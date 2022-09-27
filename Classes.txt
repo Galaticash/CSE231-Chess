@@ -1,0 +1,27 @@
+Classes
+
+Game
+	Board[][] of Pieces (stored based on positions RC)
+	- outstream/output drawing
+	- currentPlayerWhite bool (starts true)
+	- saving game/moves?
+
+	-	-	-	-
+	- drawBoard(squares)
+	- drawPieces (board[][])
+	- nextPlayer (returns true/false for currentPlayerWhite)
+	- move (Piece)
+
+Move
+	movedPiece (reference to a Piece)
+	positionPrevious -> RC
+	positionCurrent -> RC
+	-	-	-	-	
+	- (optional) undo [Then will remove recorded move from file, also read next previous move - can infinitely repeat until the board is at default state/no moves left to undo]
+
+Piece
+	- positionCurrent -> RC
+
+	-	-	-	-
+	- getPossibleMoves (returns list/array of RC from currentPosition)
+	

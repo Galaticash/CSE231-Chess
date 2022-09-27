@@ -1,0 +1,45 @@
+TODO:
+
+Add Turns
+	- test that only one Player can move pieces at a time, every other 'move' is given to Black/White
+
+Add Class - Move
+	- Move pass test cases
+
+Add LastMove
+	- Check that move() returns a Move
+
+Add Class - Piece, and all dervied classes
+	- Piece (virutal) pass test cases
+	- Empty/Space pass test cases
+	- Pawn pass test cases
+	- King pass test cases
+	- Queen pass test cases
+	- Rook pass test cases
+	- Bishop pass test cases
+	- Knight pass test cases
+
+Adjust Move to hold reference to piece instead of just To and From positions
+
+Add En-Passant
+	- Pass test cases
+
+Add Pawn Promotion
+	- Pass test cases
+		- Pawn moving to row 8 (index 7)
+		- Pawn moving to row 1 (index 0)
+		- new Queen is able to move properly (should work, since creating new object Queen)
+
+Add Castling
+	- Pass test cases
+		- Conditions are all met
+			- King has NOT moved
+			- Rook has NOT moved
+			- Empty spaces between
+			- Possible to do either castling if empty spaces exist, correct?
+		- Rook also moves
+		- King side castle
+			- Rook moves _ spaces
+		- Queen side castle
+			- Rook moves _ spaces
+		
