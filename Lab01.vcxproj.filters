@@ -49,5 +49,7 @@
     <Text Include="game.txt">
       <Filter>Saved Games</Filter>
     </Text>
+    <Text Include="TODO.txt" />
+    <Text Include="Classes.txt" />
   </ItemGroup>
 </Project>

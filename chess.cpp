@@ -3,6 +3,7 @@
  * Just a simple program to demonstrate how to create an Open GL window, 
  * draw something on the window, and accept simple user input
  **********************************************************************/
+#pragma once
 
 #include "uiInteract.h"   // for Interface
 #include "uiDraw.h"       // for draw*

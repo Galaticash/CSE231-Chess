@@ -110,9 +110,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Classes.txt" />
     <Text Include="enPassant.txt" />
     <Text Include="game.txt" />
     <Text Include="castle.txt" />
+    <Text Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
