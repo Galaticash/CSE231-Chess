@@ -8,8 +8,15 @@
  ************************************************************************/
 
 #pragma once
+#include "RC.h"
 
-class Move{}
+class Move {
+public:
+	Move()
+	{
+		position = RC(1, 1);
+	};
 
-
-;
+private:
+	RC position;
+};

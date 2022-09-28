@@ -86,6 +86,23 @@ namespace ChessUnitTests
 
 			// Move piece to an empty square
 			Assert::IsTrue(move(board, 63, 1));
+			
+			lastMove = Move
+			nextMove = user clicks
+
+			returnValue = move(nextMove)
+				if bool true:
+					lastMove <- nextMove
+				else:
+					
+
+
+
+			lastMove <- move(nextMove)
+
+			
+			//Assert::IsNotNull(move())
+
 			Assert::AreEqual('P', board[1]);
 			Assert::AreEqual(' ', board[63]);
 

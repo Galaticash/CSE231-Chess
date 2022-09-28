@@ -9,22 +9,29 @@
 
 #pragma once
 
-#include "Piece.h"
+#include "Bishop.h"
+#include "Rook.h"
+#include "King.h"
+#include "Knight.h"
+#include "Queen.h"
+#include "Pawn.h"
+#include "Space.h"
 
-int NUM_ROW = 8;
-int NUM_COL = 8;
-/*Piece DEFAULT_BOARD[8][8] =
-{
-			{Rook(), ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-			{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-			{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-			{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-			{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-			{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-			{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-			{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}*/
-/*
-   board [2][3]
+#include <string>
+
+const int NUM_ROW = 8;
+const int NUM_COL = 8;
+Piece DEFAULT_BOARD[8][8] = {
+			{Rook(RC(0, 0), 1), Bishop(RC(0, 0), 1), Knight(RC(0, 0), 1), Queen(RC(0, 0), 1), King(RC(0, 0), 1), Knight(RC(0, 0), 1), Bishop(RC(0, 0), 1), Rook(RC(0, 0), 1)},
+			{Pawn(RC(0, 0), 1), Pawn(RC(0, 0), 1), Pawn(RC(0, 0), 1), Pawn(RC(), 1), Pawn(RC(0, 0), 1), Pawn(RC(0, 0), 1), Pawn(RC(), 1), Pawn(RC(), 1)},
+			{Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0))},
+			{Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0))},
+			{Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0))},
+			{Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0)), Space(RC(0, 0))},
+			{Pawn(RC(0, 0), 1), Pawn(RC(0, 0), 1), Pawn(RC(0, 0), 1), Pawn(RC(0, 0), 1), Pawn(RC(0, 0), 1), Pawn(RC(0, 0), 1), Pawn(RC(0, 0), 1), Pawn(RC(), 1)},
+			{Rook(RC(0, 0), 1), Bishop(RC(0, 0), 1), Knight(RC(0, 0), 1), Queen(RC(0, 0), 1), King(RC(0, 0), 1), Knight(RC(0, 0), 1), Bishop(RC(0, 0), 1), Rook(RC(0, 0), 1)} };
+
+/*   board[2][3]
 	      0 1 2 3 4 5 6 7 
        0 . . . . . . . . 0
 		 1 . . . . . . . . 1
@@ -40,7 +47,8 @@ int NUM_COL = 8;
 class Game
 {
 public:
-	Game() {
+	Game()
+	{
 		currentIsWhite = true;
 	};
 
@@ -58,7 +66,7 @@ public:
  			}
 		}
 
-		// for move in file
+		// for each move in file
 		// translate it from the string --> Moves
 		// do the move
 	}

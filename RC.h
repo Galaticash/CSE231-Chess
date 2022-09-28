@@ -12,13 +12,14 @@
 class RC
 {
 public:
+	RC() {};
 	RC(int newRow, int newCol)
 	{
 		row = newRow;
 		col = newCol;	
 	};
 
-	RC& operator == (const RC& other);
+	//RC& operator == (const RC& other);
 
 	int getRow()
 	{
