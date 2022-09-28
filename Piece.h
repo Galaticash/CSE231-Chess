@@ -9,6 +9,7 @@
 
 #pragma once
 #include "Move.h"
+
 using namespace std;
 
 class Piece {
@@ -22,4 +23,6 @@ protected:
 	bool isWhite;
 
 private:
-}
+
+  
+};
