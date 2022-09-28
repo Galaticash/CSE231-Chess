@@ -8,28 +8,18 @@
  ************************************************************************/
 
 #pragma once
-<<<<<<< HEAD
-
+#include "Move.h"
 using namespace std;
-
-
 
 class Piece {
 public:
-   RC[] getPossibleMoves();
-   bool getHasMoved() { return false; };
-   bool move() { return false; }
+	Move[] getPossibleMoves();
+	bool getHasMoved() { return false; };
+	bool move() { return false; }
 
 protected:
-   bool hasMoved;
-   bool isWhite;
+	bool hasMoved;
+	bool isWhite;
 
 private:
-   
-=======
-class Piece {
-
-
-
->>>>>>> bb7afb8274a9d49abcf975edd10f3156cd0b42ba
-};
+}

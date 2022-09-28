@@ -27,7 +27,7 @@ private:
 
 /*bool RC& operator == (const RC& other)
 {
-	if (this.row == other.row and this.col == other.col)
+	if (this.getRow() == other.getRow() and this.getCol() == other.getCol())
 	{
 		return true;
 	}
