@@ -27,8 +27,9 @@ public:
 		this->hasMoved = false;
 
 	};
-	void virtual getPossibleMoves() = 0;
+	set <RC> virtual getPossibleMoves(Piece* board[]) = 0;
 	bool getHasMoved() { return this->hasMoved; };
+	bool getIsWhite() { return this->isWhite; };
 	bool move() { return false; };
 
 protected:
