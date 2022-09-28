@@ -18,6 +18,9 @@ namespace UnitTestLogan
 			// exercise
 			// verify
 		}	// teardown
+
+	private: 
+
 	};
 
 

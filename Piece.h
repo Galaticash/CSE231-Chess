@@ -8,7 +8,6 @@
  ************************************************************************/
 
 #pragma once
-<<<<<<< HEAD
 
 using namespace std;
 
@@ -26,10 +25,4 @@ protected:
 
 private:
    
-=======
-class Piece {
-
-
-
->>>>>>> bb7afb8274a9d49abcf975edd10f3156cd0b42ba
 };
