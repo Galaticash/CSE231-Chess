@@ -17,10 +17,10 @@ namespace ChessUnitTests
 	{
 	public:
 		/* Helper method to insert pieces into board */
-		void InsertPiece(Piece* board[8][8], Piece* piece) 
+		void InsertPiece(Piece* board[8][8], Piece piece) 
 		{
 			RC pos = piece.getCurrentPosition();
-			board[pos.getRow()][pos.getCol()] = piece;
+			board[pos.getRow()][pos.getCol()] = &piece;
 		}
 
 
@@ -59,6 +59,7 @@ namespace ChessUnitTests
 			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
 
 			King kingTest = King(RC(1, 1), 1);
+			InsertPiece(board, kingTest);
 
 			// EXERCISE
 			set <Move>possibleMoves = kingTest.getPossibleMoves(board);
