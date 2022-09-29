@@ -39,7 +39,7 @@ public:
 
         c = col;
         r = row + isWhite ? 2 : -2; // Check the space 2 rows ahead of the Piece
-        if (row == 6 && board[r][c] == Space(RC(r, c)))
+        if (row == 6 && board[r][c].isSpace())
             possible.insert(Move(this, RC(row, col), RC(r, c)));    // forward two blank spaces
         
         r = row + isWhite ? -1 : 1; // check the space right in front of the Piece
@@ -55,6 +55,8 @@ public:
             possible.insert(Move(this, RC(row, col), RC(r, c)));    // attack right
         
        // En-Passant
+       //if lastMove.getPiece == "PAWN" && 
+       
         //if (board[row +/- 1][col] == Pawn(RC(row +/- 1, col), !isWhite))
 
         // Pawn Promotion (assumes queen)
