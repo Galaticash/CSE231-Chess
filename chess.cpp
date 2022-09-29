@@ -102,8 +102,6 @@ set <int> getPossibleMoves(const char* board, int location)
    //   possible = piece.getMoves() --> RC/integer (index)
    // return possible
 
-
-
    //
    // PAWN
    //
@@ -274,7 +272,7 @@ set <int> getPossibleMoves(const char* board, int location)
             possible.insert(r * 8 + c);
       }
    }
-
+   
    return possible;
 }
 
