@@ -14,12 +14,11 @@ class Space : public Piece
 {
 
 public:
-	Space()
+	Space() : Piece()
 	{
-		this->currentPosition = RC(-1, -1);
-		this->isWhite = false;
+		this->type = "SPACE";
 	};
-	Space(RC position, bool isWhite = 0) : Piece()
+	Space(RC position, bool isWhite = 0) : Piece(position, isWhite)
 	{
 		this->type = "SPACE";
 	};
