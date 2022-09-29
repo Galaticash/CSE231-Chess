@@ -19,6 +19,17 @@ public:
 		this->positionFrom = from;
 		this->positionTo = to;
 	};
+	Move(string smithNotation)
+	{
+		translateFromSmith(smithNotation);
+	};
+	Piece* getPiece() { return this->movingPiece; };
+	RC getPositionFrom() { return this->positionFrom; };
+
+
+
+
+	// Translate the Move into Smith's notation
 	string translateToSmith()
 	{
 		string smithNotation = "";
@@ -29,6 +40,11 @@ public:
 
 		smithNotation += posFrom + posTo;
 		return smithNotation;
+	};
+	// Given a move in Smith's notation, get the relevant attributes
+	void translateFromSmith(string smithNotation)
+	{
+
 	};
 
 
