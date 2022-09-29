@@ -28,16 +28,22 @@ public:
 		this->currentPosition = position;
 		this->hasMoved = false;
 	};
-	set <Move> virtual getPossibleMoves(Piece* board[]) = 0;	
+	set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) = 0;
 	RC getCurrentPosition() { return this->currentPosition; };
 	bool getHasMoved() { return this->hasMoved; };
 	bool getIsWhite() { return this->isWhite; };
-	bool move() { return false; };
+	string getType() { return type; };
+	bool isSpace() { return type == "SPACE"; };
 
-	//bool operator== (Piece& other) { return this->currentPosition.getRow() == other.getCurrentPosition().getRow() && this->currentPosition.getCol() == other.getCurrentPosition().getCol(); };
+	// To tell if a Piece is the same as another Piece
+	bool operator== (Piece& other) { return (this->getType() == other.getType() && this->currentPosition.getRow() == other.getCurrentPosition().getRow() && this->currentPosition.getCol() == other.getCurrentPosition().getCol()); };
 	//bool operator!= (Piece& other) { return !(this == other); };
 
 protected:
+	// Type of Piece (PAWN, KNIGHT, KING, ect)
+	string type = "";
+
+	// Current RC on the Board
 	RC currentPosition;
 
 	bool hasMoved;
@@ -50,9 +56,5 @@ protected:
 
 		// If the RC is on the board (row: 0 - 7, col: 0 - 7)
 		return (row >= 0 && row <= 7 && col >= 0 && col >= 7);
-	};
-
-private:
-
-  
+	};  
 };

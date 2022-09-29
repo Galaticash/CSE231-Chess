@@ -11,71 +11,55 @@
 #include "Piece.h"
 #include "Space.h" // check for empty position
 
+// TODO: Add capture checks for Move class
+
 class Pawn : public Piece
 {
 public:
 	// Call the base Constructor
 	Pawn(RC position, bool isWhite) : Piece()
-	{ };
+	{
+        this->type = "PAWN";
+    };
 
-	set <Move> getPossibleMoves(Piece* board[]) {
+	set <Move> getPossibleMoves(Piece* board[], Move lastMove) {
 
-        // TODO: Change to RCs
-        // Note: stored 0 - 7 or 1 - 8? 0 - 7 is best for code (don't have to change to index every time board is used)
-        //set <int> possible;
+        // Store possible Moves in a set
         set <Move> possible;
 
         int row = this->currentPosition.getRow(); // current location row
         int col = this->currentPosition.getCol(); // current location column
 
-
         // If the position is not valid or the selected Position is an empty Space
         if (!(isValidPosition(this->currentPosition)) || board[row][col] == Space(RC(row, col)))
             return possible; 
+        
         int r;                   // the row we are checking
         int c;                   // the column we are checking
-        // C# -> type(board[r][c] == Space)
 
         c = col;
-        r = row + isWhite ? 2 : -2; // row +/- 2, based on if moving up/down
-        if (row == 6 && board[r * 8 + c] == Space())
-            possible.insert(Move(RC(row, col), RC(r, c));
-                //r * 8 + c);  // forward two blank spaces
-        r = row + isWhite ? 1 : -1; // +/- 1 based on moving up/down
-        if (r >= 0 && board[r * 8 + c] == Space())
-            possible.insert(r * 8 + c);  // forward one black space
-        c = col - 1; //same
-        if (board[r][c].getIsWhite()) // isWhite(board, r, c))
-            possible.insert(r * 8 + c);    // attack left
-        c = col + 1; //same
-        if (board[r][c].getIsWhite()) //(isWhite(board, r, c))
-            possible.insert(r * 8 + c);    // attack right
+        r = row + isWhite ? 2 : -2; // Check the space 2 rows ahead of the Piece
+        if (row == 6 && board[r][c] == Space(RC(r, c)))
+            possible.insert(Move(this, RC(row, col), RC(r, c)));    // forward two blank spaces
         
-       // what about en-passant and pawn promotion
+        r = row + isWhite ? -1 : 1; // check the space right in front of the Piece
+        if (r >= 0 && board[r][c] == Space(RC(r, c)))
+            possible.insert(Move(this, RC(row, col), RC(r, c)));  // forward one blank space
+        
+        c = col - 1; // left capture
+        if (board[r][c].getIsWhite())
+            possible.insert(Move(this, RC(row, col), RC(r, c)));    // attack left
+        
+        c = col + 1; // right capture
+        if (board[r][c].getIsWhite())
+            possible.insert(Move(this, RC(row, col), RC(r, c)));    // attack right
+        
+       // En-Passant
         //if (board[row +/- 1][col] == Pawn(RC(row +/- 1, col), !isWhite))
 
-        //if
-        // Move(from, to, Q)
+        // Pawn Promotion (assumes queen)
+        // Move(from, to, Q
 
-        // redundant, double check changes
-        if (board[location] == 'p')
-        {
-            c = col;
-            r = row + 2;
-            if (row == 1 && board[r * 8 + c] == ' ')
-                possible.insert(r * 8 + c);  // forward two blank spaces
-            r = row + 1;
-            if (r < 8 && board[r * 8 + c] == ' ')
-                possible.insert(r * 8 + c);    // forward one blank space
-            c = col - 1;
-            if (isBlack(board, r, c))
-                possible.insert(r * 8 + c);      // attack left
-            c = col + 1;
-            if (isBlack(board, r, c))
-                possible.insert(r * 8 + c);      // attack right
-             // what about en-passant and pawn promotion
-        
-            return possible;
-        }
+        return possible;
     };
 };

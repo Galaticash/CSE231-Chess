@@ -32,7 +32,6 @@ Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
 			{&Pawn(RC(6, 0), 1), &Pawn(RC(6, 1), 1), &Pawn(RC(6, 2), 1), &Pawn(RC(6, 3), 1), &Pawn(RC(6, 4), 1), &Pawn(RC(6, 5), 1), &Pawn(RC(6, 6), 1), &Pawn(RC(6, 7), 1)},
 			{&Rook(RC(7, 0), 1), &Bishop(RC(7, 1), 1), &Knight(RC(7, 2), 1), &Queen(RC(7, 3), 1), &King(RC(7, 4), 1), &Knight(RC(7, 5), 1), &Bishop(RC(7, 6), 1), &Rook(RC(7, 7), 1)} };
 
-
 /*   board[2][3]
 	      0 1 2 3 4 5 6 7 
          0 . . . . . . . . 0
@@ -52,6 +51,7 @@ public:
 	Game()
 	{
 		currentIsWhite = true;
+		this->board = DEFAULT_BOARD;
 	};
 
 	void createBoard(string filename = "")
@@ -97,7 +97,7 @@ public:
 
 
 private:
-	Piece board[NUM_ROW][NUM_COL];
+	Piece* board[NUM_ROW][NUM_COL];
 	Move lastMove;
 	bool currentIsWhite;
 	// ogstream

@@ -42,6 +42,11 @@ namespace ChessUnitTests
 			return false;
 		}
 
+
+		void insertPiece(Piece* board, Piece insert) {
+			board[insert.getPosition.getRow()][insert.getPosition().getCol()] = insert;
+		}
+
 		TEST_METHOD(TestMethod3)
 		{
 			char board[64] = {
@@ -55,6 +60,8 @@ namespace ChessUnitTests
 				' ', ' ', ' ', ' ', ' ', ' ', ' ', 'P'
 			};
 			
+			//insertPiece(board, King(RC(3, 3));
+
 			// Blank Board
 			/*	    ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
 					' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
