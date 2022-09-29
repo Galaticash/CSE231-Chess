@@ -17,7 +17,7 @@ class Pawn : public Piece
 {
 public:
 	// Call the base Constructor
-	Pawn(RC position, bool isWhite) : Piece()
+	Pawn(RC position, bool isWhite) : Piece(position, isWhite)
 	{
         this->type = "PAWN";
     };
