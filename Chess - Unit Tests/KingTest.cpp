@@ -62,7 +62,7 @@ namespace ChessUnitTests
 			InsertPiece(board, kingTest);
 
 			// EXERCISE
-			set <Move>possibleMoves = kingTest.getPossibleMoves(board);
+			set <Move>possibleMoves = kingTest.getPossibleMoves(*board);
 
 			// VERIFY
 			// Check that it's all 8 squares, only 1
@@ -70,7 +70,7 @@ namespace ChessUnitTests
 			Assert::AreEqual(true, true);
 
 			// TEARDOWN
-			delete board
+			delete board;
 		}
 
 		/*
