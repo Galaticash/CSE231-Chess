@@ -14,8 +14,10 @@ class King : public Piece
 {
 public:
 	// Call the base Constructor
-	King(RC position, bool isWhite) : Piece()
-	{};
+	King(RC position, bool isWhite) : Piece(position, isWhite)
+	{
+        this->type = "KING";
+    };
 	set <Move> getPossibleMoves(Piece* board[], Move lastMove) 
 	{ 
 		set <Move> possible; 
