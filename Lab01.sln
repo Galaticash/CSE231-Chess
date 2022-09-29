@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab01", "Lab01.vcxproj", "{95E58651-91CD-480B-B221-61A9A6E42304}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chess - Unit Tests", "..\Chess - Unit Tests\Chess - Unit Tests.vcxproj", "{EA9C0BED-D519-4D7C-8D43-D3DC726674DD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chess - Unit Tests", "Chess - Unit Tests\Chess - Unit Tests.vcxproj", "{EA9C0BED-D519-4D7C-8D43-D3DC726674DD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest-Logan", "UnitTest-Logan\UnitTest-Logan.vcxproj", "{FA6E370F-E73F-428F-96EA-665BA707DD33}"
 EndProject
