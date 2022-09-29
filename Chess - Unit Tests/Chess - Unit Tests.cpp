@@ -87,8 +87,8 @@ namespace ChessUnitTests
 			// Move piece to an empty square
 			Assert::IsTrue(move(board, 63, 1));
 			
-			lastMove = Move
-			nextMove = user clicks
+			//lastMove = Move();
+			//nextMove = user clicks
 
 			returnValue = move(nextMove)
 				if bool true:

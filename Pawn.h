@@ -18,7 +18,7 @@ public:
 	Pawn(RC position, bool isWhite) : Piece()
 	{ };
 
-	set <Move> getPossibleMove(Piece* board[]) {
+	set <Move> getPossibleMoves(Piece* board[]) {
 
         // TODO: Change to RCs
         // Note: stored 0 - 7 or 1 - 8? 0 - 7 is best for code (don't have to change to index every time board is used)
@@ -28,8 +28,9 @@ public:
         int row = this->currentPosition.getRow(); // current location row
         int col = this->currentPosition.getCol(); // current location column
 
-        // return the empty set if there simply are no possible moves
-        if (row < 0 || row > 7 || col < 0 || row > 7 || board[row][col] == Space(RC(row, col)))
+
+        // If the position is not valid or the selected Position is an empty Space
+        if (!(isValidPosition(this->currentPosition)) || board[row][col] == Space(RC(row, col)))
             return possible; 
         int r;                   // the row we are checking
         int c;                   // the column we are checking
@@ -73,6 +74,8 @@ public:
             if (isBlack(board, r, c))
                 possible.insert(r * 8 + c);      // attack right
              // what about en-passant and pawn promotion
+        
+            return possible;
         }
     };
 };
