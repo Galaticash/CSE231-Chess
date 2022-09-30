@@ -1,3 +1,4 @@
+# pragma once
 #include "pch.h"
 #include "CppUnitTest.h"
 
@@ -37,8 +38,8 @@ namespace ChessUnitTests
 		TEST_METHOD(TranslateMove) 
 		{
 			string smithNotation = "a1b1Q";
-			RC positionTo = smithNotation[];
-			RC positionFrom = smithNotation[];
+			//RC positionTo = smithNotation[];
+			//RC positionFrom = smithNotation[];
 			int stringSize = smithNotation.length();
 			if (stringSize > 4)
 			{

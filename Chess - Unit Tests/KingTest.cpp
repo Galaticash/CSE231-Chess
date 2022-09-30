@@ -1,3 +1,4 @@
+# pragma once
 #include "pch.h"
 #include "CppUnitTest.h"
 
@@ -62,7 +63,7 @@ namespace ChessUnitTests
 			InsertPiece(board, kingTest);
 
 			// EXERCISE
-			set <Move>possibleMoves = kingTest.getPossibleMoves(*board);
+			set <Move>possibleMoves = kingTest.getPossibleMoves(*board, Move());
 
 			// VERIFY
 			// Check that it's all 8 squares, only 1

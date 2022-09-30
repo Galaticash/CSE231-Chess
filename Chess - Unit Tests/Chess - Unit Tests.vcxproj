@@ -157,7 +157,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Chess - Unit Tests.cpp" />
-    <ClCompile Include="gameTestcpp.cpp" />
     <ClCompile Include="KingTest.cpp" />
     <ClCompile Include="PawnTest.cpp" />
     <ClCompile Include="pch.cpp">

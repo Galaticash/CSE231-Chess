@@ -12,7 +12,11 @@
 class RC
 {
 public:
-	RC() {};
+	RC() 
+	{
+		row = -1;
+		col = -1;
+	};
 	RC(int newRow, int newCol)
 	{
 		row = newRow;

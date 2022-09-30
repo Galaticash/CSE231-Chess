@@ -28,7 +28,8 @@ public:
 		this->currentPosition = position;
 		this->hasMoved = false;
 	};
-	set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) = 0;
+	set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) {} ;
+	//set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) = 0;
 	RC getCurrentPosition() { return this->currentPosition; };
 	bool getHasMoved() { return this->hasMoved; };
 	bool getIsWhite() { return this->isWhite; };
@@ -36,7 +37,7 @@ public:
 	bool isSpace() { return type == "SPACE"; };
 
 	// To tell if a Piece is the same as another Piece
-	bool operator== (Piece& other) { return (this->getType() == other.getType() && this->currentPosition.getRow() == other.getCurrentPosition().getRow() && this->currentPosition.getCol() == other.getCurrentPosition().getCol()); };
+	//bool operator== (Piece& other) { return (this->getType() == other.getType() && this->currentPosition.getRow() == other.getCurrentPosition().getRow() && this->currentPosition.getCol() == other.getCurrentPosition().getCol()); };
 	//bool operator!= (Piece& other) { return !(this == other); };
 
 protected:
