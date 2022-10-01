@@ -31,10 +31,12 @@ namespace ChessUnitTests
 			TestCastlingKing();
 			TestKingMovement();
 			TestKingBlocked();
-			TestKingCapturing();
+			TestKingAttacking();
 		}
 
-		/*
+		/**********************************
+		* TEST KING MOVEMENT
+		* Test all basic movement options for the king.
 			0 1 2 3 4 5 6 7
 		 0 . . . . . . . . 0
 		 1 . k . . . . . . 1
@@ -45,13 +47,13 @@ namespace ChessUnitTests
 		 6 . . . . . . . . 6
 		 7 . . . . . . . . 7
 			0 1 2 3 4 5 6 7
-		*/
+		******************************************/
 		TEST_METHOD(TestKingMovement)
 		{
 			// SETUP
 			Piece* board[8][8] = {
 			{&Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7))},
-			{&Space(RC(1, 0)), &King(RC(1, 1), 0), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7))},
+			{&Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7))},
 			{&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7))},
 			{&Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7))},
 			{&Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7))},
@@ -66,15 +68,15 @@ namespace ChessUnitTests
 			set <Move>possibleMoves = kingTest.getPossibleMoves(*board, Move());
 
 			// VERIFY
-			// Check that it's all 8 squares, only 1
-			// (see test cases and write them into code)
 			Assert::AreEqual(true, true);
 
 			// TEARDOWN
 			delete board;
 		}
 
-		/*
+		/*******************************
+		* TEST CASTLING QUUEN
+		* Test that queen side castling works. 
 			0 1 2 3 4 5 6 7
 		 0 r . . . k p . r 0
 		 1 . . . p p p . . 1
@@ -85,26 +87,49 @@ namespace ChessUnitTests
 		 6 . . . . . . . . 6
 		 7 . . . . . . . . 7
 			0 1 2 3 4 5 6 7
-		*/
+		***********************************/
 		TEST_METHOD(TestCastlingQueen)
 		{
 			// setup
 			Piece* board[8][8] = {
-			{&Space(RC(0, 0)), & Space(RC(0, 1)), & Space(RC(0, 2)), & Space(RC(0, 3)), & Space(RC(0, 4)), & Space(RC(0, 5)), & Space(RC(0, 6)), & Space(RC(0, 7))},
-			{ &Space(RC(1, 0)), &King(RC(1, 1), 0), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7)) },
+			{ &Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7)) },
+			{ &Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7)) },
 			{ &Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7)) },
 			{ &Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7)) },
 			{ &Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7)) },
 			{ &Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7)) },
 			{ &Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7)) },
-			{ &Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7)) }
-		};
+			{ &Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7)) } };
+
+			King kingTest = King(RC(0, 4), 1);
+			Rook rookTestLeft = Rook(RC(0, 0), 1);
+			Rook rookTestRight = Rook(RC(0, 7), 1);
+			Pawn pawnTest1 = Pawn(RC(0, 5), 1);
+			Pawn pawnTest2 = Pawn(RC(1, 3), 1);
+			Pawn pawnTest3 = Pawn(RC(1, 4), 1);
+			Pawn pawnTest4 = Pawn(RC(1, 5), 1);
+
+			InsertPiece(board, kingTest);
+			InsertPiece(board, rookTestLeft);
+			InsertPiece(board, rookTestRight);
+			InsertPiece(board, pawnTest1);
+			InsertPiece(board, pawnTest2);
+			InsertPiece(board, pawnTest3);
+			InsertPiece(board, pawnTest4);
+
 			// exercise
+			set <Move>possibleMoves = kingTest.getPossibleMoves(*board, Move());
+
 			// verify
+			
+
 			// takedown
+			delete board;
 		}
 
-		/*
+		/*********************************
+		* TEST CASTLING KING
+		* Test that king side castling works.
 			0 1 2 3 4 5 6 7
 		 0 r . . p k . . r 0
 		 1 . . . p p p . . 1
@@ -115,25 +140,48 @@ namespace ChessUnitTests
 		 6 . . . . . . . . 6
 		 7 . . . . . . . . 7
 			0 1 2 3 4 5 6 7
-		*/
+		**********************************/
 		TEST_METHOD(TestCastlingKing)
 		{
 			// setup
 			Piece* board[8][8] = {
-			{&Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7))},
-			{&Space(RC(1, 0)), &King(RC(1, 1), 0), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7))},
-			{&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7))},
-			{&Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7))},
-			{&Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7))},
-			{&Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7))},
-			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
-			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
+			{ &Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7)) },
+			{ &Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7)) },
+			{ &Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7)) },
+			{ &Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7)) },
+			{ &Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7)) },
+			{ &Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7)) },
+			{ &Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7)) },
+			{ &Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7)) } };
+
+			King kingTest = King(RC(0, 4), 1);
+			Rook rookTestLeft = Rook(RC(0, 0), 1);
+			Rook rookTestRight = Rook(RC(0, 7), 1);
+			Pawn pawnTest1 = Pawn(RC(0, 3), 1);
+			Pawn pawnTest2 = Pawn(RC(1, 3), 1);
+			Pawn pawnTest3 = Pawn(RC(1, 4), 1);
+			Pawn pawnTest4 = Pawn(RC(1, 5), 1);
+
+			InsertPiece(board, kingTest);
+			InsertPiece(board, rookTestLeft);
+			InsertPiece(board, rookTestRight);
+			InsertPiece(board, pawnTest1);
+			InsertPiece(board, pawnTest2);
+			InsertPiece(board, pawnTest3);
+			InsertPiece(board, pawnTest4);
+
 			// exercise
+			set <Move>possibleMoves = kingTest.getPossibleMoves(*board, Move());
+
 			// verify
 			// takedown
+			delete board;
 		}
 
-		/*
+		/************************************
+		* TEST KING BLOCKED
+		* Test that when all movement options are covered by friendly
+		* pieces, the king can't move.
 			0 1 2 3 4 5 6 7
 		 0 . . . . p p p . 0
 		 1 . . . . p k p . 1
@@ -144,25 +192,51 @@ namespace ChessUnitTests
 		 6 . . . . . . . . 6
 		 7 . . . . . . . . 7
 			0 1 2 3 4 5 6 7
-		*/
+		****************************************/
 		TEST_METHOD(TestKingBlocked)
 		{
 			// setup
 			Piece* board[8][8] = {
-			{&Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Pawn(RC(0, 4), 1), &Pawn(RC(0, 5), 1), &Pawn(RC(0, 6), 1), &Space(RC(0, 7))},
-			{&Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Pawn(RC(1, 4), 1), &King(RC(1, 5), 1), &Pawn(RC(1, 6), 1), &Space(RC(1, 7))},
-			{&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Pawn(RC(2, 4), 1), &Pawn(RC(2, 5), 1), &Pawn(RC(2, 6), 1), &Space(RC(2, 7))},
-			{&Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7))},
-			{&Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7))},
-			{&Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7))},
-			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
-			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
+			{ &Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7)) },
+			{ &Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7)) },
+			{ &Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7)) },
+			{ &Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7)) },
+			{ &Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7)) },
+			{ &Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7)) },
+			{ &Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7)) },
+			{ &Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7)) } };
+
+			King kingTest = King(RC(1, 5), 1);
+			Pawn pawnTest1 = Pawn(RC(0, 4), 1);
+			Pawn pawnTest2 = Pawn(RC(0, 5), 1);
+			Pawn pawnTest3 = Pawn(RC(0, 6), 1);
+			Pawn pawnTest4 = Pawn(RC(1, 4), 1);
+			Pawn pawnTest5 = Pawn(RC(1, 6), 1);
+			Pawn pawnTest6 = Pawn(RC(2, 4), 1);
+			Pawn pawnTest7 = Pawn(RC(2, 5), 1);
+			Pawn pawnTest8 = Pawn(RC(2, 6), 1);
+
+			InsertPiece(board, kingTest);
+			InsertPiece(board, pawnTest1);
+			InsertPiece(board, pawnTest2);
+			InsertPiece(board, pawnTest3);
+			InsertPiece(board, pawnTest4);
+			InsertPiece(board, pawnTest5);
+			InsertPiece(board, pawnTest6);
+			InsertPiece(board, pawnTest7);
+			InsertPiece(board, pawnTest8);
+
 			// exercise
+			set <Move>possibleMoves = kingTest.getPossibleMoves(*board, Move());
+
 			// verify
 			// takedown
+			delete board;
 		}
 
-		/*
+		/*************************************
+		* TEST KING ATTACKING
+		* Test that all of the kings attacking options work.
 			0 1 2 3 4 5 6 7
 		 0 . . . . . . . . 0
 		 1 . . . . . . . . 1
@@ -173,23 +247,46 @@ namespace ChessUnitTests
 		 6 . . . P P P . . 6
 		 7 . . . . . . . . 7
 			0 1 2 3 4 5 6 7
-		*/
-		TEST_METHOD(TestKingCapturing)
+		***********************************/
+		TEST_METHOD(TestKingAttacking)
 		{
 			// setup
 			Piece* board[8][8] = {
-			{&Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7))},
-			{&Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7))},
-			{&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7))},
-			{&Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7))},
-			{&Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Pawn(RC(4, 3), 0), &Pawn(RC(4, 4),0), &Pawn(RC(4, 5), 0), &Space(RC(4, 6)), &Space(RC(4, 7))},
-			{&Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Pawn(RC(5, 3), 0), &King(RC(5, 4), 1), &Pawn(RC(5, 5), 0), &Space(RC(5, 6)), &Space(RC(5, 7))},
-			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Pawn(RC(6, 3), 0), &Pawn(RC(6, 4), 0), &Pawn(RC(6, 5), 0), &Space(RC(6, 6)), &Space(RC(6, 7))},
-			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
+			{ &Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7)) },
+			{ &Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7)) },
+			{ &Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7)) },
+			{ &Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7)) },
+			{ &Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7)) },
+			{ &Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7)) },
+			{ &Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7)) },
+			{ &Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7)) } };
+
+			King kingTest = King(RC(5, 4), 1);
+			Pawn pawnTest1 = Pawn(RC(4, 3), 0);
+			Pawn pawnTest2 = Pawn(RC(4, 4), 0);
+			Pawn pawnTest3 = Pawn(RC(4, 5), 0);
+			Pawn pawnTest4 = Pawn(RC(5, 3), 0);
+			Pawn pawnTest5 = Pawn(RC(5, 5), 0);
+			Pawn pawnTest6 = Pawn(RC(6, 3), 0);
+			Pawn pawnTest7 = Pawn(RC(6, 4), 0);
+			Pawn pawnTest8 = Pawn(RC(6, 5), 0);
+
+			InsertPiece(board, kingTest);
+			InsertPiece(board, pawnTest1);
+			InsertPiece(board, pawnTest2);
+			InsertPiece(board, pawnTest3);
+			InsertPiece(board, pawnTest4);
+			InsertPiece(board, pawnTest5);
+			InsertPiece(board, pawnTest6);
+			InsertPiece(board, pawnTest7);
+			InsertPiece(board, pawnTest8);
 
 			// exercise
+			set <Move>possibleMoves = kingTest.getPossibleMoves(*board, Move());
+
 			// verify
 			// takedown
+			delete board;
 		}
 	};
 }
