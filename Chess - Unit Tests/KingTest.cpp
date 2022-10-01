@@ -73,7 +73,7 @@ namespace ChessUnitTests
 			Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete board;
+			delete [] &board;
 		}
 
 		/*******************************
@@ -127,7 +127,7 @@ namespace ChessUnitTests
 			Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// takedown
-			delete board;
+			delete [] &board;
 		}
 
 		/*********************************
@@ -181,7 +181,7 @@ namespace ChessUnitTests
 			Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// takedown
-			delete board;
+			delete [] &board;
 		}
 
 		/************************************
@@ -240,7 +240,7 @@ namespace ChessUnitTests
 			Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// takedown
-			delete board;
+			delete [] &board;
 		}
 
 		/*************************************
@@ -299,7 +299,7 @@ namespace ChessUnitTests
 			Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// takedown
-			delete board;
+			delete [] &board;
 		}
 	};
 }

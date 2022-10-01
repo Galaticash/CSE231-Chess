@@ -10,6 +10,8 @@
 #pragma once
 #include "RC.h"
 
+using namespace std;
+
 class Move {
 public:
 	Move()
@@ -18,23 +20,32 @@ public:
 		this->positionFrom = RC(-1, -1);
 		this->positionTo = RC(-1, -1);
 	};
+	/*Move(string smithNotation)
+{
+	this->smithNotation = smithNotation;
+	translateFromSmith(smithNotation);
+};*/
 	Move(RC from, RC to)
 	{
 		this->positionFrom = from;
 		this->positionTo = to;
-	}
-	/*Move(Piece* mover, RC from, RC to)
+	};
+
+	// TODO: Fix so it is a pointer to a Piece or a string type
+	Move(string movedPiece, RC from, RC to)
+	{
+		this->pieceType = movedPiece;
+		this->positionFrom = from;
+		this->positionTo = to;
+	};
+	/*
+	Move(Piece* mover, RC from, RC to)
 	{
 		this->movingPiece = *mover;
 		this->positionFrom = from;
 		this->positionTo = to;
 		//this->smithNotation = translateToSmith();
 
-	};*/
-	/*Move(string smithNotation)
-	{
-		this->smithNotation = smithNotation;
-		translateFromSmith(smithNotation);
 	};*/
 
 	// Get all the attributes of Piece
@@ -68,9 +79,11 @@ public:
 
 	//};
 
+	//bool operator== (Move& other) { return (this->getPositionFrom() == other.getPositionFrom() && this->getPositionTo() == other.getPositionTo()); };
 
 private:
-	//Piece movingPiece;
+	//Piece* movingPiece;
+	string pieceType;
 	RC positionTo;
 	RC positionFrom;
 	//string smithNotation;

@@ -26,7 +26,7 @@ public:
         int col = this->currentPosition.getCol(); // current location column
 
         // If the currentPosition is not valid or the selected Position is an empty Space
-        if (!(isValidPosition(this->currentPosition)) || board[row][col] == Space(RC(row, col)))
+        if (!(isValidPosition(this->currentPosition)) || board[row][col].isSpace())
             return possible;
 
         int r;                   // the row we are checking
@@ -46,15 +46,15 @@ public:
             while (r >= 0 && r < 8 && c >= 0 && c < 8 &&
                 board[r][c].isSpace())
             {
-                possible.insert(Move(this, RC(row, col), RC(r, c)));
+                possible.insert(Move(RC(row, col), RC(r, c)));
                 r += moves[i].getRow();
                 c += moves[i].getCol();
             }
 
             if (board[r][c].isSpace() || (!this->isWhite && board[r][c].getIsWhite()))
-                possible.insert(Move(this, RC(row, col), RC(r, c)));
+                possible.insert(Move(RC(row, col), RC(r, c)));
             if (board[r][c].isSpace() || (this->isWhite && !board[r][c].getIsWhite()))
-                possible.insert(Move(this, RC(row, col), RC(r, c)));
+                possible.insert(Move(RC(row, col), RC(r, c)));
         }
         
 
