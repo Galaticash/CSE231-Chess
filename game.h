@@ -33,8 +33,9 @@ Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
 			{&Rook(RC(7, 0), 1), &Bishop(RC(7, 1), 1), &Knight(RC(7, 2), 1), &Queen(RC(7, 3), 1), &King(RC(7, 4), 1), &Knight(RC(7, 5), 1), &Bishop(RC(7, 6), 1), &Rook(RC(7, 7), 1)} };
 
 /*   board[2][3]
+			a b c d e f g h
 	      0 1 2 3 4 5 6 7 
-         0 . . . . . . . . 0
+       0 . . . . . . . . 0
 		 1 . . . . . . . . 1
 		 2 . . . p . . . . 2
 		 3 . . . . . . . . 3
@@ -43,6 +44,7 @@ Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
 		 6 . . . . . . . . 6
 		 7 . . . . . . . . 7
 		   0 1 2 3 4 5 6 7
+			a b c d e f g h
 */
 
 class Game

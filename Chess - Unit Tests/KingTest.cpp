@@ -65,10 +65,12 @@ namespace ChessUnitTests
 			InsertPiece(board, kingTest);
 
 			// EXERCISE
-			set <Move>possibleMoves = kingTest.getPossibleMoves(*board, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(*board, Move());
 
-			// VERIFY
-			Assert::AreEqual(true, true);
+			// VERIFY   possible.insert(Move(RC(row, col), RC(r, c)));
+			set <Move> expectedMoves = { {Move(RC(1, 1), RC(0, 0))}, {Move(RC(1, 1), RC(0, 1))}, {Move(RC(1, 1), RC(0, 2))}, {Move(RC(1, 1), RC(1, 0))}, 
+				{Move(RC(1, 1), RC(1, 2))}, {Move(RC(1, 1), RC(2, 0))}, {Move(RC(1, 1), RC(2, 1))}, {Move(RC(1, 1), RC(2, 2))} };
+			Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
 			delete board;
@@ -118,10 +120,11 @@ namespace ChessUnitTests
 			InsertPiece(board, pawnTest4);
 
 			// exercise
-			set <Move>possibleMoves = kingTest.getPossibleMoves(*board, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(*board, Move());
 
 			// verify
-			
+			set <Move> expectedMoves = { { Move(RC(0, 4), RC(0, 2)) }, { Move(RC(0, 4), RC(0, 3)) } };
+			Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// takedown
 			delete board;
@@ -171,9 +174,12 @@ namespace ChessUnitTests
 			InsertPiece(board, pawnTest4);
 
 			// exercise
-			set <Move>possibleMoves = kingTest.getPossibleMoves(*board, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(*board, Move());
 
 			// verify
+			set <Move> expectedMoves = { { Move(RC(0, 4), RC(0, 5)) }, { Move(RC(0, 4), RC(0, 6)) } };
+			Assert::AreEqual(expectedMoves, possibleMoves);
+
 			// takedown
 			delete board;
 		}
@@ -227,9 +233,12 @@ namespace ChessUnitTests
 			InsertPiece(board, pawnTest8);
 
 			// exercise
-			set <Move>possibleMoves = kingTest.getPossibleMoves(*board, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(*board, Move());
 
 			// verify
+			set <Move> expectedMoves = {};
+			Assert::AreEqual(expectedMoves, possibleMoves);
+
 			// takedown
 			delete board;
 		}
@@ -282,9 +291,13 @@ namespace ChessUnitTests
 			InsertPiece(board, pawnTest8);
 
 			// exercise
-			set <Move>possibleMoves = kingTest.getPossibleMoves(*board, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(*board, Move());
 
 			// verify
+			set <Move> expectedMoves = { {Move(RC(5, 4), RC(4, 3))}, {Move(RC(5, 4), RC(4, 4))}, {Move(RC(5, 4), RC(4, 5))}, {Move(RC(5, 4), RC(5, 3))},
+				{Move(RC(5, 4), RC(5, 5))}, {Move(RC(5, 4), RC(6, 3))}, {Move(RC(5, 4), RC(6, 4))}, {Move(RC(5, 4), RC(6, 5))} };
+			Assert::AreEqual(expectedMoves, possibleMoves);
+
 			// takedown
 			delete board;
 		}
