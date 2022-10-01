@@ -129,7 +129,7 @@ namespace ChessUnitTests
 			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
 			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
 
-			int row = 1;
+			int row = 6;
 			int col = 1;
 			Pawn testPawn = Pawn(RC(row, col), 1);
 			insertPiece(*testBoard, testPawn);
@@ -175,7 +175,7 @@ namespace ChessUnitTests
 			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
 			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
 
-			int row = 1;
+			int row = 6;
 			int col = 1;
 			Pawn testPawn = Pawn(RC(row, col), 1);
 			insertPiece(*testBoard, testPawn);
@@ -226,7 +226,7 @@ namespace ChessUnitTests
 			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
 			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
 
-			int row = 1;
+			int row = 6;
 			int col = 1;
 			Pawn testPawn = Pawn(RC(row, col), 1);
 			insertPiece(*testBoard, testPawn);
@@ -373,7 +373,7 @@ namespace ChessUnitTests
 			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
 			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
 
-			int row = 1;
+			int row = 6;
 			int col = 1;
 			Pawn testPawn = Pawn(RC(row, col), 1);
 			insertPiece(*testBoard, testPawn);
