@@ -31,7 +31,7 @@ public:
 		this->positionTo = to;
 	};
 
-	// TODO: Fix so it is a pointer to a Piece or a string type
+	// TODO: Fix to consistently use a pointer to a Piece or a string type
 	Move(string movedPiece, RC from, RC to)
 	{
 		this->pieceType = movedPiece;
@@ -79,7 +79,7 @@ public:
 
 	//};
 
-	//bool operator== (Move& other) { return (this->getPositionFrom() == other.getPositionFrom() && this->getPositionTo() == other.getPositionTo()); };
+	bool operator== (Move& other) { return (this->getPositionFrom() == other.getPositionFrom() && this->getPositionTo() == other.getPositionTo()); };
 
 private:
 	//Piece* movingPiece;

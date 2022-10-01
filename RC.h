@@ -34,7 +34,7 @@ public:
 		return this->col;
 	};
 
-	//bool operator== (RC& other) { return (this->getRow() == other.getRow() && this->getCol() == other.getCol()); };
+	bool operator== (RC& other) { return (this->getRow() == other.getRow() && this->getCol() == other.getCol()); };
 
 
 private:

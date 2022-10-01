@@ -53,7 +53,13 @@ public:
 	Game()
 	{
 		currentIsWhite = true;
-		this->board = DEFAULT_BOARD;
+		for (int r = 0; r < NUM_ROW; r++)
+		{
+			for (int c = 0; c < NUM_COL; c++)
+			{
+				this->board[r][c] = DEFAULT_BOARD[r][c];
+			}
+		}
 	};
 
 	void createBoard(string filename = "")
