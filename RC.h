@@ -38,6 +38,7 @@ public:
 
 	bool operator== (RC const & other) const { return (this->row == other.row && this->col == other.col); };
 	bool _equals(RC const& other) const { return (this->row == other.row && this->col == other.col); };
+	bool operator< (RC const& other) const { return (this->row < other.row && this->col < other.col); };
 
 
 private:

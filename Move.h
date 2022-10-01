@@ -83,6 +83,8 @@ public:
 	//bool operator== (Move& other) { return (this->getPositionFrom() == other.getPositionFrom() && this->getPositionTo() == other.getPositionTo()); };
 	bool operator== (Move const& other) const { return (this->positionFrom == other.positionFrom && this->positionTo == other.positionTo); };
 	bool _equals(Move const& other) const { return (this->positionFrom == other.positionFrom && this->positionTo == other.positionTo); };
+	bool operator< (Move const& other) const { return (this->positionFrom < other.positionFrom && this->positionTo < other.positionTo); };
+
 
 private:
 	//Piece* movingPiece;

@@ -28,7 +28,7 @@ public:
 		this->currentPosition = position;
 		this->hasMoved = false;
 	};
-	set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) {} ;
+	set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) { return set <Move> {}; } ;
 	//set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) = 0; <- pure virutal, cannot make Piece* 2S array
 	
 	void setPosition(Piece* board[], RC positionTo)
