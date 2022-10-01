@@ -50,6 +50,10 @@ namespace ChessUnitTests
 
 		/* Helper function that inserts a Piece into the board */
 		void insertPiece (Piece* board[], Piece insert) {
+			// Delete the previous Piece at that position (in most cases, Space)
+			delete &board[insert.getCurrentPosition().getRow()][insert.getCurrentPosition().getCol()];
+
+			// Insert the new Piec
 			board[insert.getCurrentPosition().getRow()][insert.getCurrentPosition().getCol()] = insert;
 		}
 
@@ -60,39 +64,33 @@ namespace ChessUnitTests
 			RC pieceCurrentPos = currentMove.getPositionFrom();
 			RC pieceDestination = currentMove.getPositionTo();
 			// TODO: Assert RC positions are on the board (return lastMove if this Move cannot be completed)
-			// Assert RC positions are not the same (no actual movement done)
 
 			if (!(pieceCurrentPos == pieceDestination))
 			{
+				// Assert RC positions are not the same (no actual movement done)
+
 				Piece movePiece = board[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()];
 				Piece destinationPiece = board[pieceDestination.getRow()][pieceDestination.getCol()];
 
-				if (destinationPiece.isSpace())
+				// Delete the old Piece/Space, and put in the new one
+				insertPiece(board, movePiece);
+
+				// Update the Piece's currentPosition, and hasMoved
+				movePiece.setPosition(board, pieceDestination);
+
+				// Replace the previous position with an empty space
+				board[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()] = Space();
+
+				// If the movedPiece is a Pawn moving into the last row,
+				if (movePiece.getType() == "PAWN")
 				{
-					// Move the Piece to the new position
-					board[pieceDestination.getRow()][pieceDestination.getCol()] = movePiece;
-
-					// Update the Piece's currentPosition, and hasMoved
-					movePiece.setPosition(board, pieceDestination);
-
-					// Replace the previous position with an empty Space
-					board[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()] = Space();
+					if (movePiece.getCurrentPosition().getRow() == 8 || movePiece.getCurrentPosition().getRow() == 0)
+					{
+						// Replace the Pawn with a Queen
+						insertPiece(board, Queen(movePiece.getCurrentPosition(), movePiece.getIsWhite()));
+					}
 				}
-				else
-				{
-					// TODO: Assert that the capture is mentioned in the Move's Smith notation
-					// Delete the old Piece, no longer used in the Game
-					delete& board[pieceDestination.getRow()][pieceDestination.getCol()];
 
-					// Move the Piece
-					board[pieceDestination.getRow()][pieceDestination.getCol()] = movePiece;
-
-					// Update the Piece's currentPosition, and hasMoved
-					movePiece.setPosition(board, pieceDestination);
-
-					// Replace the previous position with an empty space
-					board[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()] = Space();
-				}
 				return currentMove;
 			}
 
@@ -126,7 +124,7 @@ namespace ChessUnitTests
 			{&Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7))},
 			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
 			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
-			
+
 			int row = 1;
 			int col = 1;
 			Pawn testPawn = Pawn(RC(row, col), 1);
@@ -143,7 +141,7 @@ namespace ChessUnitTests
 			//Assert::AreEqual(expectedMoves, possibleMoves); <- There were errors in xutility/cppUnitTest.h (still occurring)
 
 			// TEARDOWN
-			delete[] &testBoard;
+			delete[] & testBoard;
 		}
 
 		/*********************************
@@ -181,20 +179,20 @@ namespace ChessUnitTests
 			Assert::IsFalse(testPawn.getHasMoved());
 
 			// EXERCISE - Move Pawn and call Pawn::getHasMoved()
-			move(*testBoard, Move(RC(row, col), RC(row -1, col)), Move());
+			move(*testBoard, Move(RC(row, col), RC(row - 1, col)), Move());
 			Assert::IsTrue(testPawn.getHasMoved());
-			Assert::IsTrue(testPawn.getCurrentPosition() == RC(row -1, col));
+			Assert::IsTrue(testPawn.getCurrentPosition() == RC(row - 1, col));
 
 			// EXERCISE - Pawn::getPossibleMoves()
 			set<Move> possibleMoves = testPawn.getPossibleMoves(*testBoard, Move());
 
 			// VERIFY
 			// Pawn can only move one space ahead
-			set<Move> expectedMoves = { Move(RC(row, col), RC(testPawn.getCurrentPosition().getRow() - 1, col))};
+			set<Move> expectedMoves = { Move(RC(row, col), RC(testPawn.getCurrentPosition().getRow() - 1, col)) };
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
-			delete[] &testBoard;
+			delete[] & testBoard;
 		}
 
 		/*********************************
@@ -242,7 +240,7 @@ namespace ChessUnitTests
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete[] &testBoard;
+			delete[] & testBoard;
 		}
 
 		/*********************************
@@ -291,7 +289,7 @@ namespace ChessUnitTests
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete[] &testBoard;
+			delete[] & testBoard;
 		}
 
 		/*********************************
@@ -336,12 +334,12 @@ namespace ChessUnitTests
 
 			// VERIFY
 			// Assert that the Pawn can attack move forward or attack the enemyPawn
-			set<Move> expectedMoves = { Move(RC(row, col), RC(row -1, col)), Move(RC(row, col), enemyPawn.getCurrentPosition()) };
+			set<Move> expectedMoves = { Move(RC(row, col), RC(row - 1, col)), Move(RC(row, col), enemyPawn.getCurrentPosition()) };
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete[] &testBoard;
+			delete[] & testBoard;
 		}
 
 		/*********************************
@@ -389,12 +387,12 @@ namespace ChessUnitTests
 
 			// VERIFY
 			// Assert that the Pawn can attack move diagonally and attack Pawns of the opposite color, but not forward (blocked)
-			set<Move> expectedMoves = { Move(RC(row, col), enemyPawnOne.getCurrentPosition()), Move(RC(row, col), enemyPawnThree.getCurrentPosition())};
+			set<Move> expectedMoves = { Move(RC(row, col), enemyPawnOne.getCurrentPosition()), Move(RC(row, col), enemyPawnThree.getCurrentPosition()) };
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
-		
+
 			// TEARDOWN
-			delete[] &testBoard;
+			delete[] & testBoard;
 		}
 
 		/*********************************
@@ -446,7 +444,7 @@ namespace ChessUnitTests
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete[] &testBoard;
+			delete[] & testBoard;
 		}
 
 		/*********************************
@@ -477,7 +475,7 @@ namespace ChessUnitTests
 			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
 
 			// RC of the testPawn
-			int row = 1;
+			int row = 3;
 			int col = 1;
 			Pawn testPawn = Pawn(RC(row, col), 1);
 			insertPiece(*testBoard, testPawn);
@@ -500,5 +498,52 @@ namespace ChessUnitTests
 			// TEARDOWN
 			delete[] & testBoard;
 		}
+
+		/*********************************
+		* TEST move
+		* Test that the Pawn will promote to Queen (after moving to last row 0 or 8).
+			0 1 2 3 4 5 6 7
+		 0 . * . . . . . . 0
+		 1 . p . . . . . . 1
+		 2 . . . . . . . . 2
+		 3 . . . . . . . . 3
+		 4 . . . . . . . . 4
+		 5 . . . . . . . . 5
+		 6 . . . . . . . . 6
+		 7 . . . . . . . . 7
+			0 1 2 3 4 5 6 7
+		**********************************/
+		TEST_METHOD(pawnPromotion)
+		{
+			// SETUP - Place an enemy Pawn to the left of the testPawn, having just moved two spaces
+			Piece* testBoard[NUM_ROW][NUM_COL] = {
+			{&Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7))},
+			{&Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7))},
+			{&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7))},
+			{&Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7))},
+			{&Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7))},
+			{&Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7))},
+			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
+			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
+
+			// RC of the testPawn
+			int row = 1;
+			int col = 1;
+			Pawn testPawn = Pawn(RC(row, col), 1);
+			insertPiece(*testBoard, testPawn);
+
+			// EXERCISE - move Pawn to the last row (row 0, or 8)
+			move(*testBoard, Move(RC(row, col), RC(row - 1, col)), Move());
+
+			// VERIFY
+			// Assert that the Pawn was replaced with a Queen Piece
+			string queenType = "QUEEN";
+			Assert::IsTrue(testBoard[row - 1][col]->getType() == queenType);
+			//Assert::AreEqual(queenType, testBoard[row - 1][col]->getType());
+
+			// TEARDOWN
+			delete[] & testBoard;
+		};
+
 	};
 }

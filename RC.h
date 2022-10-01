@@ -34,7 +34,10 @@ public:
 		return this->col;
 	};
 
-	bool operator== (RC& other) { return (this->getRow() == other.getRow() && this->getCol() == other.getCol()); };
+	//bool operator== (RC& other) { return (this->getRow() == other.getRow() && this->getCol() == other.getCol()); };
+
+	bool operator== (RC const & other) const { return (this->row == other.row && this->col == other.col); };
+	bool _equals(RC const& other) const { return (this->row == other.row && this->col == other.col); };
 
 
 private:

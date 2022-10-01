@@ -25,7 +25,7 @@ public:
 	set <Move> getPossibleMoves(Piece* board[], Move lastMove) {
 
         // Store possible Moves in a set
-        set <Move> possible;
+        set <Move> possible = {};
 
         int row = this->currentPosition.getRow(); // current location row
         int col = this->currentPosition.getCol(); // current location column

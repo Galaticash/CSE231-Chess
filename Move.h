@@ -32,6 +32,7 @@ public:
 	};
 
 	// TODO: Fix to consistently use a pointer to a Piece or a string type
+	// OR rely on board to get pieceType (board[RC from].getType() or .isSpace())
 	Move(string movedPiece, RC from, RC to)
 	{
 		this->pieceType = movedPiece;
@@ -79,7 +80,9 @@ public:
 
 	//};
 
-	bool operator== (Move& other) { return (this->getPositionFrom() == other.getPositionFrom() && this->getPositionTo() == other.getPositionTo()); };
+	//bool operator== (Move& other) { return (this->getPositionFrom() == other.getPositionFrom() && this->getPositionTo() == other.getPositionTo()); };
+	bool operator== (Move const& other) const { return (this->positionFrom == other.positionFrom && this->positionTo == other.positionTo); };
+	bool _equals(Move const& other) const { return (this->positionFrom == other.positionFrom && this->positionTo == other.positionTo); };
 
 private:
 	//Piece* movingPiece;
