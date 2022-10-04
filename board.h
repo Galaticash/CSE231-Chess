@@ -22,7 +22,8 @@
 const int NUM_ROW = 8;
 const int NUM_COL = 8;
 
-/*Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
+/*
+Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
 			{&Rook(RC(0, 0), 0), &Bishop(RC(0, 1), 0), &Knight(RC(0, 2), 0), &Queen(RC(0, 3), 0), &King(RC(0, 4), 0), &Knight(RC(0, 5), 0), &Bishop(RC(0, 6), 0), &Rook(RC(0, 7), 0)},
 			{&Pawn(RC(1, 0), 0), &Pawn(RC(1, 1), 0), &Pawn(RC(1, 2), 0), &Pawn(RC(1, 3), 0), &Pawn(RC(1, 4), 0), &Pawn(RC(1, 5), 0), &Pawn(RC(1, 6), 0), &Pawn(RC(1, 7), 0)},
 			{&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7))},
@@ -37,10 +38,10 @@ class Board
 {
 public:
 	// When a board is created, will use the Default 2D array of Piece*
-	Board() { this->lastMove = Move(); //copyBoard(DEFAULT_BOARD); 
+	Board() { //copyBoard(DEFAULT_BOARD);
 	};
 	// Use a custom board, for testing
-	Board(Piece* copiedBoard[NUM_ROW][NUM_COL]) { this->lastMove = Move(); copyBoard(copiedBoard); };
+	Board(Piece* copiedBoard[NUM_ROW][NUM_COL]) { copyBoard(copiedBoard); };
 	//~Board() { delete[] &this->piecesBoard; };
 
 	Piece** getPieceBoard() { return *this->piecesBoard; };
@@ -67,6 +68,6 @@ public:
 	Move move(Move currentMove);
 
 private:
-	Piece* piecesBoard[NUM_ROW][NUM_COL];
-	Move lastMove;
+	Piece* piecesBoard[NUM_ROW][NUM_COL] = {};
+	Move lastMove = Move();
 };

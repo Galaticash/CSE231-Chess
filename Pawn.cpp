@@ -14,7 +14,7 @@
  * GET POSSIBLE MOVES
  * Get's the possible moves from a piece.
  ********************************************/
-set <Move> Pawn::getPossibleMoves(Piece* board[], Move lastMove) {
+set <Move> Pawn::getPossibleMoves(Piece** board, Move lastMove) {
 
    // Store possible Moves in a set
    set <Move> possible = {};
@@ -23,7 +23,7 @@ set <Move> Pawn::getPossibleMoves(Piece* board[], Move lastMove) {
    int col = this->currentPosition.getCol(); // current location column
 
    // If the position is not valid or the selected Position is an empty Space
-   if (!(Piece::isValidPosition(this->currentPosition)) || board[row][col].isSpace())
+   if (!(isValidPosition(this->currentPosition)) || board[row][col].isSpace())
       return possible;
 
    int r;                   // the row we are checking

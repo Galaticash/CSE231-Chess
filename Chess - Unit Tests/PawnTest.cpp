@@ -2,8 +2,10 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 
-#include <set>
-#include "../board.h"
+//#include <set>
+
+// Should NOT be calling .cpp, but it fixed the linking error
+#include "../board.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
