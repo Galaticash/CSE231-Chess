@@ -23,7 +23,7 @@ set <Move> Pawn::getPossibleMoves(Piece* board[], Move lastMove) {
    int col = this->currentPosition.getCol(); // current location column
 
    // If the position is not valid or the selected Position is an empty Space
-   if (!(isValidPosition(this->currentPosition)) || board[row][col].isSpace())
+   if (!(Piece::isValidPosition(this->currentPosition)) || board[row][col].isSpace())
       return possible;
 
    int r;                   // the row we are checking

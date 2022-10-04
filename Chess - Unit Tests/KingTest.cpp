@@ -4,10 +4,10 @@
 
 #include <set>            // for STD::SET
 
-#include "../King.h"
-#include "../Rook.h"
+#include "../King.cpp"
+#include "../Rook.cpp"
 #include "../Space.h"
-#include "../Pawn.h"
+#include "../Pawn.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;

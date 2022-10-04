@@ -98,7 +98,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bishop.cpp" />
+    <ClCompile Include="board.cpp" />
     <ClCompile Include="chess.cpp" />
+    <ClCompile Include="King.cpp" />
+    <ClCompile Include="Knight.cpp" />
+    <ClCompile Include="Pawn.cpp" />
+    <ClCompile Include="Queen.cpp" />
+    <ClCompile Include="Rook.cpp" />
     <ClCompile Include="uiDraw.cpp" />
     <ClCompile Include="uiInteract.cpp" />
   </ItemGroup>

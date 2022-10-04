@@ -28,8 +28,6 @@ Move Board::move(Move currentMove)
 	RC pieceCurrentPos = currentMove.getPositionFrom();
 	RC pieceDestination = currentMove.getPositionTo();
 	// TODO: Assert RC positions are on the board (return lastMove if this Move cannot be completed)
-	
-
 
 	if (!(pieceCurrentPos == pieceDestination))
 	{
@@ -53,6 +51,7 @@ Move Board::move(Move currentMove)
 		// if (currentMove.isCastlingQ/isCastlingK
 		// if currentMove.isPromotion -> Then (not in this case, 
 
+		/*
 
 		// PAWN PROMOTION
 		if (movePiece->getType() == "PAWN" && (movePiece->getCurrentPosition().getRow() == 8 || movePiece->getCurrentPosition().getRow() == 0)) {
@@ -60,6 +59,7 @@ Move Board::move(Move currentMove)
 			// Replace the Pawn with a Queen
 			insertPiece(new Queen(movePiece->getCurrentPosition(), movePiece->getIsWhite()));
 		}
+		*/
 		// CASTLING (King side/Queen side)
 		// EN-PASSANT
 

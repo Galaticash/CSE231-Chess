@@ -9,7 +9,6 @@
 
 #pragma once
 #include "Piece.h"
-#include "Space.h" // check for empty position
 
 // TODO: Add capture checks for Move class
 

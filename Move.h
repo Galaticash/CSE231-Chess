@@ -9,6 +9,7 @@
 
 #pragma once
 #include "RC.h"
+#include <string>
 
 using namespace std;
 
@@ -20,11 +21,6 @@ public:
 		this->positionFrom = RC(-1, -1);
 		this->positionTo = RC(-1, -1);
 	};
-	/*Move(string smithNotation)
-{
-	this->smithNotation = smithNotation;
-	translateFromSmith(smithNotation);
-};*/
 	Move(RC from, RC to)
 	{
 		this->positionFrom = from;
@@ -39,7 +35,14 @@ public:
 		this->positionFrom = from;
 		this->positionTo = to;
 	};
-	/*
+
+	/*Move(string smithNotation)
+{
+	this->smithNotation = smithNotation;
+	translateFromSmith(smithNotation);
+};*/
+
+/*
 	Move(Piece* mover, RC from, RC to)
 	{
 		this->movingPiece = *mover;
@@ -48,18 +51,6 @@ public:
 		//this->smithNotation = translateToSmith();
 
 	};*/
-
-	// Get all the attributes of Piece
-	//Piece getPiece() { return this->movingPiece; };
-	RC getPositionFrom() { return this->positionFrom; };
-	RC getPositionTo() { return this->positionTo; };
-	//RC getDelta() { return RC(this->positionFrom.getRow() - this->positionTo.getRow(), this-> };
-
-	void setCapture(char piece) { this->capture = piece; };
-	void setIsCastlingQ() { this->castlingQSide = true; };
-	void setIsCastlingK() { this->castlingQSide = true; };
-	void setIsEnPassant() { this->enpassant = true; };
-	void setIsPromotion() { this->promotion = true; };
 
 	// Translate the Move into Smith's notation
 	//string translateToSmith()
@@ -80,15 +71,27 @@ public:
 
 	//};
 
+
+	// Get all the attributes of Piece
+	//Piece getPiece() { return this->movingPiece; };
+	RC getPositionFrom() { return this->positionFrom; };
+	RC getPositionTo() { return this->positionTo; };
+	//RC getDelta() { return RC(this->positionFrom.getRow() - this->positionTo.getRow(), this-> };
+
+	void setCapture(char piece) { this->capture = piece; };
+	void setIsCastlingQ() { this->castlingQSide = true; };
+	void setIsCastlingK() { this->castlingQSide = true; };
+	void setIsEnPassant() { this->enpassant = true; };
+	void setIsPromotion() { this->promotion = true; };
+
 	//bool operator== (Move& other) { return (this->getPositionFrom() == other.getPositionFrom() && this->getPositionTo() == other.getPositionTo()); };
 	bool operator== (Move const& other) const { return (this->positionFrom == other.positionFrom && this->positionTo == other.positionTo); };
 	bool _equals(Move const& other) const { return (this->positionFrom == other.positionFrom && this->positionTo == other.positionTo); };
 	bool operator< (Move const& other) const { return (this->positionFrom < other.positionFrom && this->positionTo < other.positionTo); };
 
-
 private:
 	//Piece* movingPiece;
-	string pieceType;
+	string pieceType = "SPACE";
 	RC positionTo;
 	RC positionFrom;
 	//string smithNotation;
