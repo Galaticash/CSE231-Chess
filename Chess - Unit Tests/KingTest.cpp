@@ -239,9 +239,7 @@ namespace ChessUnitTests
 			set <Move> possibleMoves = kingTest.getPossibleMoves(*board, Move());
 
 			// verify
-			set <Move> expectedMoves = {};
-			Assert::IsTrue(possibleMoves == expectedMoves);
-			//Assert::AreEqual(expectedMoves, possibleMoves);
+			Assert::IsTrue(possibleMoves.empty());
 
 			// takedown
 			delete [] &board;

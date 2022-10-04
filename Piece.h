@@ -31,20 +31,11 @@ public:
 	set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) { return set <Move> {}; } ;
 	//set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) = 0; <- pure virutal, cannot make Piece* 2S array
 	
-	void setPosition(Piece* board[], RC positionTo)
+	void setPosition(RC positionTo)
 	{
 		// Assert that the given position is on the board
 		// assert()
-
-		// delete what was previously at that position
-		delete& board[positionTo.getRow()][positionTo.getCol()];
-
-		// Give the board a pointer to this Piece
-		board[positionTo.getRow()][positionTo.getCol()] = *this;
-
-		// Reset the previous board position to a Space
-		//board[this->currentPosition.getRow()][this->currentPosition.getCol()] = Space(); // Or would Game be in charge of this?
-
+		
 		// Update the Piece's position
 		currentPosition = positionTo;
 

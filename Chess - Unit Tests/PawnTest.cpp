@@ -20,45 +20,27 @@
 
 #endif
 
+// TODO: Change to a Board object, Piece* [][] kept inside
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
 
 namespace ChessUnitTests
 {
-	const int NUM_ROW = 8;
-	const int NUM_COL = 8;
 	TEST_CLASS(PawnTests)
 	{
 	public:
 		
-		/*Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
-					{&Rook(RC(0, 0), 0), &Bishop(RC(0, 1), 0), &Knight(RC(0, 2), 0), &Queen(RC(0, 3), 0), &King(RC(0, 4), 0), &Knight(RC(0, 5), 0), &Bishop(RC(0, 6), 0), &Rook(RC(0, 7), 0)},
-					{&Pawn(RC(1, 0), 0), &Pawn(RC(1, 1), 0), &Pawn(RC(1, 2), 0), &Pawn(RC(1, 3), 0), &Pawn(RC(1, 4), 0), &Pawn(RC(1, 5), 0), &Pawn(RC(1, 6), 0), &Pawn(RC(1, 7), 0)},
-					{&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7))},
-					{&Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7))},
-					{&Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7))},
-					{&Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7))},
-					{&Pawn(RC(6, 0), 1), &Pawn(RC(6, 1), 1), &Pawn(RC(6, 2), 1), &Pawn(RC(6, 3), 1), &Pawn(RC(6, 4), 1), &Pawn(RC(6, 5), 1), &Pawn(RC(6, 6), 1), &Pawn(RC(6, 7), 1)},
-					{&Rook(RC(7, 0), 1), &Bishop(RC(7, 1), 1), &Knight(RC(7, 2), 1), &Queen(RC(7, 3), 1), &King(RC(7, 4), 1), &Knight(RC(7, 5), 1), &Bishop(RC(7, 6), 1), &Rook(RC(7, 7), 1)} };
-		*/
-		/*
-		Piece* EMPTY_BOARD[NUM_ROW][NUM_COL] = {
-			{&Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7))},
-			{&Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7))},
-			{&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7))},
-			{&Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7))},
-			{&Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7))},
-			{&Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7))},
-			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
-			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
-		*/
 		/* Helper function that inserts a Piece into the board */
-		void insertPiece (Piece* board[], Piece insert) {
-			// Delete the previous Piece at that position (in most cases, Space)
-			delete &board[insert.getCurrentPosition().getRow()][insert.getCurrentPosition().getCol()];
+		void insertPiece (Piece* board[8][8], Piece insert) {
+			int row = insert.getCurrentPosition().getRow();
+			int col = insert.getCurrentPosition().getCol();
 
-			// Insert the new Piec
-			board[insert.getCurrentPosition().getRow()][insert.getCurrentPosition().getCol()] = insert;
+			// Delete the previous Piece at that position (in most cases, Space)
+			delete board[row][col];
+
+			// Insert the new Piece
+			board[row][col] = &insert;
 		}
 
 		/* A function immitating how Game would perform a move (Piece cannot move itself) */
@@ -102,6 +84,20 @@ namespace ChessUnitTests
 			return lastMove;
 		}
 
+		// Runs all the test methods
+		TEST_METHOD(testPawn)
+		{
+			hasMoved();
+			pawnBlocked();
+			diagAttackAll();
+			diagAttackLeft();
+			diagAttackRight();
+			emptyBoard();
+			enPassantLeft();
+			enPassantRight;
+			pawnPromotion();
+		}
+
 		/*********************************
 		* TEST getPossibleMoves
 		* Test that the Pawn can move forward one (or two, if hasMoved == false).
@@ -132,7 +128,7 @@ namespace ChessUnitTests
 			int row = 6;
 			int col = 1;
 			Pawn testPawn = Pawn(RC(row, col), 1);
-			insertPiece(*testBoard, testPawn);
+			insertPiece(testBoard, testPawn);
 
 			// EXERCISE - Pawn::getPossibleMoves()
 			set<Move> possibleMoves = testPawn.getPossibleMoves(*testBoard, Move());
@@ -145,7 +141,11 @@ namespace ChessUnitTests
 			//Assert::AreEqual(expectedMoves, possibleMoves); <- There were errors in xutility/cppUnitTest.h (still occurring)
 
 			// TEARDOWN
-			delete[] & testBoard;
+			//delete[] & testBoard;
+			for (int r = 0; r < NUM_ROW; r++)
+			{
+				delete[] & testBoard[r];
+			}
 		}
 
 		/*********************************
@@ -196,7 +196,11 @@ namespace ChessUnitTests
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
-			delete[] & testBoard;
+			//delete[] & testBoard;
+			for (int r = 0; r < NUM_ROW; r++)
+			{
+				delete[] & testBoard[r];
+			}
 		}
 
 		/*********************************
@@ -293,7 +297,11 @@ namespace ChessUnitTests
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete[] & testBoard;
+			//delete[] & testBoard;
+			for (int r = 0; r < NUM_ROW; r++)
+			{
+				delete[] & testBoard[r];
+			}
 		}
 
 		/*********************************
@@ -343,7 +351,11 @@ namespace ChessUnitTests
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete[] & testBoard;
+			//delete[] & testBoard;
+			for (int r = 0; r < NUM_ROW; r++)
+			{
+				delete[] & testBoard[r];
+			}
 		}
 
 		/*********************************
@@ -396,7 +408,11 @@ namespace ChessUnitTests
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete[] & testBoard;
+			//delete[] & testBoard;
+			for (int r = 0; r < NUM_ROW; r++)
+			{
+				delete[] & testBoard[r];
+			}
 		}
 
 		/*********************************
@@ -448,7 +464,11 @@ namespace ChessUnitTests
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete[] & testBoard;
+			//delete[] & testBoard;
+			for (int r = 0; r < NUM_ROW; r++)
+			{
+				delete[] & testBoard[r];
+			}
 		}
 
 		/*********************************
@@ -500,7 +520,10 @@ namespace ChessUnitTests
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete[] & testBoard;
+			for (int r = 0; r < NUM_ROW; r++)
+			{
+				delete[] & testBoard[r];
+			}
 		}
 
 		/*********************************
@@ -546,7 +569,12 @@ namespace ChessUnitTests
 			//Assert::AreEqual(queenType, testBoard[row - 1][col]->getType());
 
 			// TEARDOWN
-			delete[] & testBoard;
+			// delete board
+			//delete[] & testBoard;
+			for (int r = 0; r < NUM_ROW; r++)
+			{
+				delete[] & testBoard[r];
+			}
 		};
 
 	};
