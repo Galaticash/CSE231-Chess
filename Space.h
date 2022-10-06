@@ -22,5 +22,5 @@ public:
 	{
 		this->type = "SPACE";
 	};
-	set <Move> getPossibleMoves(Piece* board[], Move lastMove) { set <Move> possible; return possible; };
+	set <Move> getPossibleMoves(Piece** board[], Move lastMove) { set <Move> possible; return possible; };
 };

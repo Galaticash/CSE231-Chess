@@ -2,7 +2,8 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 
-//#include <set>
+#include <set>
+#include <iostream>
 
 // Should NOT be calling .cpp, but it fixed the linking error
 #include "../board.cpp"
@@ -14,19 +15,21 @@ namespace ChessUnitTests
 {
 	const int NUM_ROW = 8;
 	const int NUM_COL = 8;
+
+	Piece* EMPTY_BOARD[NUM_ROW][NUM_COL] = {
+		{&Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7))},
+		{&Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7))},
+		{&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7))},
+		{&Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7))},
+		{&Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7))},
+		{&Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7))},
+		{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
+		{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
+
+
 	TEST_CLASS(PawnTests)
 	{
 	public:
-		Piece* EMPTY_BOARD[NUM_ROW][NUM_COL] = {
-			{&Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7))},
-			{&Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7))},
-			{&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7))},
-			{&Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7))},
-			{&Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7))},
-			{&Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7))},
-			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
-			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
-
 
 		// Runs all the test methods
 		TEST_METHOD(testPawn)
@@ -34,6 +37,7 @@ namespace ChessUnitTests
 			hasMoved();
 			pawnBlocked();
 			diagAttackAll();
+			diagAttackForward();
 			diagAttackLeft();
 			diagAttackRight();
 			emptyBoard();
@@ -50,8 +54,8 @@ namespace ChessUnitTests
 		 1 . . . . . . . . 1
 		 2 . . . . . . . . 2
 		 3 . . . . . . . . 3
-		 4 . . . . . . . . 4
-		 5 . . . . . . . . 5
+		 4 . * . . . . . . 4
+		 5 . * . . . . . . 5
 		 6 . p . . . . . . 6
 		 7 . . . . . . . . 7
 			0 1 2 3 4 5 6 7
@@ -67,17 +71,19 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&testPawn);
 
 			// EXERCISE - Pawn::getPossibleMoves()
-			set<Move> possibleMoves = testPawn.getPossibleMoves(testBoard.getPieceBoard(), Move());
+			set<Move> possibleMoves = 
+			//{ Move(RC(row, col), RC(row + 1, col)), Move(RC(row, col), RC(row + 2, col)) };
+				testPawn.getPossibleMoves(testBoard.getPieceBoard(), Move());
 
 			// VERIFY
 			// Can move forward one (row +/- based on Pawn color)
 			// or move forward two (first move only)
 			set<Move> expectedMoves = { Move(RC(row, col), RC(row + 1, col)), Move(RC(row, col), RC(row + 2, col)) };
+			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(possibleMoves == expectedMoves);
-			//Assert::AreEqual(expectedMoves, possibleMoves); <- There were errors in xutility/cppUnitTest.h (still occurring)
-
+			//Assert::AreEqual(expectedMoves, possibleMoves); <- error
+			
 			// TEARDOWN
-			delete &testBoard;
 		}
 
 		/*********************************
@@ -117,10 +123,11 @@ namespace ChessUnitTests
 			// VERIFY
 			// Pawn can only move one space ahead
 			set<Move> expectedMoves = { Move(RC(row, col), RC(testPawn.getCurrentPosition().getRow() - 1, col)) };
+			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
-			delete &testBoard;
+			// TEARDOWN
 		}
 
 		/*********************************
@@ -155,12 +162,13 @@ namespace ChessUnitTests
 
 			// VERIFY
 			// Assert that the Pawn cannot move
-			set<Move> expectedMoves = {};
-			Assert::IsTrue(possibleMoves == expectedMoves);
+			//set<Move> expectedMoves = {};
+			Assert::IsTrue(possibleMoves.empty());
+			//Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
+			//Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete& testBoard;
 		}
 
 		/*********************************
@@ -172,7 +180,7 @@ namespace ChessUnitTests
 		 2 . . . . . . . . 2
 		 3 . . . . . . . . 3
 		 4 . . . . . . . . 4
-		 5 . . P . . . . . 5
+		 5 . * P . . . . . 5
 		 6 . p . . . . . . 6
 		 7 . . . . . . . . 7
 			0 1 2 3 4 5 6 7
@@ -197,11 +205,11 @@ namespace ChessUnitTests
 			// VERIFY
 			// Assert that the Pawn can attack move forward or attack enemyPawn
 			set<Move> expectedMoves = { Move(RC(row, col), RC(row - 1, col)),  Move(RC(row, col), enemyPawn.getCurrentPosition()) };
+			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete& testBoard;
 		}
 
 		/*********************************
@@ -213,7 +221,7 @@ namespace ChessUnitTests
 		 2 . . . . . . . . 2
 		 3 . . . . . . . . 3
 		 4 . . . . . . . . 4
-		 5 P . . . . . . . 5
+		 5 P * . . . . . . 5
 		 6 . p . . . . . . 6
 		 7 . . . . . . . . 7
 			0 1 2 3 4 5 6 7
@@ -239,11 +247,12 @@ namespace ChessUnitTests
 			// VERIFY
 			// Assert that the Pawn can attack move forward or attack the enemyPawn
 			set<Move> expectedMoves = { Move(RC(row, col), RC(row - 1, col)), Move(RC(row, col), enemyPawn.getCurrentPosition()) };
+			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(possibleMoves == expectedMoves);
+			//Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete& testBoard;
 		}
 
 		/*********************************
@@ -284,11 +293,65 @@ namespace ChessUnitTests
 			// VERIFY
 			// Assert that the Pawn can attack move diagonally and attack Pawns of the opposite color, but not forward (blocked)
 			set<Move> expectedMoves = { Move(RC(row, col), enemyPawnOne.getCurrentPosition()), Move(RC(row, col), enemyPawnThree.getCurrentPosition()) };
-			Assert::IsTrue(possibleMoves == expectedMoves);
-			//Assert::AreEqual(expectedMoves, possibleMoves);
+			/*for (set<Move>::iterator it = expectedMoves.begin(); it != expectedMoves.end(); it++)
+			{
+				Move setMove = *it;
+				cout << "Move in Smith's notation: " << setMove.getSmithNotation() << endl;
+			}*/
+			
+			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
+			Assert::IsTrue(expectedMoves == possibleMoves);
 
 			// TEARDOWN
-			delete& testBoard;
+		}
+
+		/*********************************
+		* TEST getPossibleMoves
+		* Test that the Pawn choose to attack Pawns of the opposite color or move forward.
+			0 1 2 3 4 5 6 7
+		 0 . . . . . . . . 0
+		 1 . . . . . . . . 1
+		 2 . . . . . . . . 2
+		 3 . . . . . . . . 3
+		 4 . . . . . . . . 4
+		 5 P * P . . . . . 5
+		 6 . p . . . . . . 6
+		 7 . . . . . . . . 7
+			0 1 2 3 4 5 6 7
+		**********************************/
+		TEST_METHOD(diagAttackForward)
+		{
+			// Setup - Put three enemy Pawns in front of the testPawn
+			Board testBoard = Board(EMPTY_BOARD);
+
+			int row = 6;
+			int col = 1;
+			Pawn testPawn = Pawn(RC(row, col), 1);
+			testBoard.insertPiece(&testPawn);
+
+			// TODO: Check that secondary Pawn is placed in front of first Pawn (direction travelling)
+			Pawn enemyPawnOne = Pawn(RC(row -1 , col - 1), 0);
+			testBoard.insertPiece(&enemyPawnOne);
+			//Assert::AreEqual(string("PAWN"), (testBoard.getPieceAtPosition(RC(row - 1, col - 1))->getType()));
+			string testType = (testBoard.getPieceAtPosition(RC(row - 1, col))->getType());
+			//Assert::AreEqual(string("SPACE"), (testBoard.getPieceAtPosition(RC(row - 1, col))->getType()));
+			Assert::IsTrue(testBoard.getPieceAtPosition(RC(row -1, col))->isSpace());
+			//Pawn enemyPawnTwo = Pawn(RC(row + 1, col), 0);
+			//testBoard.insertPiece(&enemyPawnTwo);
+			Pawn enemyPawnThree = Pawn(RC(row -1, col + 1), 0);
+			testBoard.insertPiece(&enemyPawnThree);
+
+			// EXERCISE - Pawn::getPossibleMoves			
+			set<Move> possibleMoves = testPawn.getPossibleMoves(testBoard.getPieceBoard(), Move());
+
+			// VERIFY
+			// Assert that the Pawn can attack move diagonally and attack Pawns of the opposite color, or can move forward
+			set<Move> expectedMoves = { Move(RC(row, col), RC(row + 1, col)), Move(RC(row, col), enemyPawnOne.getCurrentPosition()), Move(RC(row, col), enemyPawnThree.getCurrentPosition()) };
+
+			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
+			Assert::IsTrue(expectedMoves == possibleMoves);
+
+			// TEARDOWN
 		}
 
 		/*********************************
@@ -329,11 +392,11 @@ namespace ChessUnitTests
 			// VERIFY
 			// Assert that the Pawn can attack a Pawn in the same row BUT will move to the space behind it
 			set<Move> expectedMoves = { Move(RC(row, col), RC(row - 1, col)), Move(RC(row, col), RC(row - 1, col + 1)) };
+			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete &testBoard;
 		}
 
 		/*********************************
@@ -374,11 +437,11 @@ namespace ChessUnitTests
 			// VERIFY
 			// Assert that the Pawn can attack a Pawn in the same row BUT will move to the space behind it
 			set<Move> expectedMoves = { Move(RC(row, col), RC(row - 1, col)), Move(RC(row, col), RC(row - 1, col - 1)) };
+			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete& testBoard;
 		}
 
 		/*********************************
@@ -416,7 +479,6 @@ namespace ChessUnitTests
 			//Assert::AreEqual(queenType, testBoard[row - 1][col]->getType());
 
 			// TEARDOWN
-			delete& testBoard;
 		};
 
 	};

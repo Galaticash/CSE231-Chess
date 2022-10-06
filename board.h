@@ -42,7 +42,7 @@ public:
 	};
 	// Use a custom board, for testing
 	Board(Piece* copiedBoard[NUM_ROW][NUM_COL]) { copyBoard(copiedBoard); };
-	//~Board() { delete[] &this->piecesBoard; };
+	//~Board() { delete[] & this->piecesBoard; delete& this->lastMove;  delete this; };
 
 	Piece** getPieceBoard() { return *this->piecesBoard; };
 
@@ -52,7 +52,9 @@ public:
 		int row = position.getRow();
 		int col = position.getCol();
 
-		return piecesBoard[row][col];
+		Piece* toReturn = piecesBoard[row][col];
+		return toReturn;
+		//return piecesBoard[row][col];
 	}
 	void copyBoard(Piece* copiedBoard[NUM_ROW][NUM_COL])
 	{

@@ -28,7 +28,7 @@ public:
 		this->currentPosition = position;
 		this->hasMoved = false;
 	};
-	set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) { return set <Move> {}; } ;
+	set <Move> virtual getPossibleMoves(Piece** board, Move lastMove) { return set <Move> {}; };
 	//set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) = 0; <- pure virutal, cannot make Piece* 2S array
 	
 	void setPosition(RC positionTo)
@@ -49,16 +49,19 @@ public:
 	RC getCurrentPosition() { return this->currentPosition; };
 	bool getHasMoved() { return this->hasMoved; };
 	bool getIsWhite() { return this->isWhite; };
-	string getType() { return type; };
-	bool isSpace() { return type == "SPACE"; };
+	// ERROR CATCHING: Fix type to be SPACE if not defined (somehow)
+	string getType() { if (this->type == "" || this->type == "INVALID") { this->type = "SPACE"; } return this->type; };
+	bool isSpace() { return this->type == "SPACE"; };
 
 	// To tell if a Piece is the same as another Piece
+	
+	//Piece& operator= (Piece& other) { return *this; };
 	//bool operator== (Piece& other) { return (this->getType() == other.getType() && this->currentPosition.getRow() == other.getCurrentPosition().getRow() && this->currentPosition.getCol() == other.getCurrentPosition().getCol()); };
 	//bool operator!= (Piece& other) { return !(this == other); };
 
 protected:
 	// Type of Piece (PAWN, KNIGHT, KING, ect)
-	string type = "";
+	string type = "INVALID"; // ERROR: Some Pieces/Spaces exist with empty string?
 
 	// Current RC on the Board
 	RC currentPosition;
@@ -72,6 +75,6 @@ protected:
 		int col = position.getCol();
 
 		// If the RC is on the board (row: 0 - 7, col: 0 - 7)
-		return (row >= 0 && row <= 7 && col >= 0 && col >= 7);
+		return (row >= 0 && row <= 7 && col >= 0 && col <= 7);
 	};  
 };

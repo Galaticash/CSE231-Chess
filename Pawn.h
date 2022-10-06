@@ -21,5 +21,5 @@ public:
         this->type = "PAWN";
     };
 
-   set <Move> getPossibleMoves(Piece* board[], Move lastMove);
+   set <Move> getPossibleMoves(Piece** board, Move lastMove);
 };

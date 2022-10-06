@@ -20,7 +20,11 @@ void Board::insertPiece(Piece* insertPiece)
 	int col = insertPiece->getCurrentPosition().getCol();
 
 	// Delete the previous Piece at that position (in most cases, a Space)
-	delete &piecesBoard[row][col];
+	// What. Errors stopped when previous Piece is NOT deleted
+	if (false)
+	{
+		delete& (piecesBoard[row][col]);
+	}
 
 	// Assign the position on the board the Piece*
 	this->piecesBoard[row][col] = insertPiece;
