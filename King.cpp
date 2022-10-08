@@ -55,8 +55,8 @@ set <Move> King::getPossibleMoves(Piece* board[][8][8], Move lastMove)
    // Check if king has moved, check if rook has moved, check if the spaces between the two are empty.
 
    //King side
-   if ((hasMoved == false && this->isWhite))
-      if (((*board)[row][7]->getType() == "ROOK") && (((*board)[row][7])->getHasMoved() == false) && ((*board)[row][7])->getIsWhite() == true)
+   if ((hasMoved == false && this->isWhite)) //((*board)[row][7]->getType() == "ROOK")
+      if ((((*board)[row][7])->getHasMoved() == false) && ((*board)[row][7])->getIsWhite() == true)
          if (((*board)[row][5]->isSpace() == true) && ((*board)[row][6]->isSpace() == true))
          {
             possible.insert(Move(RC(row, col), RC(row, 6)));
@@ -64,7 +64,7 @@ set <Move> King::getPossibleMoves(Piece* board[][8][8], Move lastMove)
          }
 
    if ((hasMoved == false && !this->isWhite))
-      if (((*board)[row][7]->getType() == "ROOK") && (((*board)[row][7])->getHasMoved() == false) && ((*board)[row][7])->getIsWhite() == false)
+      if ((((*board)[row][7])->getHasMoved() == false) && ((*board)[row][7])->getIsWhite() == false)
          if (((*board)[row][5]->isSpace() == true) && ((*board)[row][6]->isSpace() == true))
          {
             possible.insert(Move(RC(row, col), RC(row, 6)));
@@ -73,7 +73,7 @@ set <Move> King::getPossibleMoves(Piece* board[][8][8], Move lastMove)
 
    // Queen side
    if ((hasMoved == false && this->isWhite))
-      if (((*board)[row][0]->getType() == "ROOK") && (((*board)[row][0])->getHasMoved() == false) && ((*board)[row][0])->getIsWhite() == true)
+      if ((((*board)[row][0])->getHasMoved() == false) && ((*board)[row][0])->getIsWhite() == true)
          if (((*board)[row][1]->isSpace() == true) && ((*board)[row][2]->isSpace() == true) && ((*board)[row][3]->isSpace() == true))
          {
             possible.insert(Move(RC(row, col), RC(row, 2)));
@@ -81,7 +81,7 @@ set <Move> King::getPossibleMoves(Piece* board[][8][8], Move lastMove)
          }
 
    if ((hasMoved == false && !this->isWhite))
-      if (((*board)[row][0]->getType() == "ROOK") && (((*board)[row][0])->getHasMoved() == false) && ((*board)[row][0])->getIsWhite() == false)
+      if ((((*board)[row][0])->getHasMoved() == false) && ((*board)[row][0])->getIsWhite() == false)
          if (((*board)[row][1]->isSpace() == true) && ((*board)[row][2]->isSpace() == true) && ((*board)[row][3]->isSpace() == true))
          {
             possible.insert(Move(RC(row, col), RC(row, 2)));
