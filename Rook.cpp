@@ -41,22 +41,17 @@ set <Move> Rook::getPossibleMoves(Piece* board[], Move lastMove)
       r = row + moves[i].getRow();
       c = col + moves[i].getCol();
 
-
       while (r >= 0 && r < 8 && c >= 0 && c < 8 &&
          board[r][c].isSpace())
       {
-         //possible.insert(Move(this, RC(row, col), RC(r, c)));
          possible.insert(Move(RC(row, col), RC(r, c)));
          r += moves[i].getRow();
          c += moves[i].getCol();
       }
 
-
       if (board[r][c].isSpace() || (!this->isWhite && board[r][c].getIsWhite()))
-         //possible.insert(Move(this, RC(row, col), RC(r, c)));
          possible.insert(Move(RC(row, col), RC(r, c)));
       if (board[r][c].isSpace() || (this->isWhite && !board[r][c].getIsWhite()))
-         //possible.insert(Move(this, RC(row, col), RC(r, c)));
          possible.insert(Move(RC(row, col), RC(r, c)));
    }
 

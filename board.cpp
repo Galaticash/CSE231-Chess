@@ -81,11 +81,11 @@ Move Board::move(Move currentMove)
 		}
 		else if (currentMove.getCastlingK())
 		{
-			string todo = "TODO";
+			Move(RC(pieceDestination.getRow(), 7), RC(pieceDestination.getRow(), 5));
 		}
 		else if (currentMove.getCastlingQ())
 		{
-			string todo = "TODO";
+			Move(RC(pieceDestination.getRow(), 0), RC(pieceDestination.getRow(), 3));
 		}
 
 		return currentMove;

@@ -1,4 +1,13 @@
-# pragma once
+/***********************************************************************
+ * King Test Cases
+ * Author: Logan Huston
+ *
+ * Summary: Tests different variations of King's movements,
+ *		asserting that the set of Moves from King::getPossibleMoves
+ *		match what is expected. Includes Castling.
+ ************************************************************************/
+
+#pragma once
 #include "pch.h"
 #include "CppUnitTest.h"
 
