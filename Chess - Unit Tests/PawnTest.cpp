@@ -171,7 +171,7 @@ namespace ChessUnitTests
 			// VERIFY
 			set<Move> expectedMoves = { 
 				Move(RC(row, col), RC(row - 1, col)),					// Move forward
-				Move(RC(row, col), enemyPawn.getCurrentPosition()) };	// Capture enemy Pawn
+				Move(RC(row, col), enemyPawn.getCurrentPosition(), enemyPawn.getType()) };	// Capture enemy Pawn
 			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
@@ -217,7 +217,7 @@ namespace ChessUnitTests
 			// VERIFY
 			set<Move> expectedMoves = { 
 				Move(RC(row, col), RC(row - 1, col)),					// Move forward
-				Move(RC(row, col), enemyPawn.getCurrentPosition()) };	// Attack enemy Pawn
+				Move(RC(row, col), enemyPawn.getCurrentPosition(), enemyPawn.getType()) };	// Capture enemy Pawn
 			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
@@ -264,8 +264,8 @@ namespace ChessUnitTests
 
 			// VERIFY
 			set<Move> expectedMoves = { 
-				Move(RC(row, col), enemyPawnOne.getCurrentPosition()),		// Attack left enemy Pawn
-				Move(RC(row, col), enemyPawnThree.getCurrentPosition()) };	// Attack right enemy Pawn
+				Move(RC(row, col), enemyPawnOne.getCurrentPosition(), enemyPawnOne.getType()),		// Attack left enemy Pawn
+				Move(RC(row, col), enemyPawnThree.getCurrentPosition(), enemyPawnThree.getType()) };	// Attack right enemy Pawn
 
 			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(expectedMoves == possibleMoves);
@@ -315,10 +315,10 @@ namespace ChessUnitTests
 			// VERIFY
 			// Assert that the Pawn can attack move diagonally and attack Pawns of the opposite color, or can move forward (1 or 2)
 			set<Move> expectedMoves = {
-				Move(RC(row, col), enemyPawnOne.getCurrentPosition()),		// Attack left enemy Pawn
+				Move(RC(row, col), enemyPawnOne.getCurrentPosition(), enemyPawnOne.getType()),		// Attack left enemy Pawn
 				Move(RC(row, col), RC(row - 1, col)),						// Move forward one
 				//Move(RC(row, col), RC(row - 2, col)),						// Move forward two, if hasMoved = false
-				Move(RC(row, col), enemyPawnThree.getCurrentPosition()) };	// Attack right enemy Pawn
+				Move(RC(row, col), enemyPawnThree.getCurrentPosition(), enemyPawnThree.getType()) };	// Attack right enemy Pawn
 
 			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(expectedMoves == possibleMoves);
@@ -366,9 +366,12 @@ namespace ChessUnitTests
 
 			// VERIFY
 			// Assert that the Pawn can attack a Pawn in the same row BUT will move to the space behind it
+			Move enPassant = Move(RC(row, col), RC(row - 1, col + 1), enemyPawn.getType());
+			enPassant.setEnPassant();
+
 			set<Move> expectedMoves = { 
 				Move(RC(row, col), RC(row - 1, col)),		// Move forward one
-				Move(RC(row, col), RC(row - 1, col + 1)) }; // En-passant
+				enPassant }; // En-passant
 
 			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(possibleMoves == expectedMoves);
@@ -417,9 +420,12 @@ namespace ChessUnitTests
 
 			// VERIFY
 			// Assert that the Pawn can attack a Pawn in the same row BUT will move to the space behind it
+			Move enPassant = Move(RC(row, col), RC(row - 1, col - 1), enemyPawn.getType());
+			enPassant.setEnPassant();
+
 			set<Move> expectedMoves = { 
 				Move(RC(row, col), RC(row - 1, col)),		// Move forward one
-				Move(RC(row, col), RC(row - 1, col - 1)) };	// En-Passant
+				enPassant };	// En-Passant
 
 			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(possibleMoves == expectedMoves);

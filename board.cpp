@@ -41,11 +41,11 @@ Move Board::move(Move currentMove)
 	RC pieceCurrentPos = currentMove.getPositionFrom();
 	RC pieceDestination = currentMove.getPositionTo();
 	// TODO: Assert RC positions are on the board (return lastMove if this Move cannot be completed)
+	// Assert RC positions are not the same (no actual movement done)
 
+	// If the Move if From and To different positions on the Board,
 	if (!(pieceCurrentPos == pieceDestination))
 	{
-		// Assert RC positions are not the same (no actual movement done)
-
 		Piece* movePiece = piecesBoard[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()];
 		Piece* destinationPiece = piecesBoard[pieceDestination.getRow()][pieceDestination.getCol()];
 

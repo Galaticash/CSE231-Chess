@@ -13,6 +13,12 @@
 
 using namespace std;
 
+#ifndef BOARD_CONST
+#define BOARD_CONST
+const int NUM_ROW = 8;
+const int NUM_COL = 8;
+#endif
+
 class Piece {
 public:
 	Piece() {
@@ -76,6 +82,6 @@ protected:
 		int col = position.getCol();
 
 		// If the RC is on the board (row: 0 - 7, col: 0 - 7)
-		return (row >= 0 && row <= 7 && col >= 0 && col <= 7);
+		return (row >= 0 && row < NUM_ROW && col >= 0 && col < NUM_COL);
 	};  
 };

@@ -19,9 +19,6 @@
 //#include "Knight.h"
 #endif
 
-const int NUM_ROW = 8;
-const int NUM_COL = 8;
-
 /*
 Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
 			{&Rook(RC(0, 0), 0), &Bishop(RC(0, 1), 0), &Knight(RC(0, 2), 0), &Queen(RC(0, 3), 0), &King(RC(0, 4), 0), &Knight(RC(0, 5), 0), &Bishop(RC(0, 6), 0), &Rook(RC(0, 7), 0)},

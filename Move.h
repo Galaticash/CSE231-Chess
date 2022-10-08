@@ -1,9 +1,9 @@
 /***********************************************************************
  * Header File:
- *    Move: 
- * Author:
+ *    Move: A move in a game of chess.
+ * Author: Ashley DeMott
  *
- * Summary:
+ * Summary: A Move from an RC position to another RC position, can be represented in Smith's notation
  *
  ************************************************************************/
 
@@ -16,7 +16,6 @@ class Move {
 public:
 	Move()
 	{
-		//this->movingPiece = Space();
 		this->positionFrom = RC(-1, -1);
 		this->positionTo = RC(-1, -1);
 		translateToSmith();
@@ -28,8 +27,14 @@ public:
 		translateToSmith();
 	};
 
-	// TODO: Fix to consistently use a pointer to a Piece or a string type
-	// OR rely on board to get pieceType (board[RC from].getType() or .isSpace())
+	// TESTING: Pass captured piece to constructor - add to rest of code?
+	Move(RC from, RC to, string capture) : Move(from, to)
+	{
+		this->setCapture(capture);
+	};
+
+	// TODO: Use this OR remove this and rely on board to get pieceType
+	//  (board[RC from].getType() or .isSpace())
 	Move(string movedPiece, RC from, RC to)
 	{
 		this->pieceType = movedPiece;
@@ -37,24 +42,52 @@ public:
 		this->positionTo = to;
 		translateToSmith();
 	};
-
+	// Create a Move from a given smithNotation
 	/*Move(string smithNotation)
 {
 	this->smithNotation = smithNotation;
 	translateFromSmith(smithNotation);
 };*/
 
+	// TODO: Create Move.cpp?
+
 	// Translate the Move into Smith's notation
 	string translateToSmith()
 	{
 		string createdNotation = "";
-		string posFrom = this->positionFrom.getString(); // TODO: Translate into an alphabet letter (0 - A, 1 - B, ...)
+		string posFrom = this->positionFrom.getString(); 
+		// TODO: Translate into an alphabet letter (0 - A, 1 - B, ...)
 		string posTo = this->positionTo.getString();
 
-		// If there was a capture/special type of move, [TODO]
-		
+		string specialCases = "";
 
-		createdNotation += posFrom + posTo;
+		// If a piece is captured by this move
+		if(this->capture != ' ')
+		{
+			specialCases += capture;
+		}
+
+		// If there was a special type of move performed
+		if (this->enpassant)
+		{
+			specialCases += "E";
+		}
+		else if (this->promotion)
+		{
+			// In a regular chess game, would have player decide what
+			//  piece to promote to, but here will always assume Queen
+			specialCases += "Q";
+		}
+		else if (this->castlingKSide)
+		{
+			specialCases += "c";
+		}
+		else if (this->castlingQSide)
+		{
+			specialCases += "C";
+		}
+
+		createdNotation += posFrom + posTo + specialCases;
 		this->smithNotation = createdNotation;
 		return createdNotation;
 	};
@@ -67,45 +100,98 @@ public:
 	//};
 
 
-	// Get all the attributes of Piece
-	//Piece getPiece() { return this->movingPiece; };
+	// - - - GETTERS AND SETTERS - - - //
+	
+	// Piece involved in the move, currenlty used for En-Passant
+	string getPieceType() { return this->pieceType; };
+
+	// Positions To and From
 	RC getPositionFrom() { return this->positionFrom; };
 	RC getPositionTo() { return this->positionTo; };
-	string getPieceType() { return this->pieceType; };
+	
+	// How far the Piece moved, currently used for En-Passant
 	RC getDelta() { return RC(this->positionFrom.getRow() - this->positionTo.getRow(), this->positionFrom.getCol() - this->positionTo.getCol()); };
+	
+	// The string Smith notation of the move
 	string getSmithNotation() { return this->translateToSmith(); };
 
-	void setCapture(char piece) { this->capture = piece; };
-	void setIsCastlingQ() { this->castlingQSide = true; };
-	void setIsCastlingK() { this->castlingQSide = true; };
-	void setIsEnPassant() { this->enpassant = true; };
-	void setIsPromotion() { this->promotion = true; };
+	// Get/set special cases
+	void setCapture(string pieceType)
+	{	
+		// TODO: Change to enum?
+		// OR change string pieceType to char (PAWN -> 'p')
+		
+		if (pieceType == "PAWN")
+		{
+			this->capture = 'p';
+		}
+		else if (pieceType == "KNIGHT")
+		{
+			this->capture = 'n';
+		}
+		else if (pieceType == "BISHOP")
+		{
+			this->capture = 'b';
+		}
+		else if (pieceType == "ROOK")
+		{
+			this->capture = 'r';
+		}
+		else if (pieceType == "QUEEN")
+		{
+			this->capture = 'q';
+		}
+		else if (pieceType == "KING")
+		{
+			this->capture = 'k';
+		}
+		else
+		{
+			// Invalid piece type
+			this->capture = ' ';
+		}
+	};
+	char getCapture() { return this->capture; };
 
+	void setCastlingQ() { this->castlingQSide = true; };
+	void setCastlingK() { this->castlingQSide = true; };
+	bool getCastlingQ() { return this->castlingQSide; };
+	bool getCastlingK() { return this->castlingKSide; };
 
+	void setEnPassant() { this->enpassant = true; };
+	bool getEnPassant() { return this->enpassant; };
+
+	void setPromotion() { this->promotion = true; };
+	char getPromotion() { return this->promotion; };
+
+	// - - -  OPERATORS - - - //
+
+	// Not sure if this is the correct usage
 	/*Move& operator= (const Move& m) { return *this; };*/
 	void operator= (const Move& m) {
+		// Information about Piece and how it moved
 		this->pieceType = m.pieceType;
 		this->positionTo = m.positionTo;
-		this->positionFrom = m.positionFrom;		
+		this->positionFrom = m.positionFrom;
+
+		// Special conditions
+		this->capture = m.capture;
+
 		this->enpassant = m.enpassant;
 		this->castlingKSide = m.castlingKSide;
 		this->castlingQSide = m.castlingQSide;
 		this->promotion = m.promotion;
-		this->capture = m.capture;
-
+		
+		// Retranslate into Smith's notation
 		this->translateToSmith();
 	};
 	
 	bool operator== (Move const& other) const { return (this->positionFrom == other.positionFrom && this->positionTo == other.positionTo); };
 	//bool _equals(Move const& other) const { return (this->positionFrom == other.positionFrom && this->positionTo == other.positionTo); };
 
+	// Updated to use Smith notation to compare moves
 	bool operator< (Move const& other) const { return this->smithNotation < other.smithNotation; };
 	//bool operator< (Move const& other) const { return (this->positionFrom < other.positionFrom || this->positionTo < other.positionTo); };
-
-	/*friend std::ostream& operator<<(std::ostream& os, const Move& m)
-	{
-		os << m.smithNotation;	
-	};*/
 
 private:
 	string pieceType = "SPACE";
