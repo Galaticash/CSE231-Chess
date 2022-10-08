@@ -28,7 +28,7 @@ public:
 		this->currentPosition = position;
 		this->hasMoved = false;
 	};
-	set <Move> virtual getPossibleMoves(Piece** board, Move lastMove) { return set <Move> {}; };
+	set <Move> virtual getPossibleMoves(Piece* board[][8][8], Move lastMove) { return set <Move> {}; };
 	//set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) = 0; <- pure virutal, cannot make Piece* 2S array
 	
 	void setPosition(RC positionTo)
@@ -47,6 +47,7 @@ public:
 	}
 	
 	RC getCurrentPosition() { return this->currentPosition; };
+	void setHasMoved(bool moved) { this->hasMoved = moved; }; // For Testing
 	bool getHasMoved() { return this->hasMoved; };
 	bool getIsWhite() { return this->isWhite; };
 	// ERROR CATCHING: Fix type to be SPACE if not defined (somehow)

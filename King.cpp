@@ -14,7 +14,7 @@
 * GET POSSIBLE MOVES
 * Get's the possible moves from a piece.
 ********************************************/
-set <Move> King::getPossibleMoves(Piece* board[], Move lastMove)
+set <Move> King::getPossibleMoves(Piece* board[][8][8], Move lastMove)
 {
    set <Move> possible;
 
@@ -22,7 +22,7 @@ set <Move> King::getPossibleMoves(Piece* board[], Move lastMove)
    int col = this->currentPosition.getCol(); // current location column
 
    // If the currentPosition is not valid or the selected Position is an empty Space
-   if (!(isValidPosition(this->currentPosition)) || board[row][col].isSpace())
+   if (!(isValidPosition(this->currentPosition)) || (*board)[row][col]->isSpace())
       return possible;
 
    int r;                   // the row we are checking
@@ -42,11 +42,11 @@ set <Move> King::getPossibleMoves(Piece* board[], Move lastMove)
       r = row + moves[i].getRow();
       c = col + moves[i].getCol();
 
-      if (board[r][c].isSpace() || (!this->isWhite && board[r][c].getIsWhite()))
+      if ((*board)[row][col]->isSpace() || (!this->isWhite && (*board)[r][c]->getIsWhite()))
          //possible.insert(Move(this, RC(row, col), RC(r, c)));
          possible.insert(Move(RC(row, col), RC(r, c)));
 
-      if (board[r][c].isSpace() || (this->isWhite && !board[r][c].getIsWhite()))
+      if ((*board)[row][col]->isSpace() || (this->isWhite && !(*board)[r][c]->getIsWhite()))
          //possible.insert(Move(this, RC(row, col), RC(r, c)));
          possible.insert(Move(RC(row, col), RC(r, c)));
    }

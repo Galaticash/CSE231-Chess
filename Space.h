@@ -16,7 +16,7 @@ class Space : public Piece
 public:
 	Space() : Piece()
 	{
-		this->type = "SPACE";
+		this->type = "SPACE";		
 	};
 	Space(RC position, bool isWhite = 0) : Piece(position, isWhite)
 	{

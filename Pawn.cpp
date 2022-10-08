@@ -14,9 +14,11 @@
  * GET POSSIBLE MOVES
  * Get's the possible moves from a piece.
  ********************************************/
-set <Move> Pawn::getPossibleMoves(Piece** board, Move lastMove) {
+set <Move> Pawn::getPossibleMoves(Piece* board[][8][8], Move lastMove) {
 
     // *** TODO: Add Move.capture ***
+
+    int boardSize = sizeof(board); // For debug
 
    set <Move> possible = {}; // Store possible Moves in a set
 
@@ -24,7 +26,7 @@ set <Move> Pawn::getPossibleMoves(Piece** board, Move lastMove) {
    int col = this->currentPosition.getCol(); // current location column
 
    // If the position is not valid or the selected Position is an empty Space
-   if (!(isValidPosition(this->currentPosition)) || board[row][col].isSpace())
+   if (!(isValidPosition(this->currentPosition)) || (*board)[row][col]->isSpace())
       return possible;
 
    int r;                   // the row we are checking
@@ -38,7 +40,7 @@ set <Move> Pawn::getPossibleMoves(Piece** board, Move lastMove) {
    // Note: Pawn cannot capture while moving forward, only diagonal and en-passant
 
    // If the space in front of the Pawn is empty,
-   if (board[r][c].isSpace())
+   if ((*board)[r][c]->isSpace())
    {
        // If the Pawn is going into the last row,
        if (r == 8 || r == 0)
@@ -51,7 +53,7 @@ set <Move> Pawn::getPossibleMoves(Piece** board, Move lastMove) {
        }
 
        // If the Pawn has not yet moved AND the space 2 rows ahead is also empty,
-       if ((!this->hasMoved) && board[r + direction][c].isSpace())
+       if ((!this->hasMoved) && (*board)[r + direction][c]->isSpace())
        {
            possible.insert(Move(RC(row, col), RC(r + direction, c))); // forward two blank spaces
        }
@@ -59,14 +61,14 @@ set <Move> Pawn::getPossibleMoves(Piece** board, Move lastMove) {
 
    c = col - 1; 
    // If the piece on the left diagonal is a Piece of the opposite color
-   if (!(board[r][c].isSpace()) && board[r][c].getIsWhite() != this->isWhite)
+   if (!((*board)[r][c]->isSpace()) && (*board)[r][c]->getIsWhite() != this->isWhite)
    {
        possible.insert(Move(RC(row, col), RC(r, c))); // left diagonal capture***
    }
 
    c = col + 1; 
    // If the piece on the right diagonal is a Piece of the opposite color
-   if (!(board[r][c].isSpace()) && board[r][c].getIsWhite() != this->isWhite)
+   if (!((*board)[r][c]->isSpace()) && (*board)[r][c]->getIsWhite() != this->isWhite)
    {
        possible.insert(Move(RC(row, col), RC(r, c)));     // right diagonal capture***
    }

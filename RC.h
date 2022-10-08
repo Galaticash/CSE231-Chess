@@ -1,29 +1,34 @@
 /***********************************************************************
  * Header File:
  *    RC: Holds a row and a column.
- * Author:
+ * Author: Ashley DeMott
  *
- * Summary:
+ * Summary: RC or RowColumn, holds two integer values representing 
+ * a Row/Column combination on the Chess Board.
  *
  ************************************************************************/
 
 #pragma once
+#include <string>
+#include <iostream>
+
+using namespace std;
 
 class RC
 {
 public:
-	RC() 
+	// Constructors
+	RC()
 	{
-		row = -1;
-		col = -1;
-	};
+		// If no row/col is given, invalid board positions are set
+		this->row = -1;
+		this->col = -1;
+	}
 	RC(int newRow, int newCol)
 	{
-		row = newRow;
-		col = newCol;	
+		this->row = newRow;
+		this->col = newCol;	
 	};
-
-	//RC& operator == (const RC& other);
 
 	int getRow()
 	{
@@ -34,6 +39,16 @@ public:
 		return this->col;
 	};
 
+	// Gets RC where the row is represented as a letter, ex: A1, B3
+	string getString()
+	{
+		string row = to_string(this->getRow());
+			//static_cast<char>('a' - 1 + this->getRow());
+		string col = to_string(this->getCol());
+			//static_cast<char>(this->getCol());
+		string rcString = "" + row + col;
+		return rcString;
+	};
 
 	/*RC& operator= (const RC& rc)
 	{
@@ -50,18 +65,8 @@ public:
 	//bool _equals(RC const& other) const { return (this->row == other.row && this->col == other.col); };
 	bool operator< (RC const& other) const { return (this->row < other.row || this->col < other.col); };
 
-
 private:
 	int row;
 	int col;
 };
 
-
-/*bool RC& operator == (const RC& other)
-{
-	if (this.getRow() == other.getRow() and this.getCol() == other.getCol())
-	{
-		return true;
-	}
-	return false;
-};*/

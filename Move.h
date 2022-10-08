@@ -9,7 +9,6 @@
 
 #pragma once
 #include "RC.h"
-#include <string>
 
 using namespace std;
 
@@ -20,11 +19,13 @@ public:
 		//this->movingPiece = Space();
 		this->positionFrom = RC(-1, -1);
 		this->positionTo = RC(-1, -1);
+		translateToSmith();
 	};
 	Move(RC from, RC to)
 	{
 		this->positionFrom = from;
 		this->positionTo = to;
+		translateToSmith();
 	};
 
 	// TODO: Fix to consistently use a pointer to a Piece or a string type
@@ -34,6 +35,7 @@ public:
 		this->pieceType = movedPiece;
 		this->positionFrom = from;
 		this->positionTo = to;
+		translateToSmith();
 	};
 
 	/*Move(string smithNotation)
@@ -42,27 +44,19 @@ public:
 	translateFromSmith(smithNotation);
 };*/
 
-/*
-	Move(Piece* mover, RC from, RC to)
-	{
-		this->movingPiece = *mover;
-		this->positionFrom = from;
-		this->positionTo = to;
-		//this->smithNotation = translateToSmith();
-
-	};*/
-
 	// Translate the Move into Smith's notation
 	string translateToSmith()
 	{
-		string smithNotation = "";
-		string posFrom = "" + static_cast<char>('a' - 1 + this->positionFrom.getRow()) + this->positionFrom.getCol();
-		string posTo = "" + static_cast<char>('a' - 1 + this->positionTo.getRow()) + this->positionTo.getCol();
+		string createdNotation = "";
+		string posFrom = this->positionFrom.getString(); // TODO: Translate into an alphabet letter (0 - A, 1 - B, ...)
+		string posTo = this->positionTo.getString();
 
-		// If there was a capture/special type of move
+		// If there was a capture/special type of move, [TODO]
+		
 
-		smithNotation += posFrom + posTo;
-		return smithNotation;
+		createdNotation += posFrom + posTo;
+		this->smithNotation = createdNotation;
+		return createdNotation;
 	};
 
 	//// Given a move in Smith's notation, get the relevant attributes
@@ -92,33 +86,21 @@ public:
 	void operator= (const Move& m) {
 		this->pieceType = m.pieceType;
 		this->positionTo = m.positionTo;
-		this->positionFrom = m.positionFrom;
-		//this->translateToSmith();
+		this->positionFrom = m.positionFrom;		
 		this->enpassant = m.enpassant;
 		this->castlingKSide = m.castlingKSide;
 		this->castlingQSide = m.castlingQSide;
 		this->promotion = m.promotion;
 		this->capture = m.capture;
+
+		this->translateToSmith();
 	};
-	//Move&
-	//void 
-	/*	operator= (const Move& m)
-	{ 
-		this->pieceType = m.pieceType;
-		this->positionTo = m.positionTo;
-		this->positionFrom = m.positionFrom;
-		//this->translateToSmith();
-		this->enpassant = m.enpassant;
-		this->castlingKSide = m.castlingKSide;
-		this->castlingQSide = m.castlingQSide;
-		this->promotion = m.promotion;
-		this->capture = m.capture;
-		return *this; 
-	};*/ 
 	
 	bool operator== (Move const& other) const { return (this->positionFrom == other.positionFrom && this->positionTo == other.positionTo); };
 	//bool _equals(Move const& other) const { return (this->positionFrom == other.positionFrom && this->positionTo == other.positionTo); };
-	bool operator< (Move const& other) const { return (this->positionFrom < other.positionFrom || this->positionTo < other.positionTo); };
+
+	bool operator< (Move const& other) const { return this->smithNotation < other.smithNotation; };
+	//bool operator< (Move const& other) const { return (this->positionFrom < other.positionFrom || this->positionTo < other.positionTo); };
 
 	/*friend std::ostream& operator<<(std::ostream& os, const Move& m)
 	{
@@ -126,7 +108,6 @@ public:
 	};*/
 
 private:
-	//Piece* movingPiece;
 	string pieceType = "SPACE";
 	string smithNotation = "";
 	RC positionTo;

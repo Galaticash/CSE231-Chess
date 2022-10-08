@@ -19,5 +19,5 @@ public:
         this->type = "KING";
     };
 
-	set <Move> getPossibleMoves(Piece* board[], Move lastMove);
+	set <Move> getPossibleMoves(Piece* board[][8][8], Move lastMove);
 };

@@ -4,6 +4,8 @@
 
 #include <set>            // for STD::SET
 
+#include "../board.h"
+
 #include "../King.cpp"
 #include "../Rook.cpp"
 #include "../Space.h"
@@ -16,6 +18,16 @@ namespace ChessUnitTests
 {
 	TEST_CLASS(KingTests)
 	{
+		Piece* EMPTY_BOARD[8][8] = {
+			{&Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7))},
+			{&Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7))},
+			{&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7))},
+			{&Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7))},
+			{&Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7))},
+			{&Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7))},
+			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
+			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
+
 	public:
 		/* Helper method to insert pieces into board */
 		void InsertPiece(Piece* board[8][8], Piece piece) 
@@ -51,21 +63,12 @@ namespace ChessUnitTests
 		TEST_METHOD(TestKingMovement)
 		{
 			// SETUP
-			Piece* board[8][8] = {
-			{&Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7))},
-			{&Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7))},
-			{&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7))},
-			{&Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7))},
-			{&Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7))},
-			{&Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7))},
-			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
-			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
-
+			Board testBoard(EMPTY_BOARD);
 			King kingTest = King(RC(1, 1), 1);
-			InsertPiece(board, kingTest);
+			testBoard.insertPiece(&kingTest);
 
 			// EXERCISE
-			set <Move> possibleMoves = kingTest.getPossibleMoves(*board, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(testBoard.getPieceBoard(), Move());
 
 			// VERIFY   possible.insert(Move(RC(row, col), RC(r, c)));
 			set <Move> expectedMoves = set<Move> { {Move(RC(1, 1), RC(0, 0))}, {Move(RC(1, 1), RC(0, 1))}, {Move(RC(1, 1), RC(0, 2))}, {Move(RC(1, 1), RC(1, 0))},
@@ -74,7 +77,6 @@ namespace ChessUnitTests
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
 			// TEARDOWN
-			delete [] &board;
 		}
 
 		/*******************************
@@ -94,15 +96,7 @@ namespace ChessUnitTests
 		TEST_METHOD(TestCastlingQueen)
 		{
 			// setup
-			Piece* board[8][8] = {
-			{ &Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7)) },
-			{ &Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7)) },
-			{ &Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7)) },
-			{ &Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7)) },
-			{ &Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7)) },
-			{ &Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7)) },
-			{ &Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7)) },
-			{ &Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7)) } };
+			Board testBoard(EMPTY_BOARD);
 
 			King kingTest = King(RC(0, 4), 1);
 			Rook rookTestLeft = Rook(RC(0, 0), 1);
@@ -112,24 +106,23 @@ namespace ChessUnitTests
 			Pawn pawnTest3 = Pawn(RC(1, 4), 1);
 			Pawn pawnTest4 = Pawn(RC(1, 5), 1);
 
-			InsertPiece(board, kingTest);
-			InsertPiece(board, rookTestLeft);
-			InsertPiece(board, rookTestRight);
-			InsertPiece(board, pawnTest1);
-			InsertPiece(board, pawnTest2);
-			InsertPiece(board, pawnTest3);
-			InsertPiece(board, pawnTest4);
+			testBoard.insertPiece(&kingTest);
+			testBoard.insertPiece(&rookTestLeft);
+			testBoard.insertPiece(&rookTestRight);
+			testBoard.insertPiece(&pawnTest1);
+			testBoard.insertPiece(&pawnTest2);
+			testBoard.insertPiece(&pawnTest3);
+			testBoard.insertPiece(&pawnTest4);
 
 			// exercise
-			set <Move> possibleMoves = kingTest.getPossibleMoves(*board, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(testBoard.getPieceBoard(), Move());
 
 			// verify
 			set <Move> expectedMoves = set<Move> { { Move(RC(0, 4), RC(0, 2)) }, { Move(RC(0, 4), RC(0, 3)) } };
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
-			// takedown
-			delete [] &board;
+			// TEARDOWN
 		}
 
 		/*********************************
@@ -148,16 +141,8 @@ namespace ChessUnitTests
 		**********************************/
 		TEST_METHOD(TestCastlingKing)
 		{
-			// setup
-			Piece* board[8][8] = {
-			{ &Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7)) },
-			{ &Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7)) },
-			{ &Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7)) },
-			{ &Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7)) },
-			{ &Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7)) },
-			{ &Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7)) },
-			{ &Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7)) },
-			{ &Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7)) } };
+			// SETUP
+			Board testBoard(EMPTY_BOARD);
 
 			King kingTest = King(RC(0, 4), 1);
 			Rook rookTestLeft = Rook(RC(0, 0), 1);
@@ -167,24 +152,23 @@ namespace ChessUnitTests
 			Pawn pawnTest3 = Pawn(RC(1, 4), 1);
 			Pawn pawnTest4 = Pawn(RC(1, 5), 1);
 
-			InsertPiece(board, kingTest);
-			InsertPiece(board, rookTestLeft);
-			InsertPiece(board, rookTestRight);
-			InsertPiece(board, pawnTest1);
-			InsertPiece(board, pawnTest2);
-			InsertPiece(board, pawnTest3);
-			InsertPiece(board, pawnTest4);
+			testBoard.insertPiece(&kingTest);
+			testBoard.insertPiece(&rookTestLeft);
+			testBoard.insertPiece(&rookTestRight);
+			testBoard.insertPiece(&pawnTest1);
+			testBoard.insertPiece(&pawnTest2);
+			testBoard.insertPiece(&pawnTest3);
+			testBoard.insertPiece(&pawnTest4);
 
 			// exercise
-			set <Move> possibleMoves = kingTest.getPossibleMoves(*board, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(testBoard.getPieceBoard(), Move());
 
 			// verify
 			set <Move> expectedMoves = set<Move> { { Move(RC(0, 4), RC(0, 5)) }, { Move(RC(0, 4), RC(0, 6)) } };
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
-			// takedown
-			delete [] &board;
+			// TEARDOWN
 		}
 
 		/************************************
@@ -205,15 +189,7 @@ namespace ChessUnitTests
 		TEST_METHOD(TestKingBlocked)
 		{
 			// setup
-			Piece* board[8][8] = {
-			{ &Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7)) },
-			{ &Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7)) },
-			{ &Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7)) },
-			{ &Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7)) },
-			{ &Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7)) },
-			{ &Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7)) },
-			{ &Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7)) },
-			{ &Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7)) } };
+			Board testBoard(EMPTY_BOARD);
 
 			King kingTest = King(RC(1, 5), 1);
 			Pawn pawnTest1 = Pawn(RC(0, 4), 1);
@@ -225,24 +201,23 @@ namespace ChessUnitTests
 			Pawn pawnTest7 = Pawn(RC(2, 5), 1);
 			Pawn pawnTest8 = Pawn(RC(2, 6), 1);
 
-			InsertPiece(board, kingTest);
-			InsertPiece(board, pawnTest1);
-			InsertPiece(board, pawnTest2);
-			InsertPiece(board, pawnTest3);
-			InsertPiece(board, pawnTest4);
-			InsertPiece(board, pawnTest5);
-			InsertPiece(board, pawnTest6);
-			InsertPiece(board, pawnTest7);
-			InsertPiece(board, pawnTest8);
+			testBoard.insertPiece(&kingTest);
+			testBoard.insertPiece(&pawnTest1);
+			testBoard.insertPiece(&pawnTest2);
+			testBoard.insertPiece(&pawnTest3);
+			testBoard.insertPiece(&pawnTest4);
+			testBoard.insertPiece(&pawnTest5);
+			testBoard.insertPiece(&pawnTest6);
+			testBoard.insertPiece(&pawnTest7);
+			testBoard.insertPiece(&pawnTest8);
 
 			// exercise
-			set <Move> possibleMoves = kingTest.getPossibleMoves(*board, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(testBoard.getPieceBoard(), Move());
 
 			// verify
 			Assert::IsTrue(possibleMoves.empty());
 
-			// takedown
-			delete [] &board;
+			// TEARDOWN
 		}
 
 		/*************************************
@@ -262,15 +237,7 @@ namespace ChessUnitTests
 		TEST_METHOD(TestKingAttacking)
 		{
 			// setup
-			Piece* board[8][8] = {
-			{ &Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7)) },
-			{ &Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7)) },
-			{ &Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7)) },
-			{ &Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7)) },
-			{ &Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7)) },
-			{ &Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7)) },
-			{ &Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7)) },
-			{ &Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7)) } };
+			Board testBoard(EMPTY_BOARD);
 
 			King kingTest = King(RC(5, 4), 1);
 			Pawn pawnTest1 = Pawn(RC(4, 3), 0);
@@ -282,18 +249,18 @@ namespace ChessUnitTests
 			Pawn pawnTest7 = Pawn(RC(6, 4), 0);
 			Pawn pawnTest8 = Pawn(RC(6, 5), 0);
 
-			InsertPiece(board, kingTest);
-			InsertPiece(board, pawnTest1);
-			InsertPiece(board, pawnTest2);
-			InsertPiece(board, pawnTest3);
-			InsertPiece(board, pawnTest4);
-			InsertPiece(board, pawnTest5);
-			InsertPiece(board, pawnTest6);
-			InsertPiece(board, pawnTest7);
-			InsertPiece(board, pawnTest8);
+			testBoard.insertPiece(&kingTest);
+			testBoard.insertPiece(&pawnTest1);
+			testBoard.insertPiece(&pawnTest2);
+			testBoard.insertPiece(&pawnTest3);
+			testBoard.insertPiece(&pawnTest4);
+			testBoard.insertPiece(&pawnTest5);
+			testBoard.insertPiece(&pawnTest6);
+			testBoard.insertPiece(&pawnTest7);
+			testBoard.insertPiece(&pawnTest8);
 
 			// exercise
-			set <Move> possibleMoves = kingTest.getPossibleMoves(*board, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(testBoard.getPieceBoard(), Move());
 
 			// verify
 			set <Move> expectedMoves = set<Move> { {Move(RC(5, 4), RC(4, 3))}, {Move(RC(5, 4), RC(4, 4))}, {Move(RC(5, 4), RC(4, 5))}, {Move(RC(5, 4), RC(5, 3))},
@@ -301,8 +268,7 @@ namespace ChessUnitTests
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
-			// takedown
-			delete [] &board;
+			// TEARDOWN
 		}
 	};
 }

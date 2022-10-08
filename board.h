@@ -44,7 +44,9 @@ public:
 	Board(Piece* copiedBoard[NUM_ROW][NUM_COL]) { copyBoard(copiedBoard); };
 	//~Board() { delete[] & this->piecesBoard; delete& this->lastMove;  delete this; };
 
-	Piece** getPieceBoard() { return *this->piecesBoard; };
+	// Pass a pointer to the PiecesBoard
+	// TODO: Put actual type instead of auto
+	auto getPieceBoard() { return &this->piecesBoard; };
 
 	// Would require Board is passed to Piece, looping inclusion
 	Piece* getPieceAtPosition(RC position)
