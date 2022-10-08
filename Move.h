@@ -192,6 +192,7 @@ public:
 	// Updated to use Smith notation to compare moves
 	bool operator< (Move const& other) const { return this->smithNotation < other.smithNotation; };
 	//bool operator< (Move const& other) const { return (this->positionFrom < other.positionFrom || this->positionTo < other.positionTo); };
+	inline friend ostream& operator<<(ostream& out, Move& m) {	return out << m.smithNotation; };
 
 private:
 	string pieceType = "SPACE";
