@@ -1,3 +1,14 @@
+/***********************************************************************
+ * Pawn Test Cases
+ * Author: Ashley DeMott
+ *
+ * Summary: Tests different variations of Pawn's movements, 
+ *	asserting that the set of Moves from Pawn::getPossibleMoves
+ *  match what is expected. Includes Promotion and En-Passant.
+ *
+ ************************************************************************/
+
+
 # pragma once
 #include "pch.h"
 #include "CppUnitTest.h"
@@ -377,6 +388,9 @@ namespace ChessUnitTests
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
+
+			// Don't include, tests Board instead of Pawn //
+
 			// EXERCISE - Board.move(enPassant)
 			// testBoard.move(enPassant);
 
@@ -439,7 +453,7 @@ namespace ChessUnitTests
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 			
 
-			// Don't include, testing Board instead of Pawn //
+			// Don't include, tests Board instead of Pawn //
 
 			// EXERCISE - Board.move(enPassant)
 			//testBoard.move(enPassant);
@@ -495,7 +509,7 @@ namespace ChessUnitTests
 			Assert::IsTrue(possibleMoves == expectedMoves);
 
 
-			// Don't include, testing Board instead of Pawn //
+			// Don't include, tests Board instead of Pawn //
 			
 			// EXERCISE
 			//testBoard.move(Move(RC(row, col), RC(row - 1, col)));
