@@ -377,6 +377,13 @@ namespace ChessUnitTests
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
+			// EXERCISE - Board.move(enPassant)
+			// testBoard.move(enPassant);
+
+			// VERIFY
+			// Assert that the enemy Pawn was captured, and removed from the board
+			//Assert::IsTrue(testBoard.getPieceAtPosition(RC(row, col + 1))->isSpace());
+
 			// TEARDOWN
 		}
 
@@ -424,19 +431,29 @@ namespace ChessUnitTests
 			enPassant.setEnPassant();
 
 			set<Move> expectedMoves = { 
-				Move(RC(row, col), RC(row - 1, col)),		// Move forward one
-				enPassant };	// En-Passant
+				Move(RC(row, col), RC(row - 1, col)),	// Move forward one
+				enPassant };							// En-Passant
 
 			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
+			
+
+			// Don't include, testing Board instead of Pawn //
+
+			// EXERCISE - Board.move(enPassant)
+			//testBoard.move(enPassant);
+
+			// VERIFY
+			// Assert that the enemy Pawn was captured, and removed from the board
+			//Assert::IsTrue(testBoard.getPieceAtPosition(RC(row, col - 1))->isSpace());
 
 			// TEARDOWN
 		}
 
 		/*********************************
 		* TEST move
-		* Test that the Pawn will promote to Queen (after moving to last row 0 or 8).
+		* Test that the Pawn will know to promote to Queen (after moving to last row 0 or 8).
 			0 1 2 3 4 5 6 7
 		 0 . * . . . . . . 0
 		 1 . p . . . . . . 1
@@ -450,7 +467,7 @@ namespace ChessUnitTests
 		**********************************/
 		TEST_METHOD(pawnPromotion)
 		{
-			// SETUP - Place an enemy Pawn to the left of the testPawn, having just moved two spaces
+			// SETUP
 			Board testBoard = Board(EMPTY_BOARD);
 
 			// RC coordinates of the testPawn
@@ -465,18 +482,32 @@ namespace ChessUnitTests
 			string pawnType = "PAWN";
 			Assert::AreEqual(pawnType, testBoard.getPieceAtPosition(RC(row, col))->getType());
 
-			// EXERCISE - move Pawn to the last row (row 0, or 8)
-			testBoard.move(Move(RC(row, col), RC(row - 1, col)));
+			// EXERCISE - Pawn::getPossibleMoves()
+			set<Move> possibleMoves = testPawn.getPossibleMoves(testBoard.getPieceBoard(), Move());
 
 			// VERIFY
+			// Pawn can Move forward one and will be promoted to a Queen
+			Move promotePawn = Move(RC(row, col), RC(row -1 , col));
+			promotePawn.setPromotion();
+			set<Move> expectedMoves = { promotePawn }; // Move forward and promote to Queen
+
+			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
+			Assert::IsTrue(possibleMoves == expectedMoves);
+
+
+			// Don't include, testing Board instead of Pawn //
 			
+			// EXERCISE
+			//testBoard.move(Move(RC(row, col), RC(row - 1, col)));
+
+			// VERIFY
 			// Assert that the Piece moved from its previous spot
-			string spaceType = "SPACE";
-			Assert::AreEqual(spaceType, testBoard.getPieceAtPosition(RC(row, col))->getType());
+			//string spaceType = "SPACE";
+			//Assert::AreEqual(spaceType, testBoard.getPieceAtPosition(RC(row, col))->getType());
 			
 			// Assert that the Pawn was replaced with a Queen Piece - false, currently Space?
-			string queenType = "QUEEN";
-			Assert::AreEqual(queenType, testBoard.getPieceAtPosition(RC(row -1, col))->getType());
+			//string queenType = "QUEEN";
+			//Assert::AreEqual(queenType, testBoard.getPieceAtPosition(RC(row -1, col))->getType());
 
 			// TEARDOWN
 		};

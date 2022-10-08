@@ -12,7 +12,7 @@
 #define PIECE_CLASSES
 #include "Space.h"
 #include "Pawn.h"
-//#include "Queen.h"
+#include "Queen.h"
 //#include "Bishop.h"
 //#include "Rook.h"
 //#include "King.h"

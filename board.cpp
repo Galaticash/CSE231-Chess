@@ -60,21 +60,33 @@ Move Board::move(Move currentMove)
 
 		// TODO: Change to rely on Smith's notation for Castling, EnPassant, etc
 
-		//if(currentMove.isEnpassant)
-		// if (currentMove.isCastlingQ/isCastlingK
-		// if currentMove.isPromotion -> Then (not in this case, 
-
-		/*
-
-		// PAWN PROMOTION
-		if (movePiece->getType() == "PAWN" && (movePiece->getCurrentPosition().getRow() == 8 || movePiece->getCurrentPosition().getRow() == 0)) {
-
+		if (currentMove.getPromotion())
+		{
 			// Replace the Pawn with a Queen
-			insertPiece(new Queen(movePiece->getCurrentPosition(), movePiece->getIsWhite()));
+			Piece* promotedPawn = new Queen(RC(movePiece->getCurrentPosition().getRow(), movePiece->getCurrentPosition().getCol()), movePiece->getIsWhite());
+			this->insertPiece(promotedPawn);
 		}
-		*/
-		// CASTLING (King side/Queen side)
-		// EN-PASSANT
+		else if (currentMove.getEnPassant())
+		{
+			// Remove the Pawn that was captured
+			
+			// Assert the captured Piece was a Pawn
+
+			// Get the direction the current Pawn traveled
+			int direction = currentMove.getDelta().getRow();
+
+			// Insert an empty Space at the captured Pawns' position (1 row behind the moved Pawn)
+			Space* newEmpty = new Space(RC(movePiece->getCurrentPosition().getRow() - direction, movePiece->getCurrentPosition().getCol()));
+			this->insertPiece(newEmpty);
+		}
+		else if (currentMove.getCastlingK())
+		{
+			string todo = "TODO";
+		}
+		else if (currentMove.getCastlingQ())
+		{
+			string todo = "TODO";
+		}
 
 		return currentMove;
 	}
