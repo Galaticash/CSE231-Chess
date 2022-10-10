@@ -42,52 +42,45 @@ set <Move> King::getPossibleMoves(Piece* board[][8][8], Move lastMove)
       r = row + moves[i].getRow();
       c = col + moves[i].getCol();
 
-      if ((*board)[row][col]->isSpace() || (!this->isWhite && (*board)[r][c]->getIsWhite()))
-         //possible.insert(Move(this, RC(row, col), RC(r, c)));
-         possible.insert(Move(RC(row, col), RC(r, c)));
-
-      if ((*board)[row][col]->isSpace() || (this->isWhite && !(*board)[r][c]->getIsWhite()))
-         //possible.insert(Move(this, RC(row, col), RC(r, c)));
-         possible.insert(Move(RC(row, col), RC(r, c)));
+      // Piece cannot move off the Board
+      if (isValidPosition(RC(r, c)))
+      {
+          // If Move desitnation is a Space,
+          if ((*board)[r][c]->isSpace())
+          {
+              possible.insert(Move(RC(row, col), RC(r, c)));
+          }
+          // Else if Move destination is a Piece of the opposite color,
+          else if (this->isWhite != (*board)[r][c]->getIsWhite())
+          {
+              // Set what Piece is captured by this Move
+              Move capture = Move(RC(row, col), RC(r, c));
+              capture.setCapture((*board)[r][c]->getType());
+              possible.insert(capture);
+          }
+      }
    }
 
    // Castling
-   // Check if king has moved, check if rook has moved, check if the spaces between the two are empty.
-
-   //King side
-   if ((hasMoved == false && this->isWhite)) //((*board)[row][7]->getType() == "ROOK")
-      if ((((*board)[row][7])->getHasMoved() == false) && ((*board)[row][7])->getIsWhite() == true)
-         if (((*board)[row][5]->isSpace() == true) && ((*board)[row][6]->isSpace() == true))
-         {
-            possible.insert(Move(RC(row, col), RC(row, 6)));
-            Move(RC(row, col), RC(row, 6)).setCastlingK();
-         }
-
-   if ((hasMoved == false && !this->isWhite))
-      if ((((*board)[row][7])->getHasMoved() == false) && ((*board)[row][7])->getIsWhite() == false)
-         if (((*board)[row][5]->isSpace() == true) && ((*board)[row][6]->isSpace() == true))
-         {
-            possible.insert(Move(RC(row, col), RC(row, 6)));
-            Move(RC(row, col), RC(row, 6)).setCastlingK();
-         }
-
-   // Queen side
-   if ((hasMoved == false && this->isWhite))
-      if ((((*board)[row][0])->getHasMoved() == false) && ((*board)[row][0])->getIsWhite() == true)
-         if (((*board)[row][1]->isSpace() == true) && ((*board)[row][2]->isSpace() == true) && ((*board)[row][3]->isSpace() == true))
-         {
-            possible.insert(Move(RC(row, col), RC(row, 2)));
-            Move(RC(row, col), RC(row, 2)).setCastlingQ();
-         }
-
-   if ((hasMoved == false && !this->isWhite))
-      if ((((*board)[row][0])->getHasMoved() == false) && ((*board)[row][0])->getIsWhite() == false)
-         if (((*board)[row][1]->isSpace() == true) && ((*board)[row][2]->isSpace() == true) && ((*board)[row][3]->isSpace() == true))
-         {
-            possible.insert(Move(RC(row, col), RC(row, 2)));
-            Move(RC(row, col), RC(row, 2)).setCastlingQ();
-         }
-
+   // If the King has not moved,
+   if (!(hasMoved))
+   {
+       // If Rook at column 7 hasn't moved (King Side) AND the spaces between are clear
+       if ((!(*board)[row][7]->getHasMoved()) && (*board)[row][5]->isSpace() && (*board)[row][6]->isSpace())
+       {
+           // Define Move, then set to castling, then insert into set
+           Move castlingK = Move(RC(row, col), RC(row, 6));
+           castlingK.setCastlingK();
+           possible.insert(castlingK);
+       }
+       // If the Rook at column 0 hasn't moved (Queen side) AND the spaces between are clear
+       else if ((!(*board)[row][0]->getHasMoved()) && (*board)[row][1]->isSpace() && (*board)[row][2]->isSpace() && (*board)[row][3]->isSpace())
+       {
+           Move castlingQ = Move(RC(row, col), RC(row, 2));
+           castlingQ.setCastlingQ();
+           possible.insert(castlingQ);
+       }
+   }
 
    return possible;
 };

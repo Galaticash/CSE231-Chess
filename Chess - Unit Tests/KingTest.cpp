@@ -80,8 +80,11 @@ namespace ChessUnitTests
 			set <Move> possibleMoves = kingTest.getPossibleMoves(testBoard.getPieceBoard(), Move());
 
 			// VERIFY   possible.insert(Move(RC(row, col), RC(r, c)));
-			set <Move> expectedMoves = set<Move> { {Move(RC(1, 1), RC(0, 0))}, {Move(RC(1, 1), RC(0, 1))}, {Move(RC(1, 1), RC(0, 2))}, {Move(RC(1, 1), RC(1, 0))},
-				{Move(RC(1, 1), RC(1, 2))}, {Move(RC(1, 1), RC(2, 0))}, {Move(RC(1, 1), RC(2, 1))}, {Move(RC(1, 1), RC(2, 2))} };
+			set <Move> expectedMoves = set<Move> { 
+				{Move(RC(1, 1), RC(0, 0))}, {Move(RC(1, 1), RC(0, 1))}, 
+				{Move(RC(1, 1), RC(0, 2))}, {Move(RC(1, 1), RC(1, 0))},
+				{Move(RC(1, 1), RC(1, 2))}, {Move(RC(1, 1), RC(2, 0))}, 
+				{Move(RC(1, 1), RC(2, 1))}, {Move(RC(1, 1), RC(2, 2))} };
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
@@ -89,7 +92,7 @@ namespace ChessUnitTests
 		}
 
 		/*******************************
-		* TEST CASTLING QUUEN
+		* TEST CASTLING QUEEN
 		* Test that queen side castling works. 
 			0 1 2 3 4 5 6 7
 		 0 r . . . k p . r 0

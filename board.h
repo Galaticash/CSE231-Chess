@@ -43,6 +43,7 @@ public:
 
 	// Pass a pointer to the PiecesBoard
 	// TODO: Put actual type instead of auto
+	// Piece* [][8][8] <- doesn't allow
 	auto getPieceBoard() { return &this->piecesBoard; };
 
 	// Would require Board is passed to Piece, looping inclusion

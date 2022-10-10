@@ -30,7 +30,7 @@ namespace ChessUnitTests
 	// An empty board of Space Piece pointers
 	Piece* EMPTY_BOARD[NUM_ROW][NUM_COL] =
 	{
-		{new Space(RC(0, 0)), new Space(RC(0, 1)), new Space(RC(0, 2)), new Space(RC(0, 3)), new Space(RC(0, 4)), new Space(RC(0, 5)), new Space(RC(0, 6)), new Space(RC(0, 7))},
+		{ new Space(RC(0, 0)), new Space(RC(0, 1)), new Space(RC(0, 2)), new Space(RC(0, 3)), new Space(RC(0, 4)), new Space(RC(0, 5)), new Space(RC(0, 6)), new Space(RC(0, 7))},
 		{ new Space(RC(1, 0)), new Space(RC(1, 1)), new Space(RC(1, 2)), new Space(RC(1, 3)), new Space(RC(1, 4)), new Space(RC(1, 5)), new Space(RC(1, 6)), new Space(RC(1, 7)) },
 		{ new Space(RC(2, 0)), new Space(RC(2, 1)), new Space(RC(2, 2)), new Space(RC(2, 3)), new Space(RC(2, 4)), new Space(RC(2, 5)), new Space(RC(2, 6)), new Space(RC(2, 7)) },
 		{ new Space(RC(3, 0)), new Space(RC(3, 1)), new Space(RC(3, 2)), new Space(RC(3, 3)), new Space(RC(3, 4)), new Space(RC(3, 5)), new Space(RC(3, 6)), new Space(RC(3, 7)) },

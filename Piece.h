@@ -61,7 +61,7 @@ public:
 	void setHasMoved(bool moved) { this->hasMoved = moved; }; // For Testing
 	bool getHasMoved() { return this->hasMoved; };	
 
-	// ERROR CATCHING: Fix type to be SPACE if not defined (somehow)
+	// ERROR CATCHING: Fix type to be SPACE if not defined (somehow) <- fixed?
 	char getType() { if (this->type == ' ') { this->type = 's'; } return this->type; };
 	bool isSpace() { return this->type == 's'; };
 	bool getIsWhite() { return this->isWhite; };
@@ -73,6 +73,7 @@ public:
 	//bool operator!= (Piece& other) { return !(this == other); };
 
 private:
+protected:
 	// Type of Piece (PAWN, KNIGHT, KING, ect)
 	char type = ' '; // ERROR: Some Pieces/Spaces exist with empty string?
 
@@ -82,7 +83,6 @@ private:
 	bool hasMoved;
 	bool isWhite;
 
-protected:
 
 	/// <summary>
 	/// Determines if the given RC is a valid position on the Board

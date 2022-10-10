@@ -82,12 +82,12 @@ Move Board::move(Move currentMove)
 		else if (currentMove.getCastlingK())
 		{
 			// Move Rook (K side)
-			Move(RC(pieceDestination.getRow(), 7), RC(pieceDestination.getRow(), 5));
+			move(Move(RC(pieceDestination.getRow(), 7), RC(pieceDestination.getRow(), 5)));
 		}
 		else if (currentMove.getCastlingQ())
 		{
 			// Move Rook (Q side)
-			Move(RC(pieceDestination.getRow(), 0), RC(pieceDestination.getRow(), 3));
+			move(Move(RC(pieceDestination.getRow(), 0), RC(pieceDestination.getRow(), 3)));
 		}
 
 		return currentMove;
