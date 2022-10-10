@@ -3,8 +3,8 @@
  * Author: Logan Huston
  *
  * Summary: Tests different variations of King's movements,
- *		asserting that the set of Moves from King::getPossibleMoves
- *		match what is expected. Includes Castling.
+ *	asserting that the set of Moves from King::getPossibleMoves
+ * match what is expected. Includes Castling.
  ************************************************************************/
 
 #pragma once
@@ -153,13 +153,13 @@ namespace ChessUnitTests
 			// SETUP
 			Board testBoard(EMPTY_BOARD);
 
-			King kingTest = King(RC(0, 4), 1);
-			Rook rookTestLeft = Rook(RC(0, 0), 1);
-			Rook rookTestRight = Rook(RC(0, 7), 1);
-			Pawn pawnTest1 = Pawn(RC(0, 3), 1);
-			Pawn pawnTest2 = Pawn(RC(1, 3), 1);
-			Pawn pawnTest3 = Pawn(RC(1, 4), 1);
-			Pawn pawnTest4 = Pawn(RC(1, 5), 1);
+			King kingTest = King(RC(0, 4), 0);
+			Rook rookTestLeft = Rook(RC(0, 0), 0);
+			Rook rookTestRight = Rook(RC(0, 7), 0);
+			Pawn pawnTest1 = Pawn(RC(0, 3), 0);
+			Pawn pawnTest2 = Pawn(RC(1, 3), 0);
+			Pawn pawnTest3 = Pawn(RC(1, 4), 0);
+			Pawn pawnTest4 = Pawn(RC(1, 5), 0);
 
 			testBoard.insertPiece(&kingTest);
 			testBoard.insertPiece(&rookTestLeft);

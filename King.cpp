@@ -42,11 +42,11 @@ set <Move> King::getPossibleMoves(Piece* board[][8][8], Move lastMove)
       r = row + moves[i].getRow();
       c = col + moves[i].getCol();
 
-      if ((*board)[r][c]->isSpace() || (!this->isWhite && (*board)[r][c]->getIsWhite()))
+      if ((*board)[row][col]->isSpace() || (!this->isWhite && (*board)[r][c]->getIsWhite()))
          //possible.insert(Move(this, RC(row, col), RC(r, c)));
          possible.insert(Move(RC(row, col), RC(r, c)));
 
-      if ((*board)[r][c]->isSpace() || (this->isWhite && !(*board)[r][c]->getIsWhite()))
+      if ((*board)[row][col]->isSpace() || (this->isWhite && !(*board)[r][c]->getIsWhite()))
          //possible.insert(Move(this, RC(row, col), RC(r, c)));
          possible.insert(Move(RC(row, col), RC(r, c)));
    }
