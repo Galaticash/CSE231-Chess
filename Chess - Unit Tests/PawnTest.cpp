@@ -494,7 +494,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&testPawn);
 
 			// Check that the Pawn was placed properly
-			string pawnType = "PAWN";
+			char pawnType = 'p';
 			Assert::AreEqual(pawnType, testBoard.getPieceAtPosition(RC(row, col))->getType());
 
 			// EXERCISE - Pawn::getPossibleMoves()

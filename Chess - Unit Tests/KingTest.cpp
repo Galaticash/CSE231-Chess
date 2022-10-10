@@ -137,7 +137,7 @@ namespace ChessUnitTests
 		/*********************************
 		* TEST CASTLING KING
 		* Test that king side castling works.
-			0 1 2 3 4 5 6 7
+		   0 1 2 3 4 5 6 7
 		 0 r . . p k . . r 0
 		 1 . . . p p p . . 1
 		 2 . . . . . . . . 2
@@ -173,7 +173,11 @@ namespace ChessUnitTests
 			set <Move> possibleMoves = kingTest.getPossibleMoves(testBoard.getPieceBoard(), Move());
 
 			// verify
-			set <Move> expectedMoves = set<Move> { { Move(RC(0, 4), RC(0, 5)) }, { Move(RC(0, 4), RC(0, 6)) } };
+			Move castlingKing = Move(RC(0, 4), RC(0, 6));
+			castlingKing.setCastlingK();
+			set <Move> expectedMoves = set<Move> { 
+				{ Move(RC(0, 4), RC(0, 5)) }, 
+				castlingKing };
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
