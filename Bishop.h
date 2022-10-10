@@ -16,7 +16,7 @@ public:
 	// Call the base Constructor
 	Bishop(RC position, bool isWhite) : Piece(position, isWhite)
 	{
-        this->type = "BISHOP";
+        this->type = 'b';
     };
 
 	set <Move> getPossibleMoves(Piece* board[], Move lastMove);

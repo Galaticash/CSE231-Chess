@@ -28,14 +28,14 @@ public:
 	};
 
 	// TESTING: Pass captured piece to constructor - add to rest of code?
-	Move(RC from, RC to, string capture) : Move(from, to)
+	Move(RC from, RC to, char capture) : Move(from, to)
 	{
 		this->setCapture(capture);
 	};
 
 	// TODO: Use this OR remove this and rely on board to get pieceType
 	//  (board[RC from].getType() or .isSpace())
-	Move(string movedPiece, RC from, RC to)
+	Move(char movedPiece, RC from, RC to)
 	{
 		this->pieceType = movedPiece;
 		this->positionFrom = from;
@@ -103,7 +103,7 @@ public:
 	// - - - GETTERS AND SETTERS - - - //
 	
 	// Piece involved in the move, currenlty used for En-Passant
-	string getPieceType() { return this->pieceType; };
+	char getPieceType() { return this->pieceType; };
 
 	// Positions To and From
 	RC getPositionFrom() { return this->positionFrom; };
@@ -116,41 +116,7 @@ public:
 	string getSmithNotation() { return this->translateToSmith(); };
 
 	// Get/set special cases
-	void setCapture(string pieceType)
-	{	
-		// TODO: Change to enum?
-		// OR change string pieceType to char (PAWN -> 'p')
-		
-		if (pieceType == "PAWN")
-		{
-			this->capture = 'p';
-		}
-		else if (pieceType == "KNIGHT")
-		{
-			this->capture = 'n';
-		}
-		else if (pieceType == "BISHOP")
-		{
-			this->capture = 'b';
-		}
-		else if (pieceType == "ROOK")
-		{
-			this->capture = 'r';
-		}
-		else if (pieceType == "QUEEN")
-		{
-			this->capture = 'q';
-		}
-		else if (pieceType == "KING")
-		{
-			this->capture = 'k';
-		}
-		else
-		{
-			// Invalid piece type
-			this->capture = ' ';
-		}
-	};
+	void setCapture(char pieceType)	{this->capture = pieceType; };
 	char getCapture() { return this->capture; };
 
 	void setCastlingQ() { this->castlingQSide = true; };
@@ -192,9 +158,10 @@ public:
 	// Updated to use Smith notation to compare moves
 	bool operator< (Move const& other) const { return this->smithNotation < other.smithNotation; };
 	//bool operator< (Move const& other) const { return (this->positionFrom < other.positionFrom || this->positionTo < other.positionTo); };
+	inline friend ostream& operator<<(ostream& out, Move& m) {	return out << m.smithNotation; };
 
 private:
-	string pieceType = "SPACE";
+	char pieceType = 's';
 	string smithNotation = "";
 	RC positionTo;
 	RC positionFrom;

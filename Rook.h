@@ -16,7 +16,7 @@ public:
 	// Call the base Constructor
    Rook(RC position, bool isWhite) : Piece(position, isWhite) 
    {
-      this->type = "ROOK";
+      this->type = 'r';
    }
 
    set <Move> getPossibleMoves(Piece* board[], Move lastMove);

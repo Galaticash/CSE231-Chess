@@ -8,7 +8,6 @@
  *
  ************************************************************************/
 
-
 # pragma once
 #include "pch.h"
 #include "CppUnitTest.h"
@@ -16,7 +15,7 @@
 #include <set>
 #include <iostream>
 
-// Should NOT be calling .cpp, but it fixed the linking error
+// Includes the Board object, which also includes all Piece types
 #include "../board.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -24,9 +23,11 @@ using namespace std;
 
 namespace ChessUnitTests
 {
+	// The size of the Chess board
 	const int NUM_ROW = 8;
 	const int NUM_COL = 8;
 
+	// An empty board of Space Piece pointers
 	Piece* EMPTY_BOARD[NUM_ROW][NUM_COL] =
 	{
 		{new Space(RC(0, 0)), new Space(RC(0, 1)), new Space(RC(0, 2)), new Space(RC(0, 3)), new Space(RC(0, 4)), new Space(RC(0, 5)), new Space(RC(0, 6)), new Space(RC(0, 7))},
@@ -97,7 +98,7 @@ namespace ChessUnitTests
 
 			Assert::AreEqual(expectedMoves.size(), possibleMoves.size());
 			Assert::IsTrue(possibleMoves == expectedMoves);
-			//Assert::AreEqual(expectedMoves, possibleMoves); <- error
+			//Assert::AreEqual(expectedMoves, possibleMoves); //<- error since it can't display as has no to_string, requires operator<<
 			
 			// TEARDOWN
 		}
@@ -493,7 +494,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&testPawn);
 
 			// Check that the Pawn was placed properly
-			string pawnType = "PAWN";
+			char pawnType = 'p';
 			Assert::AreEqual(pawnType, testBoard.getPieceAtPosition(RC(row, col))->getType());
 
 			// EXERCISE - Pawn::getPossibleMoves()

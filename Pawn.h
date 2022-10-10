@@ -18,7 +18,7 @@ public:
 	// Call the base Constructor
 	Pawn(RC position, bool isWhite) : Piece(position, isWhite)
 	{
-        this->type = "PAWN";
+        this->type = 'p';
     };
 
    set <Move> getPossibleMoves(Piece* board[][8][8], Move lastMove);

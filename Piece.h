@@ -57,8 +57,8 @@ public:
 	bool getHasMoved() { return this->hasMoved; };
 	bool getIsWhite() { return this->isWhite; };
 	// ERROR CATCHING: Fix type to be SPACE if not defined (somehow)
-	string getType() { if (this->type == "" || this->type == "INVALID") { this->type = "SPACE"; } return this->type; };
-	bool isSpace() { return this->type == "SPACE"; };
+	char getType() { if (this->type == ' ') { this->type = 's'; } return this->type; };
+	bool isSpace() { return this->type == 's'; };
 
 	// To tell if a Piece is the same as another Piece
 	
@@ -68,7 +68,7 @@ public:
 
 protected:
 	// Type of Piece (PAWN, KNIGHT, KING, ect)
-	string type = "INVALID"; // ERROR: Some Pieces/Spaces exist with empty string?
+	char type = ' '; // ERROR: Some Pieces/Spaces exist with empty string?
 
 	// Current RC on the Board
 	RC currentPosition;

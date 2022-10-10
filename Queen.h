@@ -16,7 +16,7 @@ public:
 	// Call the base Constructor
 	Queen(RC position, bool isWhite) : Piece(position, isWhite)
     {
-        this->type = "QUEEN";
+        this->type = 'q';
     };
 
    set <Move> getPossibleMoves(Piece* board[], Move lastMove);
