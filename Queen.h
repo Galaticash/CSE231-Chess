@@ -1,10 +1,10 @@
 /***********************************************************************
  * Header File:
- *    Queen:
+ *    Queen: A queen in chess
  * Author:
- *
+ *    Ashley DeMott, Logan Huston
  * Summary:
- *
+ *    Contains the code for how a queen is drawn.
  ************************************************************************/
 
 #pragma once

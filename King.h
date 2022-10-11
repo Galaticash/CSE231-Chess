@@ -1,10 +1,10 @@
 /***********************************************************************
  * Header File:
- *    King:
+ *    King: A king in chess
  * Author:
- *
+ *    Ashley DeMott, Logan Huston
  * Summary:
- *
+ *    Contains the code for how a king is drawn.
  ************************************************************************/
 
 #pragma once

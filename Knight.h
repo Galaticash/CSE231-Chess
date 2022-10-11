@@ -1,10 +1,10 @@
 /***********************************************************************
  * Header File:
- *    Knight:
+ *    Knight: A knight in chess
  * Author:
- *
+ *    Ashley DeMott, Logan Huston
  * Summary:
- *
+ *    Contains the code for how a knight is drawn.
  ************************************************************************/
 
 #pragma once

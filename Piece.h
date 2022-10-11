@@ -1,8 +1,8 @@
 /***********************************************************************
  * Header File:
- *    Piece: 
- * Author: Ashley DeMott, Logan Huston
- *    
+ *    Piece: A piece in chess
+ * Author: 
+ *		Ashley DeMott, Logan Huston
  * Summary:	
  *    
  ************************************************************************/
@@ -65,11 +65,11 @@ public:
 		this->rectangles = {};
 	};
 
+	// GETTERS AND SETTERS FOR ATTRIBUTES //
+
 	// Returns the possible moves this Piece can do, given the current Board and the previous Move
 	set <Move> virtual getPossibleMoves(Board* board, Move lastMove) { return set <Move> {}; };
 	//set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) = 0; <- pure virutal, cannot make Piece* 2D array
-
-	// GETTERS AND SETTERS FOR ATTRIBUTES //
 
 	void setPosition(RC positionTo)
 	{
