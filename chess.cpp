@@ -23,63 +23,6 @@ struct RC
    int col;
 };
 
-/****************************************************
- * IS NOT WHITE
- * Is the current location valid and the piece is either
- * black (uppercase) or space
- ***************************************************/
-inline bool isNotWhite(const char* board, int row, int col)
-{
-   // not white if we are off the board or if we are looking at a space
-   if (row < 0 || row >= 8 || col < 0 || col >= 8)
-      return false;
-   char piece = board[row * 8 + col];
-
-   return piece == ' ' || (piece >= 'A' && piece <= 'Z');
-}
-
-/****************************************************
- * IS  WHITE
- * Is the current location valid and the piece is white
- ***************************************************/
-inline bool isWhite(const char* board, int row, int col)
-{
-   // not white if we are off the board or if we are looking at a space
-   if (row < 0 || row >= 8 || col < 0 || col >= 8)
-      return false;
-   char piece = board[row * 8 + col];
-
-   return (piece >= 'a' && piece <= 'z');
-}
-
-/****************************************************
- * IS NOT BLACK
- * Is the current location valid and the piece is either
- * white (lowercase) or space
- ***************************************************/
-inline bool isNotBlack(const char* board, int row, int col)
-{
-   // not white if we are off the board or if we are looking at a space
-   if (row < 0 || row >= 8 || col < 0 || col >= 8)
-      return false;
-   char piece = board[row * 8 + col];
-
-   return piece == ' ' || (piece >= 'a' && piece <= 'z');
-}
-
-/****************************************************
- * IS  BLACK
- * Is the current location valid and the piece is black
- ***************************************************/
-inline bool isBlack(const char* board, int row, int col)
-{
-   // not white if we are off the board or if we are looking at a space
-   if (row < 0 || row >= 8 || col < 0 || col >= 8)
-      return false;
-   char piece = board[row * 8 + col];
-
-   return (piece >= 'A' && piece <= 'Z');
-}
 /*********************************************************
  * GET POSSIBLE MOVES
  * Determine all the possible moves for a given chess piece
@@ -95,183 +38,12 @@ set <int> getPossibleMoves(const char* board, int location)
    int col = location % 8;  // current location column
    int r;                   // the row we are checking
    int c;                   // the column we are checking
-   bool amBlack = isBlack(board, row, col);
+   bool amBlack;
 
    // board[index] --> Piece/None
    // IF piece:
    //   possible = piece.getMoves() --> RC/integer (index)
    // return possible
-
-   //
-   // PAWN
-   //
-   if (board[location] == 'P')
-   {
-      c = col;
-      r = row - 2;
-      if (row == 6 && board[r * 8 + c] == ' ')
-         possible.insert(r * 8 + c);  // forward two blank spaces
-      r = row - 1;
-      if (r >= 0 && board[r * 8 + c] == ' ')
-         possible.insert(r * 8 + c);  // forward one black space
-      c = col - 1;
-      if (isWhite(board, r, c))
-         possible.insert(r * 8 + c);    // attack left
-      c = col + 1;
-      if (isWhite(board, r, c))
-         possible.insert(r * 8 + c);    // attack right
-      // what about en-passant and pawn promotion
-   }
-   if (board[location] == 'p')
-   {
-      c = col;
-      r = row + 2;
-      if (row == 1 && board[r * 8 + c] == ' ')
-         possible.insert(r * 8 + c);  // forward two blank spaces
-      r = row + 1;
-      if (r < 8 && board[r * 8 + c] == ' ')
-         possible.insert(r * 8 + c);    // forward one blank space
-      c = col - 1;
-      if (isBlack(board, r, c))
-         possible.insert(r * 8 + c);      // attack left
-      c = col + 1;
-      if (isBlack(board, r, c))
-         possible.insert(r * 8 + c);      // attack right
-      // what about en-passant and pawn promotion
-   }
-
-   //
-   // KNIGHT
-   //
-   if (board[location] == 'N' || board[location] == 'n')
-   {
-      RC moves[8] = 
-      {
-               {-1,  2}, { 1,  2},
-      {-2,  1},                    { 2,  1},
-      {-2, -1},                    { 2, -1},
-               {-1, -2}, { 1, -2}
-      };
-      for (int i = 0; i < 8; i++)
-      {
-         r = row + moves[i].row;
-         c = col + moves[i].col;
-         if ( amBlack && isNotBlack(board, r, c))
-            possible.insert(r * 8 + c);
-         if (!amBlack && isNotWhite(board, r, c))
-            possible.insert(r * 8 + c);
-      }
-   }
-
-   //
-   // KING
-   //
-   if (board[location] == 'K' || board[location] == 'k')
-   {
-      // posible deltas, changes in position
-      RC moves[8] =
-      {
-         {-1,  1}, {0,  1}, {1,  1},
-         {-1,  0},          {1,  0},
-         {-1, -1}, {0, -1}, {1, -1}
-      };
-      for (int i = 0; i < 8; i++)
-      {
-         r = row + moves[i].row;
-         c = col + moves[i].col;
-         if ( amBlack && isNotBlack(board, r, c))
-            possible.insert(r * 8 + c);
-         if (!amBlack && isNotWhite(board, r, c))
-            possible.insert(r * 8 + c);
-      }
-      // what about castling?
-   }
-
-   //
-   // QUEEN
-   //
-   if (board[location] == 'Q' || board[location] == 'q')
-   {
-      RC moves[8] =
-      {
-         {-1,  1}, {0,  1}, {1,  1},
-         {-1,  0},          {1,  0},
-         {-1, -1}, {0, -1}, {1, -1}
-      };
-      for (int i = 0; i < 8; i++)
-      {
-         r = row + moves[i].row;
-         c = col + moves[i].col;
-         while (r >= 0 && r < 8 && c >= 0 && c < 8 && 
-                board[r * 8 + c] == ' ')
-         {
-            possible.insert(r * 8 + c);
-            r += moves[i].row;
-            c += moves[i].col;
-         }
-         if ( amBlack && isNotBlack(board, r, c))
-            possible.insert(r * 8 + c);
-         if (!amBlack && isNotWhite(board, r, c))
-            possible.insert(r * 8 + c);
-      }
-   }
-
-   //
-   // ROOK
-   //
-   if (board[location] == 'R' || board[location] == 'r')
-   {
-      RC moves[4] =
-      {
-                  {0,  1},
-         {-1, 0},         {1, 0},
-                  {0, -1}
-      };
-      for (int i = 0; i < 4; i++)
-      {
-         r = row + moves[i].row;
-         c = col + moves[i].col;
-         while (r >= 0 && r < 8 && c >= 0 && c < 8 &&
-            board[r * 8 + c] == ' ')
-         {
-            possible.insert(r * 8 + c);
-            r += moves[i].row;
-            c += moves[i].col;
-         }
-         if (amBlack && isNotBlack(board, r, c))
-            possible.insert(r * 8 + c);
-         if (!amBlack && isNotWhite(board, r, c))
-            possible.insert(r * 8 + c);
-      }
-   }
-
-   //
-   // BISHOP
-   //
-   if (board[location] == 'B' || board[location] == 'b')
-   {
-      RC moves[4] =
-      {
-         {-1,  1}, {1,  1},
-         {-1, -1}, {1, -1}
-      };
-      for (int i = 0; i < 4; i++)
-      {
-         r = row + moves[i].row;
-         c = col + moves[i].col;
-         while (r >= 0 && r < 8 && c >= 0 && c < 8 &&
-            board[r * 8 + c] == ' ')
-         {
-            possible.insert(r * 8 + c);
-            r += moves[i].row;
-            c += moves[i].col;
-         }
-         if (amBlack && isNotBlack(board, r, c))
-            possible.insert(r * 8 + c);
-         if (!amBlack && isNotWhite(board, r, c))
-            possible.insert(r * 8 + c);
-      }
-   }
    
    return possible;
 }
@@ -297,7 +69,13 @@ void draw(const char* board, const Interface & ui, const set <int> & possible)
       gout.drawPossible(*it);
 
 
-   // Note: Draw needs positions x,y instead of Row Columns, translate
+   // Note: Draw needs positions x,y instead of Row Columns, 
+
+   // Note: Draw is wanting to know isBlack.
+   // for (int row = 0; row < 8; row++)
+   //    for (int col= 0; col < 8; col++)
+   //       gout.drawPiece(Piece.getCurrentPosition().getRow(), Piece.getCurrentPosition().getCol(),
+   //          !Piece.getIsWhite(), Piece.getRectangles(), Piece.getRectangles().len()) const;
 
    // draw the pieces
    for (int i = 0; i < 64; i++)
@@ -377,6 +155,7 @@ bool move(char* board, int positionFrom, int positionTo)
 }
 
 /*************************************
+ *  CALLBACK
  * All the interesting work happens here, when
  * I get called back from OpenGL to draw a frame.
  * When I am finished drawing, then the graphics
