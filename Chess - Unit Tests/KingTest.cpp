@@ -27,15 +27,16 @@ namespace ChessUnitTests
 {
 	TEST_CLASS(KingTests)
 	{
-		Piece* EMPTY_BOARD[8][8] = {
-			{&Space(RC(0, 0)), &Space(RC(0, 1)), &Space(RC(0, 2)), &Space(RC(0, 3)), &Space(RC(0, 4)), &Space(RC(0, 5)), &Space(RC(0, 6)), &Space(RC(0, 7))},
-			{&Space(RC(1, 0)), &Space(RC(1, 1)), &Space(RC(1, 2)), &Space(RC(1, 3)), &Space(RC(1, 4)), &Space(RC(1, 5)), &Space(RC(1, 6)), &Space(RC(1, 7))},
-			{&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7))},
-			{&Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7))},
-			{&Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7))},
-			{&Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7))},
-			{&Space(RC(6, 0)), &Space(RC(6, 1)), &Space(RC(6, 2)), &Space(RC(6, 3)), &Space(RC(6, 4)), &Space(RC(6, 5)), &Space(RC(6, 6)), &Space(RC(6, 7))},
-			{&Space(RC(7, 0)), &Space(RC(7, 1)), &Space(RC(7, 2)), &Space(RC(7, 3)), &Space(RC(7, 4)), &Space(RC(7, 5)), &Space(RC(7, 6)), &Space(RC(7, 7))} };
+		Piece* EMPTY_BOARD[NUM_ROW][NUM_COL] =
+		{
+			{ new Space(RC(0, 0)), new Space(RC(0, 1)), new Space(RC(0, 2)), new Space(RC(0, 3)), new Space(RC(0, 4)), new Space(RC(0, 5)), new Space(RC(0, 6)), new Space(RC(0, 7))},
+			{ new Space(RC(1, 0)), new Space(RC(1, 1)), new Space(RC(1, 2)), new Space(RC(1, 3)), new Space(RC(1, 4)), new Space(RC(1, 5)), new Space(RC(1, 6)), new Space(RC(1, 7)) },
+			{ new Space(RC(2, 0)), new Space(RC(2, 1)), new Space(RC(2, 2)), new Space(RC(2, 3)), new Space(RC(2, 4)), new Space(RC(2, 5)), new Space(RC(2, 6)), new Space(RC(2, 7)) },
+			{ new Space(RC(3, 0)), new Space(RC(3, 1)), new Space(RC(3, 2)), new Space(RC(3, 3)), new Space(RC(3, 4)), new Space(RC(3, 5)), new Space(RC(3, 6)), new Space(RC(3, 7)) },
+			{ new Space(RC(4, 0)), new Space(RC(4, 1)), new Space(RC(4, 2)), new Space(RC(4, 3)), new Space(RC(4, 4)), new Space(RC(4, 5)), new Space(RC(4, 6)), new Space(RC(4, 7)) },
+			{ new Space(RC(5, 0)), new Space(RC(5, 1)), new Space(RC(5, 2)), new Space(RC(5, 3)), new Space(RC(5, 4)), new Space(RC(5, 5)), new Space(RC(5, 6)), new Space(RC(5, 7)) },
+			{ new Space(RC(6, 0)), new Space(RC(6, 1)), new Space(RC(6, 2)), new Space(RC(6, 3)), new Space(RC(6, 4)), new Space(RC(6, 5)), new Space(RC(6, 6)), new Space(RC(6, 7)) },
+			{ new Space(RC(7, 0)), new Space(RC(7, 1)), new Space(RC(7, 2)), new Space(RC(7, 3)), new Space(RC(7, 4)), new Space(RC(7, 5)), new Space(RC(7, 6)), new Space(RC(7, 7)) } };
 
 	public:
 		/* Helper method to insert pieces into board */

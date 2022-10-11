@@ -31,9 +31,9 @@ set <Move> King::getPossibleMoves(Board* board, Move lastMove)
    // posible deltas, changes in position
    RC moves[8] =
    {
-       {-1,  1}, {0,  1}, {1,  1},
-       {-1,  0},          {1,  0},
-       {-1, -1}, {0, -1}, {1, -1}
+       {-1,  -1}, {-1,  0}, {-1,  1},
+       {0,  -1},          {0,  1},
+       {1, -1}, {1, 0}, {1, 1}
    };
 
    // For each possible move,
@@ -66,7 +66,7 @@ set <Move> King::getPossibleMoves(Board* board, Move lastMove)
    if (!(hasMoved))
    {
        // If Rook at column 7 hasn't moved (King Side) AND the spaces between are clear
-       if ((!(*board)[row][7]->getHasMoved()) && (*board)[row][5]->isSpace() && (*board)[row][6]->isSpace())
+       if ((*board)[row][7]->getType() == 'r' && (!(*board)[row][7]->getHasMoved()) && (*board)[row][5]->isSpace() && (*board)[row][6]->isSpace())
        {
            // Define Move, then set to castling, then insert into set
            Move castlingK = Move(RC(row, col), RC(row, 6));
@@ -74,7 +74,7 @@ set <Move> King::getPossibleMoves(Board* board, Move lastMove)
            possible.insert(castlingK);
        }
        // If the Rook at column 0 hasn't moved (Queen side) AND the spaces between are clear
-       else if ((!(*board)[row][0]->getHasMoved()) && (*board)[row][1]->isSpace() && (*board)[row][2]->isSpace() && (*board)[row][3]->isSpace())
+       else if ((*board)[row][0]->getType() == 'r' && (!(*board)[row][0]->getHasMoved()) && (*board)[row][1]->isSpace() && (*board)[row][2]->isSpace() && (*board)[row][3]->isSpace())
        {
            Move castlingQ = Move(RC(row, col), RC(row, 2));
            castlingQ.setCastlingQ();

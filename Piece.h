@@ -62,7 +62,7 @@ public:
 	void setHasMoved(bool moved) { this->hasMoved = moved; }; // For Testing
 	bool getHasMoved() { return this->hasMoved; };	
 
-	char getType() { if (this->type ) { this->type = 's'; } return this->type; };
+	char getType() { return this->type; };
 	bool isSpace() { return this->type == 's'; };
 	bool getIsWhite() { return this->isWhite; };
 
