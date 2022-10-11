@@ -127,7 +127,7 @@ void ogstream::drawPiece(Piece* p) const
 {
    
     bool black = !(p->getIsWhite());
-    set <Rect> rectangles = p.getRectangles();
+    vector <Piece::Rect> rectangles = p->getRectangles();
     int x = p->getCurrentPosition().getCol();
     int y = p->getCurrentPosition().getRow();
 
@@ -139,10 +139,10 @@ void ogstream::drawPiece(Piece* p) const
    glColor(black ? RGB_BLACK : RGB_WHITE);
 
    // iterate through the rectangles
-   for (set <Rect> ::iterator it = rectangles.begin(); it != rectangles.end(); it++)
+   for (vector <Piece::Rect> ::iterator it = rectangles.begin(); it != rectangles.end(); it++)
    {
        // The current Rectangle being drawn
-       Rect currentRect = *it;
+       Piece::Rect currentRect = *it;
 
        // Draw all the points for the current rectangle
        glVertex2i(xGL + currentRect.x0, yGL + currentRect.y0);
@@ -278,15 +278,19 @@ void ogstream::drawHover(int pos)
 * Highlight a chess square:
 *   INPUT  location  The location of the selected square
 ************************************************************************/
-void ogstream::drawPossible(int pos)
+void ogstream::drawPossible(RC rc)
 {
    // do nothing if there is nothing to do
-   if (pos < 0 || pos >= 64)
-      return;
+    if (rc.getRow() < 0 || rc.getRow() > 7 || rc.getCol() < 0 || rc.getCol() > 7)
+    {
+        return;
+    }
 
    // find the row and column
-   int row = pos / 8;
-   int col = pos % 8;
+    int row = rc.getRow();
+       //pos / 8;
+    int col = rc.getCol();
+       //pos % 8;
 
    // set the color and drawing style
    glBegin(GL_QUADS);

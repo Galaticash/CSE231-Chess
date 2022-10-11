@@ -14,7 +14,7 @@
 #include <sstream>    // for OSTRINGSTRING
 using std::string;
 
-#include "Piece.h"
+#include "Piece.cpp"
 
  /*************************************************************************
   * GRAPHICS STREAM
@@ -24,19 +24,6 @@ using std::string;
 class ogstream : public std::ostringstream
 {
 private:
-    // One rectangle, for drawing pieces.
-    struct Rect
-    {
-        int x0;
-        int y0;
-        int x1;
-        int y1;
-        int x2;
-        int y2;
-        int x3;
-        int y3;
-    };
-
     // Put text at location X, Y
     void drawText(int x, int y, const char* text) const;
 
@@ -59,7 +46,7 @@ public:
     virtual void drawBoard();
     virtual void drawSelected(int position);
     virtual void drawHover(int position);
-    virtual void drawPossible(int position);
+    virtual void drawPossible(RC position);
 
 protected:
     int x; // location of text on the screen

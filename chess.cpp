@@ -14,7 +14,8 @@
 using namespace std;
 
 
-#include "board.h"
+#include "board.cpp"
+
 #include "Pawn.h"
 #include "Queen.h"
 #include "Space.h"
@@ -47,11 +48,11 @@ void draw(const Board* board, const Interface & ui, const set <Move> & possible)
    for (set <Move> ::iterator it = possible.begin(); it != possible.end(); it++)
    {
        Move currentMove = *it;
-       gout.drawPossible(getPosition(currentMove.getPositionTo()));
+       gout.drawPossible(currentMove.getPositionTo());
    }
 
    // Draw each Piece on the Board
-   /*for (int r = 0; r < 8; r++)
+   for (int r = 0; r < 8; r++)
    {
        for (int c = 0; c < 8; c++)
        {
@@ -60,14 +61,12 @@ void draw(const Board* board, const Interface & ui, const set <Move> & possible)
                gout.drawPiece(board[r][c]);
            }
        }
-   }*/
+   }
 }
-
 
 int getPosition(RC rcPos)
 {
     int location = rcPos.getRow() * 8 + rcPos.getCol();
-
     return location;
 }
 
@@ -96,6 +95,8 @@ void callBack(Interface *pUI, void * p)
    Board * board = (Board *)p; 
 
    Board pieceBoard = Board();
+
+   // Get the Move that has PosTo = position clicked
 
    // ** MOVE **
    // Do the move that the user selected on the visual board

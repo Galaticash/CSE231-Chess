@@ -69,4 +69,3 @@ private:
 	int row;
 	int col;
 };
-
