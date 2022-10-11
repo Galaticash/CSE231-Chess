@@ -1,16 +1,17 @@
 /***********************************************************************
  * Header File:
  *    Pawn:
- * Author:
+ * Author: 
  *
- * Summary:
+ * Summary: 
  *
  ************************************************************************/
 
 #pragma once
-#include "Piece.h"
-
-// TODO: Add capture checks for Move class
+#ifndef PIECE_CLASS
+#define PIECE_CLASS
+#include "Piece.cpp"
+#endif
 
 class Pawn : public Piece
 {
@@ -18,8 +19,8 @@ public:
 	// Call the base Constructor
 	Pawn(RC position, bool isWhite) : Piece(position, isWhite)
 	{
-        this->type = 'p';
-    };
+		this->type = 'p';
+	};
 
-   set <Move> getPossibleMoves(Piece* board[][8][8], Move lastMove);
+	set <Move> getPossibleMoves(Board* board, Move lastMove);
 };

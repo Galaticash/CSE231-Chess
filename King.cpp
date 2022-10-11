@@ -14,7 +14,7 @@
 * GET POSSIBLE MOVES
 * Get's the possible moves from a piece.
 ********************************************/
-set <Move> King::getPossibleMoves(Piece* board[][8][8], Move lastMove)
+set <Move> King::getPossibleMoves(Board* board, Move lastMove)
 {
    set <Move> possible;
 
@@ -22,8 +22,8 @@ set <Move> King::getPossibleMoves(Piece* board[][8][8], Move lastMove)
    int col = this->currentPosition.getCol(); // current location column
 
    // If the currentPosition is not valid or the selected Position is an empty Space
-   if (!(isValidPosition(this->currentPosition)) || (*board)[row][col]->isSpace())
-      return possible;
+   if (!board->isValidPosition(this->currentPosition) || (*board)[row][col]->isSpace())
+       return possible;
 
    int r;                   // the row we are checking
    int c;                   // the column we are checking
@@ -43,7 +43,7 @@ set <Move> King::getPossibleMoves(Piece* board[][8][8], Move lastMove)
       c = col + moves[i].getCol();
 
       // Piece cannot move off the Board
-      if (isValidPosition(RC(r, c)))
+      if (board->isValidPosition(RC(r, c)))
       {
           // If Move desitnation is a Space,
           if ((*board)[r][c]->isSpace())

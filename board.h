@@ -8,16 +8,6 @@
  ************************************************************************/
 #pragma once
 
-#ifndef PIECE_CLASSES
-#define PIECE_CLASSES
-#include "Space.h"
-#include "Pawn.h"
-#include "Queen.h"
-//#include "Bishop.h"
-#include "Rook.h"
-//#include "King.h"
-//#include "Knight.h"
-#endif
 
 /*
 Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
@@ -31,31 +21,27 @@ Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
 			{&Rook(RC(7, 0), 1), &Bishop(RC(7, 1), 1), &Knight(RC(7, 2), 1), &Queen(RC(7, 3), 1), &King(RC(7, 4), 1), &Knight(RC(7, 5), 1), &Bishop(RC(7, 6), 1), &Rook(RC(7, 7), 1)} };
 */
 
+//#include "Piece.h"
+#include "Queen.h"
+#include "Space.h"
+
 class Board
 {
 public:
 	// When a board is created, will use the Default 2D array of Piece*
-	Board() { //copyBoard(DEFAULT_BOARD);
-	};
+	Board() { this->lastMove = Move(); };
 	// Use a custom board, for testing
-	Board(Piece* copiedBoard[NUM_ROW][NUM_COL]) { copyBoard(copiedBoard); };
+	Board(Piece* copiedBoard[NUM_ROW][NUM_COL]) : Board()
+	{ copyBoard(copiedBoard); };
 	//~Board() { delete[] & this->piecesBoard; delete& this->lastMove;  delete this; };
 
-	// Pass a pointer to the PiecesBoard
-	// TODO: Put actual type instead of auto
-	// Piece* [][8][8] <- doesn't allow
-	auto getPieceBoard() { return &this->piecesBoard; };
-
-	// Would require Board is passed to Piece, looping inclusion
+	// Get a pointer to the Piece at the given position on the Board
+	// Also override []
 	Piece* getPieceAtPosition(RC position)
 	{
-		int row = position.getRow();
-		int col = position.getCol();
-
-		Piece* toReturn = piecesBoard[row][col];
-		return toReturn;
-		//return piecesBoard[row][col];
+		return piecesBoard[position.getRow()][position.getCol()];
 	}
+
 	void copyBoard(Piece* copiedBoard[NUM_ROW][NUM_COL])
 	{
 		for (int r = 0; r < NUM_ROW; r++)
@@ -66,10 +52,30 @@ public:
 			}
 		}
 	};
+
+	// Put a Piece onto the Board, replacing any Piece currently there
 	void insertPiece(Piece* insertPiece);
+
+	// Perform a give Move
 	Move move(Move currentMove);
+
+	/// <summary>
+	/// Determines if the given RC is a valid position on the Board
+	/// </summary>
+	/// <param name="position">The Row and Column position</param>
+	/// <returns>If the given RC is a valid position on the Board</returns>
+	bool isValidPosition(RC position)
+	{
+		int row = position.getRow();
+		int col = position.getCol();
+
+		// If the RC is on the board (row: 0 - 7, col: 0 - 7)
+		return (row >= 0 && row < NUM_ROW&& col >= 0 && col < NUM_COL);
+	};
+
+	Piece** operator[] (int row) { return piecesBoard[row]; };
 
 private:
 	Piece* piecesBoard[NUM_ROW][NUM_COL] = {};
-	Move lastMove = Move();
+	Move lastMove;
 };

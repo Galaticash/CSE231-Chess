@@ -14,15 +14,15 @@
  * GET POSSIBLE MOVES
  * Get's the possible moves from a piece.
  ********************************************/
-set <Move> Queen::getPossibleMoves(Piece* board[], Move lastMove)
+set <Move> Queen::getPossibleMoves(Board* board, Move lastMove)
 {
    set <Move> possible;
 
    int row = this->currentPosition.getRow(); // current location row
    int col = this->currentPosition.getCol(); // current location column
-
+   /*
    // If the currentPosition is not valid or the selected Position is an empty Space
-   if (!(isValidPosition(this->currentPosition)) || board[row][col].isSpace())
+   if (!(board->isValidPosition(this->currentPosition)) || (*board)[row][col]->isSpace())
       return possible;
 
    int r;                   // the row we are checking
@@ -40,18 +40,18 @@ set <Move> Queen::getPossibleMoves(Piece* board[], Move lastMove)
       r = row + moves[i].getRow();
       c = col + moves[i].getCol();
       while (r >= 0 && r < 8 && c >= 0 && c < 8 &&
-         board[r][c].isSpace())
+         (*board)[r][c].isSpace())
       {
          possible.insert(Move(RC(row, col), RC(r, c)));
          r += moves[i].getRow();
          c += moves[i].getCol();
       }
 
-      if (board[r][c].isSpace() || (!this->isWhite && board[r][c].getIsWhite()))
+      if ((*board)[r][c]->isSpace() || (!this->isWhite && (*board)[r][c].getIsWhite()))
          possible.insert(Move(RC(row, col), RC(r, c)));
-      if (board[r][c].isSpace() || (this->isWhite && !board[r][c].getIsWhite()))
+      if ((*board)[r][c].isSpace() || (this->isWhite && !(*board)[r][c].getIsWhite()))
          possible.insert(Move(RC(row, col), RC(r, c)));
-   }
+   }*/
 
 
    return possible;

@@ -8,7 +8,10 @@
  ************************************************************************/
 
 #pragma once
-#include "Piece.h"
+#ifndef PIECE_CLASS
+#define PIECE_CLASS
+#include "Piece.cpp"
+#endif
 
 class Knight : public Piece
 {
@@ -19,5 +22,5 @@ public:
         this->type = 'n';
     };
 	
-   set <Move> getPossibleMoves(Piece* board[], Move lastMove);
+   set <Move> getPossibleMoves(Board* board, Move lastMove);
 };

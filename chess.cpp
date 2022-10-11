@@ -174,6 +174,7 @@ void callBack(Interface *pUI, void * p)
    if (move(board, pUI->getPreviousPosition(), pUI->getSelectPosition()))
       pUI->clearSelectPosition();
    else
+       // possible = (currentPiece).getPossibleMoves(board)
       possible = getPossibleMoves(board, pUI->getSelectPosition());
 
    // if we clicked on a blank spot, then it is not selected
