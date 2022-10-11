@@ -22,12 +22,39 @@ const int NUM_COL = 8;
 class Board;
 
 class Piece {
+private:
+protected:
+	enum pieceTypes { k = 'k', q = 'q', r = 'r', n = 'n', p = 'p', b = 'b', s = 's' };
+
+	// Type of Piece (PAWN, KNIGHT, KING, ect)
+	char type = ' '; // ERROR: Some Pieces/Spaces exist with empty string?
+
+	// Current RC on the Board
+	RC currentPosition;
+
+	bool hasMoved;
+	bool isWhite;
+
+	struct Rect
+	{
+		int x0;
+		int y0;
+		int x1;
+		int y1;
+		int x2;
+		int y2;
+		int x3;
+		int y3;
+	};
+	set <Rect> rectangles;
+
 public:
 	Piece() {
 		// If no parameters are given with the constructor
 		this->currentPosition = RC();
 		this->isWhite = false;
 		this->hasMoved = false;
+		this->rectangles = {};
 	};
 	Piece(RC position, bool isWhite)
 	{
@@ -35,6 +62,7 @@ public:
 		this->currentPosition = position;
 		this->isWhite = isWhite;
 		this->hasMoved = false;
+		this->rectangles = {};
 	};
 
 	// Returns the possible moves this Piece can do, given the current Board and the previous Move
@@ -65,24 +93,11 @@ public:
 	char getType() { return this->type; };
 	bool isSpace() { return this->type == 's'; };
 	bool getIsWhite() { return this->isWhite; };
+	set <Rect> getRectangles() { return this->rectangles; };
 
 	// To tell if a Piece is the same as another Piece (currently unused)
 	
 	//Piece& operator= (Piece& other) { return *this; };
 	//bool operator== (Piece& other) { return (this->getType() == other.getType() && this->currentPosition.getRow() == other.getCurrentPosition().getRow() && this->currentPosition.getCol() == other.getCurrentPosition().getCol()); };
 	//bool operator!= (Piece& other) { return !(this == other); };
-
-private:
-protected:
-	enum pieceTypes { k = 'k', q = 'q', r = 'r', n = 'n', p = 'p', b = 'b', s = 's' };
-
-	// Type of Piece (PAWN, KNIGHT, KING, ect)
-	char type = ' '; // ERROR: Some Pieces/Spaces exist with empty string?
-
-	// Current RC on the Board
-	RC currentPosition;
-
-	bool hasMoved;
-	bool isWhite;
-
 };
