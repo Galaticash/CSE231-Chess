@@ -77,7 +77,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&kingTest);
 
 			// EXERCISE
-			set <Move> possibleMoves = kingTest.getPossibleMoves(testBoard.getPieceBoard(), Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard, Move());
 
 			// VERIFY   possible.insert(Move(RC(row, col), RC(r, c)));
 			set <Move> expectedMoves = set<Move> { 
@@ -127,10 +127,14 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&pawnTest4);
 
 			// exercise
-			set <Move> possibleMoves = kingTest.getPossibleMoves(testBoard.getPieceBoard(), Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard, Move());
 
 			// verify
-			set <Move> expectedMoves = set<Move> { { Move(RC(0, 4), RC(0, 2)) }, { Move(RC(0, 4), RC(0, 3)) } };
+			Move castling = Move(RC(0, 4), RC(0, 3));
+			castling.setCastlingQ();
+			set <Move> expectedMoves = set<Move> { 
+				{ Move(RC(0, 4), RC(0, 2)) }, 
+				castling };
 			Assert::IsTrue(possibleMoves == expectedMoves);
 			//Assert::AreEqual(expectedMoves, possibleMoves);
 
@@ -173,7 +177,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&pawnTest4);
 
 			// exercise
-			set <Move> possibleMoves = kingTest.getPossibleMoves(testBoard.getPieceBoard(), Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard, Move());
 
 			// verify
 			Move castlingKing = Move(RC(0, 4), RC(0, 6));
@@ -228,7 +232,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&pawnTest8);
 
 			// exercise
-			set <Move> possibleMoves = kingTest.getPossibleMoves(testBoard.getPieceBoard(), Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard, Move());
 
 			// verify
 			Assert::IsTrue(possibleMoves.empty());
@@ -276,7 +280,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&pawnTest8);
 
 			// exercise
-			set <Move> possibleMoves = kingTest.getPossibleMoves(testBoard.getPieceBoard(), Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard, Move());
 
 			// verify
 			set <Move> expectedMoves = set<Move> { {Move(RC(5, 4), RC(4, 3))}, {Move(RC(5, 4), RC(4, 4))}, {Move(RC(5, 4), RC(4, 5))}, {Move(RC(5, 4), RC(5, 3))},

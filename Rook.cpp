@@ -14,13 +14,14 @@
  * GET POSSIBLE MOVES
  * Get's the possible moves from a piece.
  ********************************************/
-set <Move> Rook::getPossibleMoves(Piece* board[], Move lastMove)
+set <Move> Rook::getPossibleMoves(Board* board, Move lastMove)
 {
    set <Move> possible;
 
    int row = this->currentPosition.getRow(); // current location row
    int col = this->currentPosition.getCol(); // current location column
 
+   /*
    // If the currentPosition is not valid or the selected Position is an empty Space
    if (!(isValidPosition(this->currentPosition)) || board[row][col].isSpace())
       return possible;
@@ -53,7 +54,7 @@ set <Move> Rook::getPossibleMoves(Piece* board[], Move lastMove)
          possible.insert(Move(RC(row, col), RC(r, c)));
       if (board[r][c].isSpace() || (this->isWhite && !board[r][c].getIsWhite()))
          possible.insert(Move(RC(row, col), RC(r, c)));
-   }
+   }*/
 
    return possible;
 };

@@ -8,7 +8,10 @@
  ************************************************************************/
 
 #pragma once
-#include "Piece.h"
+#ifndef PIECE_CLASS
+#define PIECE_CLASS
+#include "Piece.cpp"
+#endif
 
 class Space : public Piece
 {
@@ -22,5 +25,5 @@ public:
 	{
 		this->type = 's';
 	};
-	set <Move> getPossibleMoves(Piece** board[], Move lastMove) { set <Move> possible; return possible; };
+	set <Move> getPossibleMoves(Board* board, Move lastMove) { set <Move> possible; return possible; };
 };
