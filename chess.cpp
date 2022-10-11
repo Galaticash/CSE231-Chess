@@ -13,46 +13,26 @@
 #include <string>         // for STRING
 using namespace std;
 
+
+#include "board.h"
+#include "Pawn.h"
+#include "Queen.h"
+#include "Space.h"
+#include "King.h"
+#include "Rook.h"
+#include "Bishop.h"
+#include "Knight.h"
+
 /***********************************************
  * Row Column
  * Simple row/column pair
  ************************************************/
-struct RC
-{
-   int row;
-   int col;
-};
-
-/*********************************************************
- * GET POSSIBLE MOVES
- * Determine all the possible moves for a given chess piece
- *********************************************************/
-set <int> getPossibleMoves(const char* board, int location)
-{
-   set <int> possible;
-
-   // return the empty set if there simply are no possible moves
-   if (location < 0 || location >= 64 || board[location] == ' ')
-      return possible;
-   int row = location / 8;  // current location row
-   int col = location % 8;  // current location column
-   int r;                   // the row we are checking
-   int c;                   // the column we are checking
-   bool amBlack;
-
-   // board[index] --> Piece/None
-   // IF piece:
-   //   possible = piece.getMoves() --> RC/integer (index)
-   // return possible
-   
-   return possible;
-}
 
 /***************************************************
  * DRAW
  * Draw the current state of the game
  ***************************************************/
-void draw(const char* board, const Interface & ui, const set <int> & possible)
+void draw(const Board* board, const Interface & ui, const set <Move> & possible)
 {
    ogstream gout;
    
@@ -64,93 +44,38 @@ void draw(const char* board, const Interface & ui, const set <int> & possible)
    gout.drawSelected(ui.getSelectPosition());
 
    // draw the possible moves
-   set <int> :: iterator it;
-   for (it = possible.begin(); it != possible.end(); ++it)
-      gout.drawPossible(*it);
-
-
-   // Note: Draw needs positions x,y instead of Row Columns, 
-
-   // Note: Draw is wanting to know isBlack.
-   // for (int row = 0; row < 8; row++)
-   //    for (int col= 0; col < 8; col++)
-   //       gout.drawPiece(Piece.getCurrentPosition().getRow(), Piece.getCurrentPosition().getCol(),
-   //          !Piece.getIsWhite(), Piece.getRectangles(), Piece.getRectangles().len()) const;
-
-   // draw the pieces
-   for (int i = 0; i < 64; i++)
-      switch (board[i])
-      {
-      case 'P':
-         gout.drawPawn(i, true);
-         break;
-      case 'p':
-         gout.drawPawn(i, false);
-         break;
-      case 'K':
-         gout.drawKing(i, true);
-         break;
-      case 'k':
-         gout.drawKing(i, false);
-         break;
-      case 'Q':
-         gout.drawQueen(i, true);
-         break;
-      case 'q':
-         gout.drawQueen(i, false);
-         break;
-      case 'R':
-         gout.drawRook(i, true);
-         break;
-      case 'r':
-         gout.drawRook(i, false);
-         break;
-      case 'B':
-         gout.drawBishop(i, true);
-         break;
-      case 'b':
-         gout.drawBishop(i, false);
-         break;
-      case 'N':
-         gout.drawKnight(i, true);
-         break;
-      case 'n':
-         gout.drawKnight(i, false);
-         break;
-      }
-}
-
-/*********************************************
- * MOVE 
- * Execute one movement. Return TRUE if successful
- *********************************************/
-bool move(char* board, int positionFrom, int positionTo)
-{
-   // do not move if a move was not indicated
-   if (positionFrom == -1 || positionTo == -1)
-      return false;
-   assert(positionFrom >= 0 && positionFrom < 64);
-   assert(positionTo >= 0 && positionTo < 64);
-
-
-   // find the set of possible moves from our current location
-   // Find the Piece on the board
-   // Piece movePiece =  board[previous.row][previous.col]
-   // set <RC> possiblePrevious = movePiece.getPossibleMoves(board)
-   set <int> possiblePrevious = getPossibleMoves(board, positionFrom);
-
-   // only move there is the suggested move is on the set of possible moves
-   if (possiblePrevious.find(positionTo) != possiblePrevious.end())
+   for (set <Move> ::iterator it = possible.begin(); it != possible.end(); it++)
    {
-      // board[positionTo.row][positionFrom.row] = board[positionFrom.row][positionRow.row]
-      board[positionTo] = board[positionFrom];
-      board[positionFrom] = ' ';
-
-      // hasMoved = True OR nMoves ++
-      return true;
+       Move currentMove = *it;
+       gout.drawPossible(getPosition(currentMove.getPositionTo()));
    }
 
-   return false;
+   // Draw each Piece on the Board
+   /*for (int r = 0; r < 8; r++)
+   {
+       for (int c = 0; c < 8; c++)
+       {
+           if (!(board)[r][c]->isSpace())
+           {
+               gout.drawPiece(board[r][c]);
+           }
+       }
+   }*/
+}
+
+
+int getPosition(RC rcPos)
+{
+    int location = rcPos.getRow() * 8 + rcPos.getCol();
+
+    return location;
+}
+
+RC getRC(int location)
+{
+   int row = location / 8;  // current location row
+   int col = location % 8;  // current location column
+   return RC(row, col);
 
 }
 
@@ -164,21 +89,30 @@ bool move(char* board, int positionFrom, int positionTo)
  **************************************/
 void callBack(Interface *pUI, void * p)
 {
-   set <int> possible;
+   set <Move> possible;
 
    // the first step is to cast the void pointer into a game object. This
    // is the first step of every single callback function in OpenGL. 
-   char * board = (char *)p;  
+   Board * board = (Board *)p; 
 
-   // move 
-   if (move(board, pUI->getPreviousPosition(), pUI->getSelectPosition()))
-      pUI->clearSelectPosition();
-   else
+   Board pieceBoard = Board();
+
+   // ** MOVE **
+   // Do the move that the user selected on the visual board
+   //pieceBoard.move();
+
+   //if(pieceBoard.move()))
+
+   //if (move(board, pUI->getPreviousPosition(), pUI->getSelectPosition()))
+   //    pUI->clearSelectPosition();
+   //else
        // possible = (currentPiece).getPossibleMoves(board)
-      possible = getPossibleMoves(board, pUI->getSelectPosition());
+       // possible = {};
+       //getPossibleMoves(board, pUI->getSelectPosition());
 
    // if we clicked on a blank spot, then it is not selected
-   if (pUI->getSelectPosition() != -1 && board[pUI->getSelectPosition()] == ' ')
+   RC selectPos = getRC(pUI->getSelectPosition());
+   if (pUI->getSelectPosition() != -1 && (*board)[selectPos.getRow()][selectPos.getCol()]->getType() == 's')
       pUI->clearSelectPosition();
 
    // draw the board
@@ -258,7 +192,7 @@ void parse(const string& textMove, int& positionFrom, int& positionTo)
  * READ FILE
  * Read a file where moves are encoded in Smith notation
  *******************************************************/
-void readFile(const char* fileName, char* board)
+void readFile(const char* fileName, Board board)
 {
    // open the file
    ifstream fin(fileName);
@@ -273,7 +207,7 @@ void readFile(const char* fileName, char* board)
       int positionFrom;
       int positionTo;
       parse(textMove, positionFrom, positionTo);
-      valid = move(board, positionFrom, positionTo);
+      //valid = move(board, positionFrom, positionTo); ***
    }
 
    // close and done
@@ -301,27 +235,7 @@ int main(int argc, char** argv)
 
    // Initialize the game class
    // note this is upside down: 0 row is at the bottom
-   char board[64] = {
-      'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r',
-      'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p',
-      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      // ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P',
-      'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'
-   };
-
-   // char board[8][8] = {}
-
-   // pieces board[64] None
-
-   // Piece's position: board[0] --> board[16]
-   
-   // pieces -> King, Pawn, Queens
-   // moveset
-
+   Board board = Board();
 
 #ifdef _WIN32
  //  int    argc;
