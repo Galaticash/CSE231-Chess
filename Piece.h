@@ -89,10 +89,11 @@ public:
 	//bool operator!= (Piece& other) { return !(this == other); };
 
 protected:
-	enum pieceTypes { k = 'k', q = 'q', r = 'r', n = 'n', p = 'p', b = 'b', s = 's' };
+	enum pieceType { k = 'k', q = 'q', r = 'r', n = 'n', p = 'p', b = 'b', s = 's' };
 
 	// Type of Piece (PAWN, KNIGHT, KING, ect)
-	char type = ' '; // ERROR: Some Pieces/Spaces exist with empty string?
+	char type = ' ';
+	//pieceType type = s;
 
 	// Current RC on the Board
 	RC currentPosition;

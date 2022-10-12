@@ -90,6 +90,7 @@ Move Board::move(Move currentMove)
 			move(Move(RC(pieceDestination.getRow(), 0), RC(pieceDestination.getRow(), 3)));
 		}
 
+		this->lastMove = currentMove;
 		return currentMove;
 	}
 

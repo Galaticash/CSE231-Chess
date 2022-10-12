@@ -13,9 +13,13 @@
 #include <string>         // for STRING
 using namespace std;
 
+#ifndef BOARD_CLASS
+#define BOARD_CLASS
+#include "board.h"
+#endif
 
-#include "board.cpp"
-
+#ifndef PIECE_CLASSES
+#define PIECE_CLASSES
 #include "Pawn.h"
 #include "Queen.h"
 #include "Space.h"
@@ -23,6 +27,19 @@ using namespace std;
 #include "Rook.h"
 #include "Bishop.h"
 #include "Knight.h"
+#endif
+
+
+Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
+            {&Rook(RC(0, 0), 0), &Bishop(RC(0, 1), 0), &Knight(RC(0, 2), 0), &Queen(RC(0, 3), 0), &King(RC(0, 4), 0), &Knight(RC(0, 5), 0), &Bishop(RC(0, 6), 0), &Rook(RC(0, 7), 0)},
+            {&Pawn(RC(1, 0), 0), &Pawn(RC(1, 1), 0), &Pawn(RC(1, 2), 0), &Pawn(RC(1, 3), 0), &Pawn(RC(1, 4), 0), &Pawn(RC(1, 5), 0), &Pawn(RC(1, 6), 0), &Pawn(RC(1, 7), 0)},
+            {&Space(RC(2, 0)), &Space(RC(2, 1)), &Space(RC(2, 2)), &Space(RC(2, 3)), &Space(RC(2, 4)), &Space(RC(2, 5)), &Space(RC(2, 6)), &Space(RC(2, 7))},
+            {&Space(RC(3, 0)), &Space(RC(3, 1)), &Space(RC(3, 2)), &Space(RC(3, 3)), &Space(RC(3, 4)), &Space(RC(3, 5)), &Space(RC(3, 6)), &Space(RC(3, 7))},
+            {&Space(RC(4, 0)), &Space(RC(4, 1)), &Space(RC(4, 2)), &Space(RC(4, 3)), &Space(RC(4, 4)), &Space(RC(4, 5)), &Space(RC(4, 6)), &Space(RC(4, 7))},
+            {&Space(RC(5, 0)), &Space(RC(5, 1)), &Space(RC(5, 2)), &Space(RC(5, 3)), &Space(RC(5, 4)), &Space(RC(5, 5)), &Space(RC(5, 6)), &Space(RC(5, 7))},
+            {&Pawn(RC(6, 0), 1), &Pawn(RC(6, 1), 1), &Pawn(RC(6, 2), 1), &Pawn(RC(6, 3), 1), &Pawn(RC(6, 4), 1), &Pawn(RC(6, 5), 1), &Pawn(RC(6, 6), 1), &Pawn(RC(6, 7), 1)},
+            {&Rook(RC(7, 0), 1), &Bishop(RC(7, 1), 1), &Knight(RC(7, 2), 1), &Queen(RC(7, 3), 1), &King(RC(7, 4), 1), &Knight(RC(7, 5), 1), &Bishop(RC(7, 6), 1), &Rook(RC(7, 7), 1)} };
+
 
 /***********************************************
  * Row Column
@@ -56,7 +73,7 @@ void draw(const Board* board, const Interface & ui, const set <Move> & possible)
    {
        for (int c = 0; c < 8; c++)
        {
-           if (!(board)[r][c]->isSpace())
+           if (!((*board)[r][c]).isSpace())
            {
                gout.drawPiece(board[r][c]);
            }
@@ -92,33 +109,64 @@ void callBack(Interface *pUI, void * p)
 
    // the first step is to cast the void pointer into a game object. This
    // is the first step of every single callback function in OpenGL. 
-   Board * board = (Board *)p; 
-
-   Board pieceBoard = Board();
+   Board* board = (Board *)p;
 
    // Get the Move that has PosTo = position clicked
 
    // ** MOVE **
    // Do the move that the user selected on the visual board
-   //pieceBoard.move();
+   
+   // Find a move that has positionTo == positionClicked
+  
 
-   //if(pieceBoard.move()))
+   if (pUI->getPreviousPosition() != -1 && pUI->getSelectPosition() != -1)
+   {
+       RC prevPos = getRC(pUI->getPreviousPosition());
+       RC selectPos = getRC(pUI->getSelectPosition());
 
-   //if (move(board, pUI->getPreviousPosition(), pUI->getSelectPosition()))
-   //    pUI->clearSelectPosition();
-   //else
-       // possible = (currentPiece).getPossibleMoves(board)
-       // possible = {};
-       //getPossibleMoves(board, pUI->getSelectPosition());
+       // From the previously clicked space, get the possible Moves for that Piece
+       set <Move> prevPossible = (*board)[prevPos.getRow()][prevPos.getCol()]->getPossibleMoves(board, board->getLastMove());
 
-   // if we clicked on a blank spot, then it is not selected
-   RC selectPos = getRC(pUI->getSelectPosition());
-   if (pUI->getSelectPosition() != -1 && (*board)[selectPos.getRow()][selectPos.getCol()]->getType() == 's')
-      pUI->clearSelectPosition();
+       // If Move.positionTo == Move in possibleMoves
+       // If the possible Moves set is not empty
+       if (prevPossible.begin() != prevPossible.end())
+       {
+           // For every Move in the set,
+           for (set <Move> ::iterator it = prevPossible.begin(); it != prevPossible.end(); it++)
+           {
+               // Look for the current Move
+               Move checkMove = *it;
+               if (checkMove.getPositionTo() == selectPos)
+               {
+                   // Perform that Move
+                   board->move(checkMove);
+                   pUI->clearSelectPosition();
+                   break;
+               }
+           }
+       }
+   }
+   // If the user clicked on an invalid spot, then it is not selected
+   else if (pUI->getSelectPosition() != -1)
+   {
+       RC selectPos = getRC(pUI->getSelectPosition());
+       // Update the possible Moves for the Piece that the user just clicked
+       possible = (*board)[selectPos.getRow()][selectPos.getCol()]->getPossibleMoves(board, board->getLastMove());
+
+       // If the selected Piece has no Moves available (most often a Space)
+       //  Will not show the user clicking on a Piece with no possible Moves
+       if (possible.begin() == possible.end())
+       {
+           pUI->clearSelectPosition();
+       }
+   }
+   else
+   {
+       pUI->clearSelectPosition();
+   }
 
    // draw the board
    draw(board, *pUI, possible);
-
 }
 
 /********************************************************
@@ -236,7 +284,7 @@ int main(int argc, char** argv)
 
    // Initialize the game class
    // note this is upside down: 0 row is at the bottom
-   Board board = Board();
+   Board board = Board(DEFAULT_BOARD);
 
 #ifdef _WIN32
  //  int    argc;
@@ -250,7 +298,7 @@ int main(int argc, char** argv)
 #endif // !_WIN32
 
    // set everything into action
-   ui.run(callBack, board);             
+   ui.run(callBack, &board);             
 
    return 0;
 }

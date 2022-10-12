@@ -16,7 +16,6 @@
 
 #pragma once
 
-
 /********************************************
  * INTERFACE
  * All the data necessary to keep our graphics
