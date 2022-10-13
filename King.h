@@ -23,13 +23,13 @@ public:
         this->type = 'k';
 		  this->rectangles = 
         {
-            { 1,8,  -1,8,  -1,1,   1,1},     // cross vertical
-            {-3,6,   3,6,   3,4,  -3,4},     // cross horizontal
-            {-8,3,  -8,-3, -3,-3, -3,3},     // bug bump left
-            { 8,3,   8,-3,  3,-3,  3,3},     // bug bump right
-            { 5,1,   5,-5, -5,-5, -5,1},     // center column
-            { 8,-4, -8,-4, -8,-5,  8,-5},    // base center
-            { 8,-6, -8,-6, -8,-8,  8,-8}     // base
+            Rect(  1,8,  -1,8,  -1,1,   1,1),     // cross vertical
+            Rect( -3,6,   3,6,   3,4,  -3,4),     // cross horizontal
+            Rect( -8,3,  -8,-3, -3,-3, -3,3),     // bug bump left
+            Rect( 8,3,   8,-3,  3,-3,  3,3),     // bug bump right
+            Rect( 5,1,   5,-5, -5,-5, -5,1),     // center column
+            Rect( 8,-4, -8,-4, -8,-5,  8,-5),    // base center
+            Rect( 8,-6, -8,-6, -8,-8,  8,-8)     // base
 		  };
     };
 

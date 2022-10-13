@@ -1,8 +1,8 @@
 /***********************************************************************
  * Header File:
- *    Board:
+ *    Board: Represents the board in chess
  * Author:
- *
+ *		Ashley DeMott, Logan Huston
  * Summary:
  *
  ************************************************************************/

@@ -1,10 +1,11 @@
 /***********************************************************************
  * Header File:
- *    Space:
+ *    Space: An empty space in chess
  * Author:
- *
+ *		Ashley DeMott, Logan Huston
  * Summary:
- *
+ *		Inherits from the piece class and has a type that is accesible 
+ *		to the board for comparisons.
  ************************************************************************/
 
 #pragma once

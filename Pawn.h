@@ -22,10 +22,10 @@ public:
 		this->type = 'p';
 		this->rectangles =
 		{
-			{ 1,7,  -1,7,  -2,5,  2,5 }, // top of head
-			{ 3,5,  -3,5,  -3,3,  3,3 }, // bottom of head
-			{ 1,3,  -1,3,  -2,-3, 2,-3}, // neck
-			{ 4,-3, -4,-3, -4,-5, 4,-5}  // base
+			Rect( 1,7,  -1,7,  -2,5,  2,5 ), // top of head
+			Rect( 3,5,  -3,5,  -3,3,  3,3 ), // bottom of head
+			Rect( 1,3,  -1,3,  -2,-3, 2,-3), // neck
+			Rect( 4,-3, -4,-3, -4,-5, 4,-5)  // base
 		};
 	};
 

@@ -1,10 +1,10 @@
 /***********************************************************************
  * Source File:
- *    Pawn:
- * Author:
- *
- * Summary:
- *
+ *    Pawn: A pawn in chess
+ * Author: 
+ *		Ashley DeMott, Logan Huston
+ * Summary: 
+ *		Contains the code for how a pawn moves.
  ************************************************************************/
 
 #pragma once
