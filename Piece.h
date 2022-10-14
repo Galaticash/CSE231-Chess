@@ -10,6 +10,8 @@
 #pragma once
 #include "Move.h"	// For the possible Moves of a given Piece
 #include <set>		// Moves are stored in a set
+#include "Rect.h"
+#include <vector>
 
 using namespace std;
 
@@ -58,7 +60,8 @@ public:
 		}
 	}	
 	RC getCurrentPosition() { return this->currentPosition; };
-	
+	vector<Rect>* getRectangles() { return &(this->rectangles); };
+
 	void setHasMoved(bool moved) { this->hasMoved = moved; }; // For Testing
 	bool getHasMoved() { return this->hasMoved; };	
 
@@ -78,11 +81,11 @@ protected:
 
 	// Type of Piece (PAWN, KNIGHT, KING, ect)
 	char type = ' '; // ERROR: Some Pieces/Spaces exist with empty string?
-
+	vector <Rect> rectangles;
+	
 	// Current RC on the Board
 	RC currentPosition;
 
 	bool hasMoved;
 	bool isWhite;
-
 };

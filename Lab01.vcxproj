@@ -122,6 +122,7 @@
     <ClInclude Include="point.h" />
     <ClInclude Include="Queen.h" />
     <ClInclude Include="RC.h" />
+    <ClInclude Include="Rect.h" />
     <ClInclude Include="Rook.h" />
     <ClInclude Include="Space.h" />
     <ClInclude Include="uiDraw.h" />
