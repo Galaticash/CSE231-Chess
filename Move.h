@@ -154,6 +154,7 @@ public:
 	
 	bool operator== (Move const& other) const { return (this->positionFrom == other.positionFrom && this->positionTo == other.positionTo); };
 	//bool _equals(Move const& other) const { return (this->positionFrom == other.positionFrom && this->positionTo == other.positionTo); };
+	bool operator!= (Move const& other) const { return !(*this == other); };
 
 	// Updated to use Smith notation to compare moves
 	bool operator< (Move const& other) const { return this->smithNotation < other.smithNotation; };

@@ -95,11 +95,11 @@ void draw(const Board* board, const Interface & ui, const set <Move> & possible)
    gout.drawSelected(ui.getSelectPosition());
 
    // draw the possible moves
-   // draw the possible moves
-   for (set <Move> ::iterator it = possible.begin(); it != possible.end(); it++)
+   for (set <Move> ::iterator it = possible.begin(); it != possible.end(); ++it)
    {
        Move currentMove = *it;
-       gout.drawPossible((currentMove.getPositionTo()).getRow() * 8 + (currentMove.getPositionTo()).getCol());
+       int position = getPosition(currentMove.getPositionTo());
+       gout.drawPossible(position);
    }
 
    // Draw each Piece on the Board
@@ -110,8 +110,8 @@ void draw(const Board* board, const Interface & ui, const set <Move> & possible)
            if (!(board->getPieceAtPosition(RC(r, c))->isSpace()))
            {
                Piece* drawMe = board->getPieceAtPosition(RC(r, c));
+                   //board[r][c]; // NOTE: const override isn't working
                char type = drawMe->getType();
-                   //board[r][c];
                gout.drawPiece(drawMe);
            }
        }
@@ -122,14 +122,14 @@ void draw(const Board* board, const Interface & ui, const set <Move> & possible)
  * MOVE 
  * Execute one movement. Return TRUE if successful
  *********************************************/
-bool move(char* board, int positionFrom, int positionTo)
+// NOTE: Functionality move to Board class
+/*bool move(char* board, int positionFrom, int positionTo)
 {
    // do not move if a move was not indicated
    if (positionFrom == -1 || positionTo == -1)
       return false;
    assert(positionFrom >= 0 && positionFrom < 64);
    assert(positionTo >= 0 && positionTo < 64);
-
 
    // find the set of possible moves from our current location
    // Find the Piece on the board
@@ -149,8 +149,7 @@ bool move(char* board, int positionFrom, int positionTo)
    }
 
    return false;
-
-}
+}*/
 
 /*************************************
  *  CALLBACK
@@ -168,14 +167,56 @@ void callBack(Interface *pUI, void * p)
     // is the first step of every single callback function in OpenGL. 
     Board* board = (Board*)p;
 
-    // Get the Move that has PosTo = position clicked
-
     // ** MOVE **
     // Do the move that the user selected on the visual board
-
     // Find a move that has positionTo == positionClicked
+    // Get the Move that has PosTo = position clicked
+    Move currentMove = Move();
 
+    RC prevPos = getRC(pUI->getPreviousPosition());
+    RC selectPos = getRC(pUI->getSelectPosition());
 
+    // From the previously clicked space, get the possible Moves for that Piece
+    if (board->isValidPosition(prevPos))
+    {
+        Piece* selectedPiece = board->getPieceAtPosition(prevPos);
+        set <Move> prevPossible = selectedPiece->getPossibleMoves(board, board->getLastMove());
+        //(*board)[prevPos.getRow()][prevPos.getCol()].getPossibleMoves(board, board->getLastMove()); // Board[] const broken
+
+        // If Move.positionTo == Move in possibleMoves
+        // If the possible Moves set is not empty,
+        if (prevPossible.begin() != prevPossible.end())
+        {
+            // For every Move in the set,
+            for (set <Move> ::iterator it = prevPossible.begin(); it != prevPossible.end(); it++)
+            {
+                // Look for the current Move (only comparing positionTo)
+                Move checkMove = *it;
+                if (checkMove.getPositionTo() == selectPos)
+                {
+                    // That is the current Move to be performed
+                    currentMove = checkMove;
+                    break;
+                }
+            }
+        }
+
+        // If the current Move can be done,
+        if (board->getLastMove() != board->move(currentMove))
+        {
+            pUI->clearSelectPosition();
+        }
+        // Otherwise, update possible Moves to display
+        else
+        {
+            possible = board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->getPossibleMoves(board, board->getLastMove());
+        }
+    }
+
+    if (pUI->getSelectPosition() != -1 && board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->isSpace())
+        pUI->clearSelectPosition();
+
+    /*
     if (pUI->getPreviousPosition() != -1 && pUI->getSelectPosition() != -1)
     {
         RC prevPos = getRC(pUI->getPreviousPosition());
@@ -222,13 +263,11 @@ void callBack(Interface *pUI, void * p)
     else
     {
         pUI->clearSelectPosition();
-    }
+    }*/
 
     // draw the board
     draw(board, *pUI, possible);
 }
-
-
 
 /********************************************************
  * PARSE
