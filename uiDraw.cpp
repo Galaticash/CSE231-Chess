@@ -119,60 +119,156 @@ void glColor(const int * rgb)
 /************************************************************************
 * DRAW Piece
 * Draw a piece at a certain location on the board
-*   INPUT  location   The location of the piece
-*          black      Whether the piece is black
-*          rectangles The rectangles of the piece
+*   INPUT  Piece* p     A pointer to the Piece being drawn
 *************************************************************************/
 void ogstream::drawPiece(Piece* p) const
-{
-   
+{   
     bool black = !(p->getIsWhite());
+    // TEMPORARY: not getting rectangles from Piece
     //set <Rect> rectangles = p->getRectangles();
 
     int x = (p->getCurrentPosition().getCol()) * 32;
     int y = (p->getCurrentPosition().getRow()) * 32;
 
-   GLint xGL = (GLint)(x + 16 /* half a square width */);
-   GLint yGL = (GLint)(y + 16 /* half a square height*/);
+    // TEMPORARY: moved GLints to extra method
 
    // get ready to draw
    glBegin(GL_QUADS);
    glColor(black ? RGB_BLACK : RGB_WHITE);
    
-   char* text = new char[2];
-   text[0] = (p->getType());
-   text[1] =(p->getIsWhite() ? 'w' : 'b');
-   drawText(xGL, yGL, text);
+   // TEMPORARY: Issues with using a set of Rects (less than operator?)
+   // Draws each Piece based on the type
+   switch (p->getType())
+   {
+   case 'p':
+   {
+       Rect pawnRectangles[] = {
+      { 1,7,  -1,7,  -2,5,  2,5 }, // top of head
+      { 3,5,  -3,5,  -3,3,  3,3 }, // bottom of head
+      { 1,3,  -1,3,  -2,-3, 2,-3}, // neck
+      { 4,-3, -4,-3, -4,-5, 4,-5}  // base
+       };
+       drawRectangles(x, y, pawnRectangles);
+       break;
+   }
+   case 'k':
+   {
+       Rect kingRectangles[] =
+       {
+          { 1,8,  -1,8,  -1,1,   1,1},     // cross vertical
+          {-3,6,   3,6,   3,4,  -3,4},     // cross horizontal
+          {-8,3,  -8,-3, -3,-3, -3,3},     // bug bump left
+          { 8,3,   8,-3,  3,-3,  3,3},     // bug bump right
+          { 5,1,   5,-5, -5,-5, -5,1},     // center column
+          { 8,-4, -8,-4, -8,-5,  8,-5},    // base center
+          { 8,-6, -8,-6, -8,-8,  8,-8}     // base
+       };
+       drawRectangles(x, y, kingRectangles);
+       break;
+   }
+   case 'q':
+   {
+       Rect queenRectangles[] =
+       {
+          { 8,8,   5,8,   5,5,   8,5 },     // right crown jewel
+          {-8,8,  -5,8,  -5,5,  -8,5 },     // left crown jewel
+          { 2,8,  -2,8,  -2,5,   2,5 },     // center crown jewel
+          { 7,5,   5,5,   1,0,   5,0 },     // right crown holder
+          {-7,5,  -5,5,  -1,0,  -5,0 },     // left crown holder
+          { 1,5,   1,0,  -1,0,  -1,5 },     // center crown holder
+          { 4,0,  -4,0,  -4,-2,  4,-2},     // upper base
+          { 6,-3, -6,-3, -6,-5,  6,-5},     // middel base
+          { 8,-6, -8,-6, -8,-8,  8,-8}      // base
+       };
+       drawRectangles(x, y, queenRectangles);
+       break;
+   }
+   case 'r':
+   {
+       Rect rookRectangles[] =
+       {
+          {-8,7,  -8,4,  -4,4,  -4,7},   // left battlement
+          { 8,7,   8,4,   4,4,   4,7},   // right battlement
+          { 2,7,   2,4,  -2,4,  -2,7},   // center battlement
+          { 4,3,   4,-5, -4,-5, -4,3},   // wall
+          { 6,-6, -6,-6, -6,-8,  6,-8}   // base
+       };
+       drawRectangles(x, y, rookRectangles);
+       break;
+   }
+   case 'b':
+   {
+       Rect bishopRectangles[] =
+       {
+          {-1,8,  -1,2,   1,2,   1,8 },   // center of head
+          { 1,8,   1,2,   5,2,   5,5 },   // right part of head
+          {-4,5,  -4,2,  -2,2,  -2, 6},   // left of head
+          {-5,3,  -5,2,   5,2,   5,3 },   // base of head
+          {-2,2,  -4,-5,  4,-5,  2,2 },   // neck
+          { 6,-6, -6,-6, -6,-8,  6,-8}    // base
+       };
+       drawRectangles(x, y, bishopRectangles);
+       break;
+   }
 
-   // TEST - draw one rectangle
-   int x0 = 4; // 4
-   int y0 = -3; // -3
-   int x1 = -4; // -4
-   int y1 = -3; // -3
-   int x2 = -4; // -4
-   int y2 = -5; // -5
-   int x3 = 4; // 4
-   int y3 = -5; // -5
+   case 'n':
+   {
+       Rect knightRectangles[] =
+       {
+          {-7,3,  -3,6,  -1,3,  -5,0},  // muzzle
+          {-2,6,  -2,8,   0,8,   0,3},  // head
+          {-3,6,   3,6,   6,1,   1,1},  // main
+          { 6,1,   1,1,  -5,-5,  5,-5}, // body
+          { 6,-6, -6,-6, -6,-8,  6,-8}  // base
 
-   glVertex2i(xGL + x0, yGL + y0);
-   glVertex2i(xGL + x1, yGL + y1);
-   glVertex2i(xGL + x2, yGL + y2);
-   glVertex2i(xGL + x3, yGL + y3);
+       };
+       drawRectangles(x, y, knightRectangles);
+       break;
+   }
+   default:
+   {
+       // Shouldn't reach here
+       Rect rectangles[] = { 4,-3, -4,-3, -4,-5, 4,-5 };
+       drawRectangles(x, y, rectangles);
+       break;
+   }
+   }
 
    // iterate through the rectangles
-   /*   for (set <Rect> ::iterator it = rectangles.begin(); it != rectangles.end(); it++)
-   {
-      // The current Rectangle being drawn
-      Rect currentRect = *it;
-      glVertex2i(xGL + rectangle[i].x0, yGL + rectangle[i].y0);
-      glVertex2i(xGL + rectangle[i].x1, yGL + rectangle[i].y1);
-      glVertex2i(xGL + rectangle[i].x2, yGL + rectangle[i].y2);
-      glVertex2i(xGL + rectangle[i].x3, yGL + rectangle[i].y3);
-   }*/
+   //for (set <Rect> ::iterator it = rectangles.begin(); it != rectangles.end(); it++)
+   /*{
+        // The current Rectangle being drawn
+        //Rect currentRect = *it;
+        glVertex2i(xGL + rectangles[i].x0, yGL + rectangles[i].y0);
+        glVertex2i(xGL + rectangles[i].x1, yGL + rectangles[i].y1);
+        glVertex2i(xGL + rectangles[i].x2, yGL + rectangles[i].y2);
+        glVertex2i(xGL + rectangles[i].x3, yGL + rectangles[i].y3);
+    }*/
 
    // finish the drawing
    glEnd();
 }
+
+void ogstream::drawRectangles(int x, int y, Rect rectangles[]) const
+{
+    // This is a pretty bad way to do this, but better than including GLint to the header file
+    //GLint xGL = (GLint)x;
+    //GLint yGL = (GLint)y;
+
+    GLint xGL = (GLint)(x + 16 /* half a square width */);
+    GLint yGL = (GLint)(y + 16 /* half a square height*/);
+
+    for (int i = 0; i < sizeof(rectangles); i++)
+    {
+        // The current Rectangle being drawn
+        //Rect currentRect = *it;
+        glVertex2i(xGL + rectangles[i].x0, yGL + rectangles[i].y0);
+        glVertex2i(xGL + rectangles[i].x1, yGL + rectangles[i].y1);
+        glVertex2i(xGL + rectangles[i].x2, yGL + rectangles[i].y2);
+        glVertex2i(xGL + rectangles[i].x3, yGL + rectangles[i].y3);
+    }
+}
+
 
 /************************************************************************
 * DRAW BOARD

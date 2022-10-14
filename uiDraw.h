@@ -39,6 +39,7 @@ public:
     virtual void drawHover(   int position);
     virtual void drawPossible(int position);
 
+
     // Draw a piece with a collection of rectangles
     void drawPiece(Piece* p) const;
 
@@ -58,8 +59,10 @@ private:
         int y2;
         int x3;
         int y3;
-    };
-   
+    };   
+
+    // TEMPORARY: Given an x/y location and array of Rects, draws the Rectangles on the board
+    void drawRectangles(int xGL, int yGL, Rect rectangles[]) const;
 
     // Put text at location X, Y
     void drawText(int x, int y, const char* text) const;
