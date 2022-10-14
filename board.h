@@ -31,7 +31,7 @@ public:
 
 	// Get a pointer to the Piece at the given position on the Board
 	// Also override []
-	Piece* getPieceAtPosition(RC position)
+	Piece* getPieceAtPosition(RC position) const
 	{
 		return piecesBoard[position.getRow()][position.getCol()];
 	}
@@ -50,6 +50,8 @@ public:
 	// Put a Piece onto the Board, replacing any Piece currently there
 	void insertPiece(Piece* insertPiece);
 
+	Move getLastMove() { return this->lastMove; };
+
 	// Perform a give Move
 	Move move(Move currentMove);
 
@@ -67,7 +69,7 @@ public:
 		return (row >= 0 && row < NUM_ROW&& col >= 0 && col < NUM_COL);
 	};
 
-	Piece** operator[] (int row) { return piecesBoard[row]; };
+	Piece* operator[](const int row) const { return *(piecesBoard[row]); };
 
 private:
 	Piece* piecesBoard[NUM_ROW][NUM_COL] = {};

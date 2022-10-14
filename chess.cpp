@@ -39,6 +39,21 @@ Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
             {new Pawn(RC(6, 0), 1), new Pawn(RC(6, 1), 1), new Pawn(RC(6, 2), 1), new Pawn(RC(6, 3), 1), new Pawn(RC(6, 4), 1), new Pawn(RC(6, 5), 1), new Pawn(RC(6, 6), 1), new Pawn(RC(6, 7), 1)},
             {new Rook(RC(7, 0), 1), new Bishop(RC(7, 1), 1), new Knight(RC(7, 2), 1), new Queen(RC(7, 3), 1), new King(RC(7, 4), 1), new Knight(RC(7, 5), 1), new Bishop(RC(7, 6), 1), new Rook(RC(7, 7), 1)} };
 
+
+int getPosition(RC rcPos)
+{
+    int location = rcPos.getRow() * 8 + rcPos.getCol();
+    return location;
+}
+
+RC getRC(int location)
+{
+    int row = location / 8;  // current location row
+    int col = location % 8;  // current location column
+    return RC(row, col);
+}
+
+
 /*********************************************************
  * GET POSSIBLE MOVES
  * Determine all the possible moves for a given chess piece
@@ -68,7 +83,7 @@ set <int> getPossibleMoves(const char* board, int location)
  * DRAW
  * Draw the current state of the game
  ***************************************************/
-void draw(const char* board, const Interface & ui, const set <int> & possible)
+void draw(const Board* board, const Interface & ui, const set <Move> & possible)
 {
    ogstream gout;
    
@@ -80,60 +95,27 @@ void draw(const char* board, const Interface & ui, const set <int> & possible)
    gout.drawSelected(ui.getSelectPosition());
 
    // draw the possible moves
-   set <int> :: iterator it;
-   for (it = possible.begin(); it != possible.end(); ++it)
-      gout.drawPossible(*it);
+   // draw the possible moves
+   for (set <Move> ::iterator it = possible.begin(); it != possible.end(); it++)
+   {
+       Move currentMove = *it;
+       gout.drawPossible((currentMove.getPositionTo()).getRow() * 8 + (currentMove.getPositionTo()).getCol());
+   }
 
-
-   // Note: Draw needs positions x,y instead of Row Columns, 
-
-   // Note: Draw is wanting to know isBlack.
-   // for (int row = 0; row < 8; row++)
-   //    for (int col= 0; col < 8; col++)
-   //       gout.drawPiece(Piece.getCurrentPosition().getRow(), Piece.getCurrentPosition().getCol(),
-   //          !Piece.getIsWhite(), Piece.getRectangles(), Piece.getRectangles().len()) const;
-
-   // draw the pieces
-   for (int i = 0; i < 64; i++)
-      switch (board[i])
-      {
-      case 'P':
-         gout.drawPawn(i, true);
-         break;
-      case 'p':
-         gout.drawPawn(i, false);
-         break;
-      case 'K':
-         gout.drawKing(i, true);
-         break;
-      case 'k':
-         gout.drawKing(i, false);
-         break;
-      case 'Q':
-         gout.drawQueen(i, true);
-         break;
-      case 'q':
-         gout.drawQueen(i, false);
-         break;
-      case 'R':
-         gout.drawRook(i, true);
-         break;
-      case 'r':
-         gout.drawRook(i, false);
-         break;
-      case 'B':
-         gout.drawBishop(i, true);
-         break;
-      case 'b':
-         gout.drawBishop(i, false);
-         break;
-      case 'N':
-         gout.drawKnight(i, true);
-         break;
-      case 'n':
-         gout.drawKnight(i, false);
-         break;
-      }
+   // Draw each Piece on the Board
+   for (int r = 0; r < 8; r++)
+   {
+       for (int c = 0; c < 8; c++)
+       {
+           if (!(board->getPieceAtPosition(RC(r, c))->isSpace()))
+           {
+               Piece* drawMe = board->getPieceAtPosition(RC(r, c));
+               char type = drawMe->getType();
+                   //board[r][c];
+               gout.drawPiece(drawMe);
+           }
+       }
+   }
 }
 
 /*********************************************
@@ -180,27 +162,73 @@ bool move(char* board, int positionFrom, int positionTo)
  **************************************/
 void callBack(Interface *pUI, void * p)
 {
-   set <int> possible;
+    set <Move> possible;
 
-   // the first step is to cast the void pointer into a game object. This
-   // is the first step of every single callback function in OpenGL. 
-   char * board = (char *)p;  
+    // the first step is to cast the void pointer into a game object. This
+    // is the first step of every single callback function in OpenGL. 
+    Board* board = (Board*)p;
 
-   // move 
-   if (move(board, pUI->getPreviousPosition(), pUI->getSelectPosition()))
-      pUI->clearSelectPosition();
-   else
-       // possible = (currentPiece).getPossibleMoves(board)
-      possible = getPossibleMoves(board, pUI->getSelectPosition());
+    // Get the Move that has PosTo = position clicked
 
-   // if we clicked on a blank spot, then it is not selected
-   if (pUI->getSelectPosition() != -1 && board[pUI->getSelectPosition()] == ' ')
-      pUI->clearSelectPosition();
+    // ** MOVE **
+    // Do the move that the user selected on the visual board
 
-   // draw the board
-   draw(board, *pUI, possible);
+    // Find a move that has positionTo == positionClicked
 
+
+    if (pUI->getPreviousPosition() != -1 && pUI->getSelectPosition() != -1)
+    {
+        RC prevPos = getRC(pUI->getPreviousPosition());
+        RC selectPos = getRC(pUI->getSelectPosition());
+
+        // From the previously clicked space, get the possible Moves for that Piece
+        set <Move> prevPossible = board->getPieceAtPosition(RC(prevPos.getRow(), prevPos.getCol()))->getPossibleMoves(board, board->getLastMove());
+            //(*board)[prevPos.getRow()][prevPos.getCol()].getPossibleMoves(board, board->getLastMove());
+
+        // If Move.positionTo == Move in possibleMoves
+        // If the possible Moves set is not empty
+        if (prevPossible.begin() != prevPossible.end())
+        {
+            // For every Move in the set,
+            for (set <Move> ::iterator it = prevPossible.begin(); it != prevPossible.end(); it++)
+            {
+                // Look for the current Move
+                Move checkMove = *it;
+                if (checkMove.getPositionTo() == selectPos)
+                {
+                    // Perform that Move
+                    board->move(checkMove);
+                    pUI->clearSelectPosition();
+                    break;
+                }
+            }
+        }
+    }
+    // If the user clicked on an invalid spot, then it is not selected
+    else if (pUI->getSelectPosition() != -1)
+    {
+        RC selectPos = getRC(pUI->getSelectPosition());
+        // Update the possible Moves for the Piece that the user just clicked
+        possible = (board)->getPieceAtPosition(RC(selectPos.getRow(), selectPos.getCol()))->getPossibleMoves(board, board->getLastMove());
+            //(*board)[selectPos.getRow()][selectPos.getCol()].getPossibleMoves(board, board->getLastMove());
+
+        // If the selected Piece has no Moves available (most often a Space)
+        //  Will not show the user clicking on a Piece with no possible Moves
+        if (possible.begin() == possible.end())
+        {
+            pUI->clearSelectPosition();
+        }
+    }
+    else
+    {
+        pUI->clearSelectPosition();
+    }
+
+    // draw the board
+    draw(board, *pUI, possible);
 }
+
+
 
 /********************************************************
  * PARSE
