@@ -44,19 +44,24 @@ set <Move> Bishop::getPossibleMoves(Board* board, Move lastMove)
        {
            // Check how many clear spaces are in each direction,
            //  goes until it is blocked or reaches the end of the board
-           while (r >= 0 && r < 8 && c >= 0 && c < 8 &&
+           while (board->isValidPosition(RC(r, c)) &&
                (*board)[r][c]->isSpace())
            {
                possible.insert(Move(RC(row, col), RC(r, c)));
-                   r += moves[i].getRow();
-                   c += moves[i].getCol();
+               r += moves[i].getRow();
+               c += moves[i].getCol();
            }
 
-           // Check if it can capture the piece that is blocking
-           if ((*board)[r][c]->isSpace() || (!this->isWhite && (*board)[r][c]->getIsWhite()))
-               possible.insert(Move(RC(row, col), RC(r, c)));
-           if ((*board)[r][c]->isSpace() || (this->isWhite && !(*board)[r][c]->getIsWhite()))
-               possible.insert(Move(RC(row, col), RC(r, c)));
+           // TODO: Rewrite, keeps checking isValid
+           // TODO: Move slide to Piece class, then have Bishop, Queen, etc call getSlide for each direction
+           if (board->isValidPosition(RC(r, c)))
+           {
+               // Check if it can capture the piece that is blocking
+               if ((*board)[r][c]->isSpace() || (!this->isWhite && (*board)[r][c]->getIsWhite()))
+                   possible.insert(Move(RC(row, col), RC(r, c)));
+               if ((*board)[r][c]->isSpace() || (this->isWhite && !(*board)[r][c]->getIsWhite()))
+                   possible.insert(Move(RC(row, col), RC(r, c)));
+           }
        }
    }
 

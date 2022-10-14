@@ -51,10 +51,13 @@ set <Move> Rook::getPossibleMoves(Board* board, Move lastMove)
               c += moves[i].getCol();
           }
 
-          if ((*board)[r][c]->isSpace() || (!this->isWhite && (*board)[r][c]->getIsWhite()))
-              possible.insert(Move(RC(row, col), RC(r, c)));
-          if ((*board)[r][c]->isSpace() || (this->isWhite && !(*board)[r][c]->getIsWhite()))
-              possible.insert(Move(RC(row, col), RC(r, c)));
+          if (board->isValidPosition(RC(r, c)))
+          {
+              if ((*board)[r][c]->isSpace() || (!this->isWhite && (*board)[r][c]->getIsWhite()))
+                  possible.insert(Move(RC(row, col), RC(r, c)));
+              if ((*board)[r][c]->isSpace() || (this->isWhite && !(*board)[r][c]->getIsWhite()))
+                  possible.insert(Move(RC(row, col), RC(r, c)));
+          }
       }
    }
 

@@ -345,7 +345,6 @@ int main(int argc, char** argv)
    Board board = Board(DEFAULT_BOARD);
    
    // TEST: Move a Piece,
-   // NOTE: Piece has vanished
    board.move(Move(RC(6, 0), RC(5, 0)));
 
 
