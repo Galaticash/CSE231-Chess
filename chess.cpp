@@ -13,15 +13,31 @@
 #include <string>         // for STRING
 using namespace std;
 
-/***********************************************
- * Row Column
- * Simple row/column pair
- ************************************************/
-struct RC
-{
-   int row;
-   int col;
-};
+#ifndef BOARD_CLASS
+#define BOARD_CLASS
+#include "board.h"
+#endif
+
+#ifndef PIECE_CLASSES
+#define PIECE_CLASSES
+#include "Pawn.h"
+#include "Queen.h"
+#include "Space.h"
+#include "King.h"
+#include "Rook.h"
+#include "Bishop.h"
+#include "Knight.h"
+#endif
+
+Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
+            {new Rook(RC(0, 0), 0), new Bishop(RC(0, 1), 0), new Knight(RC(0, 2), 0), new Queen(RC(0, 3), 0), new King(RC(0, 4), 0), new Knight(RC(0, 5), 0), new Bishop(RC(0, 6), 0), new Rook(RC(0, 7), 0)},
+            {new Pawn(RC(1, 0), 0), new Pawn(RC(1, 1), 0), new Pawn(RC(1, 2), 0), new Pawn(RC(1, 3), 0), new Pawn(RC(1, 4), 0), new Pawn(RC(1, 5), 0), new Pawn(RC(1, 6), 0),new Pawn(RC(1, 7), 0)},
+            {new Space(RC(2, 0)), new Space(RC(2, 1)), new Space(RC(2, 2)), new Space(RC(2, 3)), new Space(RC(2, 4)), new Space(RC(2, 5)), new Space(RC(2, 6)), new Space(RC(2, 7))},
+            {new Space(RC(3, 0)), new Space(RC(3, 1)), new Space(RC(3, 2)), new Space(RC(3, 3)), new Space(RC(3, 4)), new Space(RC(3, 5)), new Space(RC(3, 6)), new Space(RC(3, 7))},
+            {new Space(RC(4, 0)), new Space(RC(4, 1)), new Space(RC(4, 2)), new Space(RC(4, 3)), new Space(RC(4, 4)), new Space(RC(4, 5)), new Space(RC(4, 6)), new Space(RC(4, 7))},
+            {new Space(RC(5, 0)), new Space(RC(5, 1)), new Space(RC(5, 2)), new Space(RC(5, 3)), new Space(RC(5, 4)), new Space(RC(5, 5)), new Space(RC(5, 6)), new Space(RC(5, 7))},
+            {new Pawn(RC(6, 0), 1), new Pawn(RC(6, 1), 1), new Pawn(RC(6, 2), 1), new Pawn(RC(6, 3), 1), new Pawn(RC(6, 4), 1), new Pawn(RC(6, 5), 1), new Pawn(RC(6, 6), 1), new Pawn(RC(6, 7), 1)},
+            {new Rook(RC(7, 0), 1), new Bishop(RC(7, 1), 1), new Knight(RC(7, 2), 1), new Queen(RC(7, 3), 1), new King(RC(7, 4), 1), new Knight(RC(7, 5), 1), new Bishop(RC(7, 6), 1), new Rook(RC(7, 7), 1)} };
 
 /*********************************************************
  * GET POSSIBLE MOVES
@@ -258,7 +274,7 @@ void parse(const string& textMove, int& positionFrom, int& positionTo)
  * READ FILE
  * Read a file where moves are encoded in Smith notation
  *******************************************************/
-void readFile(const char* fileName, char* board)
+void readFile(const char* fileName, Board* board)
 {
    // open the file
    ifstream fin(fileName);
@@ -273,7 +289,7 @@ void readFile(const char* fileName, char* board)
       int positionFrom;
       int positionTo;
       parse(textMove, positionFrom, positionTo);
-      valid = move(board, positionFrom, positionTo);
+      //valid = move(board, positionFrom, positionTo);
    }
 
    // close and done
@@ -301,26 +317,7 @@ int main(int argc, char** argv)
 
    // Initialize the game class
    // note this is upside down: 0 row is at the bottom
-   char board[64] = {
-      'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r',
-      'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p',
-      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      // ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-      'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P',
-      'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'
-   };
-
-   // char board[8][8] = {}
-
-   // pieces board[64] None
-
-   // Piece's position: board[0] --> board[16]
-   
-   // pieces -> King, Pawn, Queens
-   // moveset
+   Board board = Board(DEFAULT_BOARD);
 
 
 #ifdef _WIN32
@@ -328,14 +325,14 @@ int main(int argc, char** argv)
  //  LPWSTR * argv = CommandLineToArgvW(GetCommandLineW(), &argc);
  //  string filename = argv[1];
    if (__argc == 2)
-      readFile(__argv[1], board);
+      readFile(__argv[1], &board);
 #else // !_WIN32
    if (argc == 2)
       readFile(argv[1], board);
 #endif // !_WIN32
 
    // set everything into action
-   ui.run(callBack, board);             
+   ui.run(callBack, &board);             
 
    return 0;
 }
