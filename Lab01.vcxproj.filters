@@ -62,9 +62,6 @@
     <ClInclude Include="Bishop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="King.h">
       <Filter>Header Files</Filter>
     </ClInclude>
