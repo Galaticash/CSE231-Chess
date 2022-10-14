@@ -176,7 +176,7 @@ void callBack(Interface *pUI, void * p)
     RC prevPos = getRC(pUI->getPreviousPosition());
     RC selectPos = getRC(pUI->getSelectPosition());
 
-    // From the previously clicked space, get the possible Moves for that Piece
+    // If the Previous Position is a valid space on the Board,
     if (board->isValidPosition(prevPos))
     {
         Piece* selectedPiece = board->getPieceAtPosition(prevPos);
@@ -201,9 +201,10 @@ void callBack(Interface *pUI, void * p)
             }
         }
 
-        // If the current Move can be done,
+        // If the current Move can be done, do it
         if (board->getLastMove() != board->move(currentMove))
         {
+            // Then clear the selected position
             pUI->clearSelectPosition();
         }
         // Otherwise, update possible Moves to display
@@ -212,58 +213,15 @@ void callBack(Interface *pUI, void * p)
             possible = board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->getPossibleMoves(board, board->getLastMove());
         }
     }
+    // Rearrange, this is so the first click works
+    else if(board->isValidPosition(selectPos))
+    {
+        possible = board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->getPossibleMoves(board, board->getLastMove());
+    }
+
 
     if (pUI->getSelectPosition() != -1 && board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->isSpace())
         pUI->clearSelectPosition();
-
-    /*
-    if (pUI->getPreviousPosition() != -1 && pUI->getSelectPosition() != -1)
-    {
-        RC prevPos = getRC(pUI->getPreviousPosition());
-        RC selectPos = getRC(pUI->getSelectPosition());
-
-        // From the previously clicked space, get the possible Moves for that Piece
-        set <Move> prevPossible = board->getPieceAtPosition(RC(prevPos.getRow(), prevPos.getCol()))->getPossibleMoves(board, board->getLastMove());
-            //(*board)[prevPos.getRow()][prevPos.getCol()].getPossibleMoves(board, board->getLastMove());
-
-        // If Move.positionTo == Move in possibleMoves
-        // If the possible Moves set is not empty
-        if (prevPossible.begin() != prevPossible.end())
-        {
-            // For every Move in the set,
-            for (set <Move> ::iterator it = prevPossible.begin(); it != prevPossible.end(); it++)
-            {
-                // Look for the current Move
-                Move checkMove = *it;
-                if (checkMove.getPositionTo() == selectPos)
-                {
-                    // Perform that Move
-                    board->move(checkMove);
-                    pUI->clearSelectPosition();
-                    break;
-                }
-            }
-        }
-    }
-    // If the user clicked on an invalid spot, then it is not selected
-    else if (pUI->getSelectPosition() != -1)
-    {
-        RC selectPos = getRC(pUI->getSelectPosition());
-        // Update the possible Moves for the Piece that the user just clicked
-        possible = (board)->getPieceAtPosition(RC(selectPos.getRow(), selectPos.getCol()))->getPossibleMoves(board, board->getLastMove());
-            //(*board)[selectPos.getRow()][selectPos.getCol()].getPossibleMoves(board, board->getLastMove());
-
-        // If the selected Piece has no Moves available (most often a Space)
-        //  Will not show the user clicking on a Piece with no possible Moves
-        if (possible.begin() == possible.end())
-        {
-            pUI->clearSelectPosition();
-        }
-    }
-    else
-    {
-        pUI->clearSelectPosition();
-    }*/
 
     // draw the board
     draw(board, *pUI, possible);
@@ -385,6 +343,10 @@ int main(int argc, char** argv)
    // Initialize the game class
    // note this is upside down: 0 row is at the bottom
    Board board = Board(DEFAULT_BOARD);
+   
+   // TEST: Move a Piece,
+   // NOTE: Piece has vanished
+   board.move(Move(RC(6, 0), RC(5, 0)));
 
 
 #ifdef _WIN32

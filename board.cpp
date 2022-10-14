@@ -49,14 +49,16 @@ Move Board::move(Move currentMove)
 		Piece* movePiece = piecesBoard[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()];
 		Piece* destinationPiece = piecesBoard[pieceDestination.getRow()][pieceDestination.getCol()];
 
-		// Delete the old Piece/Space, and put in the new one
-		this->insertPiece(movePiece);
+		RC prevPosition = movePiece->getCurrentPosition();
 
 		// Update the Piece's currentPosition, and hasMoved
 		movePiece->setPosition(pieceDestination);
 
+		// Delete the old Piece/Space, and put in the new one
+		this->insertPiece(movePiece);
+
 		// Replace the previous position with an empty space
-		this->insertPiece(new Space(RC(pieceCurrentPos.getRow(), pieceCurrentPos.getCol())));
+		this->insertPiece(new Space(prevPosition));
 
 		// TODO: Change to rely on Smith's notation for Castling, EnPassant, etc
 
