@@ -40,7 +40,7 @@ set <Move> Pawn::getPossibleMoves(Board* board, Move lastMove) {
     // Note: Pawn cannot capture while moving forward, only diagonal and en-passant
 
     // If the space in front of the Pawn is empty,
-    if ((*board)[r][c].isSpace())
+    if ((*board)[r][c]->isSpace())
     {
         Move moveForward = Move(RC(row, col), RC(r, c));
         // If the Pawn is going into the last row,
@@ -51,7 +51,7 @@ set <Move> Pawn::getPossibleMoves(Board* board, Move lastMove) {
         possible.insert(moveForward);  // forward one blank space
 
         // If the Pawn has not yet moved AND the space 2 rows ahead is also empty,
-        if ((!this->hasMoved) && (*board)[r + direction][c].isSpace())
+        if ((!this->hasMoved) && (*board)[r + direction][c]->isSpace())
         {
             possible.insert(Move(RC(row, col), RC(r + direction, c))); // forward two blank spaces
         }
@@ -62,13 +62,13 @@ set <Move> Pawn::getPossibleMoves(Board* board, Move lastMove) {
 
     c = col - 1;
     // If the piece on the left diagonal is a Piece of the opposite color
-    if (!((*board)[r][c].isSpace()) && (*board)[r][c].getIsWhite() != this->isWhite)
+    if (!((*board)[r][c]->isSpace()) && (*board)[r][c]->getIsWhite() != this->isWhite)
     {
         // The Pawn will move from its current position to the new position
         Move captureLeft = Move(RC(row, col), RC(r, c));
 
         // Capture the Piece at that position
-        captureLeft.setCapture((*board)[r][c].getType());
+        captureLeft.setCapture((*board)[r][c]->getType());
 
         // If the Pawn is moving into the last row,
         if (r == (NUM_ROW - 1) || r == 0)
@@ -82,13 +82,13 @@ set <Move> Pawn::getPossibleMoves(Board* board, Move lastMove) {
 
     c = col + 1;
     // If the piece on the right diagonal is a Piece of the opposite color
-    if (!((*board)[r][c].isSpace()) && (*board)[r][c].getIsWhite() != this->isWhite)
+    if (!((*board)[r][c]->isSpace()) && (*board)[r][c]->getIsWhite() != this->isWhite)
     {
         // The Pawn will move from its current position to the new position
         Move captureRight = Move(RC(row, col), RC(r, c));
 
         // Capture the Piece at that position
-        captureRight.setCapture((*board)[r][c].getType());
+        captureRight.setCapture((*board)[r][c]->getType());
 
         // If the Pawn is moving into the last row,
         if (r == (NUM_ROW - 1) || r == 0)

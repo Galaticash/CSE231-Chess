@@ -69,7 +69,8 @@ public:
 		return (row >= 0 && row < NUM_ROW&& col >= 0 && col < NUM_COL);
 	};
 
-	Piece* operator[](const int row) const { return *(piecesBoard[row]); };
+	Piece** operator[](const int row) { return piecesBoard[row]; }; // Correct
+	Piece** operator[](const int row) const { return (piecesBoard[row]); }; // Currenlty incorrect, passes a single Piece instead of Piece**
 
 private:
 	Piece* piecesBoard[NUM_ROW][NUM_COL] = {};
