@@ -1,10 +1,12 @@
 /***********************************************************************
  * Header File:
- *    Move: A move in a game of chess.
- * Author: Ashley DeMott
+ *		Move
+ * Author: 
+ *		Ashley DeMott
  *
- * Summary: A Move from an RC position to another RC position, can be represented in Smith's notation
- *
+ * Decription:
+ *		A Move from one RC position to another RC position, 
+ *		can be represented in Smith's notation (incomplete)
  ************************************************************************/
 
 #pragma once
@@ -26,7 +28,6 @@ public:
 		this->positionTo = to;
 		translateToSmith();
 	};
-
 	// Pass captured piece to constructor - add to rest of code?
 	Move(RC from, RC to, char capture) : Move(from, to)
 	{
@@ -40,13 +41,17 @@ public:
 	translateFromSmith(smithNotation);
 };*/
 
-	// Translate the Move into Smith's notation
+	// Translates the Move into Smith's notation
+	// Note: Is this long enough for Move to require a .cpp?
 	string translateToSmith()
 	{
 		string createdNotation = "";
+
+		// Get the string version of the RC (using alphabet letters for column) (incomplete)
 		string posFrom = this->positionFrom.getString();
 		string posTo = this->positionTo.getString();
 
+		// Add special cases to the end of the string
 		string specialCases = "";
 
 		// If a piece is captured by this move
@@ -75,7 +80,10 @@ public:
 			specialCases += "C";
 		}
 
+		// Combine the From, To, and special case strings
 		createdNotation += posFrom + posTo + specialCases;
+
+		// Update this Move's Smith notation
 		this->smithNotation = createdNotation;
 		return createdNotation;
 	};
@@ -84,12 +92,25 @@ public:
 	//void translateFromSmith(string smithNotation)
 	//{
 	//	// Insert code to translate smith notation into Move Attributes
-
+	//  // Split smith's notation into variables
+		// string from = smithNotation[0, 1]
+		// string to = smithNotation[2, 3]
+		// string specialCases = smithNotation[3, -1]
+		
+		// Translate into RCs and chars
+		// this->positionFrom = RC(from[0], from[1])
+		// this->positionTo = RC(to[0], to[1])
+		
+		// if specialCases length > 1
+			// if specialCases[0] == a capture
+				// this->capture = specialCases[0]
+			// elif specialCases[0] == a special Case || (specialCases length == 2 && specialCases[1] == a special Case)
+				// switch case for each special case (if, elif - only one special case possible)
 	//};
 
 	// - - - GETTERS AND SETTERS - - - //
 	
-	// Positions To and From
+	// Positions To and From (as RCs)
 	RC getPositionFrom() { return this->positionFrom; };
 	RC getPositionTo() { return this->positionTo; };
 	
@@ -145,10 +166,11 @@ public:
 	inline friend ostream& operator<<(ostream& out, Move& m) {	return out << m.smithNotation; };
 
 private:
-	string smithNotation = "";
-	RC positionTo;
-	RC positionFrom;
+	string smithNotation = "";	// The Smith's Notation of this Move
+	RC positionFrom;	// Where the Move starts
+	RC positionTo;		// Where the Move ends
 
+	// Special Cases, default to false
 	bool enpassant = false;
 	bool castlingQSide = false;
 	bool castlingKSide = false;
