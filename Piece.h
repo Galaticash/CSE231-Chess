@@ -1,17 +1,19 @@
 /***********************************************************************
  * Header File:
- *    Piece: 
- * Author: Ashley DeMott, Logan Huston
+ *		Piece 
+ * Authors: 
+ *		Ashley DeMott, Logan Huston
  *    
- * Summary:	
+ * Summary:
+ *		The base class for all types of Pieces in a chess game.
  *    
  ************************************************************************/
 
 #pragma once
 #include "Move.h"	// For the possible Moves of a given Piece
 #include <set>		// Moves are stored in a set
-#include "Rect.h"
-#include <vector>
+#include "Rect.h"	// For the Rectangles used to draw the Piece
+#include <vector>	// To hold the Rectangles
 
 using namespace std;
 
@@ -21,7 +23,7 @@ using namespace std;
 const int NUM_ROW = 8;
 const int NUM_COL = 8;
 
-
+// TODO: const bool TEAM_ONE and TEAM_TWO from chess.cpp, error if put here
 #endif
 class Board;
 
@@ -49,45 +51,36 @@ public:
 
 	void setPosition(RC positionTo)
 	{
-		// Assert that the given position is on the board
-		// assert()
-		
 		// Update the Piece's position
 		currentPosition = positionTo;
 
-		// Update hasMoved --> Or change to use nMoves, nMoves++
+		// Update hasMoved
+		// Or change to use nMoves, nMoves++ (not implemented)
 		if (!this->hasMoved)
 		{
 			this->hasMoved = true;
 		}
 	}	
-	RC getCurrentPosition() { return this->currentPosition; };
-	vector<Rect>* getRectangles() { return &(this->rectangles); };
 
-	void setHasMoved(bool moved) { this->hasMoved = moved; }; // For Testing
-	bool getHasMoved() { return this->hasMoved; };	
+	RC getCurrentPosition() { return this->currentPosition; };	// Return the RC for this Piece
+	vector<Rect>* getRectangles() { return &(this->rectangles); };	// Return a pointer to this Piece's rectangles
 
-	char getType() { return this->type; };
-	bool isSpace() { return this->type == 's'; };
-	bool getIsWhite() { return this->isWhite; };
+	void setHasMoved(bool moved) { this->hasMoved = moved; }; // For Testing, set hasMoved
+	bool getHasMoved() { return this->hasMoved; };	// Return if this Piece has moved
 
-	// To tell if a Piece is the same as another Piece (currently unused)
-	
-	//Piece& operator= (Piece& other) { return *this; };
-	//bool operator== (Piece& other) { return (this->getType() == other.getType() && this->currentPosition.getRow() == other.getCurrentPosition().getRow() && this->currentPosition.getCol() == other.getCurrentPosition().getCol()); };
-	//bool operator!= (Piece& other) { return !(this == other); };
-
+	char getType() { return this->type; };	// Return the char type of this Piece
+	bool isSpace() { return this->type == 's'; };	// Return if this Piece's char type is a Space
+	bool getIsWhite() { return this->isWhite; };	// Return if this Piece is white (TODO: TEAM_ONE/TEAM_WHITE?)
 private:
 protected:
+	// Currently unused, Piece char types as an enum
 	enum pieceTypes { k = 'k', q = 'q', r = 'r', n = 'n', p = 'p', b = 'b', s = 's' };
 
-	// Type of Piece (PAWN, KNIGHT, KING, ect)
-	char type = ' '; // ERROR: Some Pieces/Spaces exist with empty string?
-	vector <Rect> rectangles;
+	char type = ' ';	// The type of this Piece
+	vector <Rect> rectangles; // The rectangles used to draw this Piece
 	
-	// Current RC on the Board
-	RC currentPosition;
+	RC currentPosition; 	// Current Row Column position on the Board
 
-	bool hasMoved;
-	bool isWhite;
+	bool hasMoved;	// If this Piece has moved yet
+	bool isWhite;	// If this Piece is on Team White
 };

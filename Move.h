@@ -44,8 +44,7 @@ public:
 	string translateToSmith()
 	{
 		string createdNotation = "";
-		string posFrom = this->positionFrom.getString(); 
-		// TODO: Translate into an alphabet letter (0 - A, 1 - B, ...)
+		string posFrom = this->positionFrom.getString();
 		string posTo = this->positionTo.getString();
 
 		string specialCases = "";

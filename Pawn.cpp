@@ -12,9 +12,8 @@
 
  /***************************************
  * GET POSSIBLE MOVES
- * Get's the possible moves from a piece.
+ * Gets the possible moves from a Piece.
  ********************************************/
-// Board ->getPiece
 set <Move> Pawn::getPossibleMoves(Board* board, Move lastMove) {
 
     set <Move> possible = {}; // Store possible Moves in a set
@@ -30,14 +29,12 @@ set <Move> Pawn::getPossibleMoves(Board* board, Move lastMove) {
 
     int r;                   // the row we are checking
     int c;                   // the column we are checking
-    // TODO: change to use TEAM_ONE/TEAM_TWO (board orientation)
+    // TODO: change to use TEAM_ONE/TEAM_TWO (board orientation) // public const bool iffy
     int direction = (isWhite) ? 1 : -1; // The direction the Pawn is travelling
 
     // Check the space 1 row ahead of the Piece in the direction it is travelling
     c = col;
     r = row + direction;
-
-    // Note: Pawn cannot capture while moving forward, only diagonal and en-passant
 
     // If the space in front of the Pawn is empty,
     if ((*board)[r][c]->isSpace())

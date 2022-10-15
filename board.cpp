@@ -22,7 +22,8 @@ void Board::insertPiece(Piece* insertPiece)
 	int col = insertPiece->getCurrentPosition().getCol();
 
 	// Delete the previous Piece at that position (in most cases, a Space)
-	// What. Errors stopped when previous Piece is NOT deleted
+	// WARNING: Previous Pieces should be deleted, but errors 
+	//			stopped when previous Piece is NOT deleted
 	if (false)
 	{
 		delete& (piecesBoard[row][col]);
@@ -101,7 +102,6 @@ Move Board::move(Move currentMove)
 		this->lastMove = currentMove;
 		// Change current Team to the opposite
 		this->currentTeam = (this->currentTeam) ? 0 : 1;
-
 	}
 
 	// Return the last Move

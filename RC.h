@@ -1,11 +1,11 @@
 /***********************************************************************
  * Header File:
- *    RC: Holds a row and a column.
- * Author: Ashley DeMott
- *
- * Summary: RC or RowColumn, holds two integer values representing 
- * a Row/Column combination on the Chess Board.
- *
+ *		RC
+ * Author
+ *		Ashley DeMott
+ * Description:
+ *		RC or RowColumn, holds two integer values representing 
+ *		a Row/Column combination on the Chess Board.
  ************************************************************************/
 
 #pragma once
@@ -45,7 +45,8 @@ public:
 		string row = to_string(this->getRow());
 		//static_cast<char>('a' - 1 + this->getRow());
 		string col = to_string(this->getCol());
-		//static_cast<char>(this->getCol());
+		//col = atoi(col.substr(0));
+		//col = static_cast<char>(this->getCol());
 		string rcString = "" + row + col;
 		return rcString;
 	};
