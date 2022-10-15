@@ -27,7 +27,7 @@ public:
 	RC(int newRow, int newCol)
 	{
 		this->row = newRow;
-		this->col = newCol;	
+		this->col = newCol;
 	};
 
 	int getRow()
@@ -43,9 +43,9 @@ public:
 	string getString()
 	{
 		string row = to_string(this->getRow());
-			//static_cast<char>('a' - 1 + this->getRow());
+		//static_cast<char>('a' - 1 + this->getRow());
 		string col = to_string(this->getCol());
-			//static_cast<char>(this->getCol());
+		//static_cast<char>(this->getCol());
 		string rcString = "" + row + col;
 		return rcString;
 	};
@@ -53,15 +53,17 @@ public:
 	/*RC& operator= (const RC& rc)
 	{
 		//this->row = rc.row;
-		//this->col = rc.col;	
+		//this->col = rc.col;
 		return *this;
 	};*/
 	void operator= (const RC& rc)
 	{
 		this->row = rc.row;
-		this->col = rc.col;	
+		this->col = rc.col;
 	};
-	bool operator== (RC const & other) const { return (this->row == other.row && this->col == other.col); };
+	bool operator== (RC const& other) const { return (this->row == other.row && this->col == other.col); };
+	bool operator!= (RC const& other) const { return !(*this == other); };
+	
 	//bool _equals(RC const& other) const { return (this->row == other.row && this->col == other.col); };
 	bool operator< (RC const& other) const { return (this->row < other.row || this->col < other.col); };
 

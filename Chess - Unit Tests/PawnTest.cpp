@@ -84,13 +84,14 @@ namespace ChessUnitTests
 		{
 			// SETUP - setup the board with a single White Pawn
 			Board testBoard = Board(EMPTY_BOARD);
+			testBoard.setCurrentTeam(0); // Pawn is placed on Black's side, assume Black's turn
 
 			// RC coordinates of the testPawn
 			int row = 6;
 			int col = 1;
 
 			// Place test Pawn
-			Pawn testPawn = Pawn(RC(row, col), 1);
+			Pawn testPawn = Pawn(RC(row, col), 0);
 			testBoard.insertPiece(&testPawn);
 
 			// EXERCISE - Pawn::getPossibleMoves()
@@ -126,17 +127,18 @@ namespace ChessUnitTests
 		{
 			// SETUP - Place an enemy Piece in the way of the testPawn's forward movement
 			Board testBoard = Board(EMPTY_BOARD);
+			testBoard.setCurrentTeam(0);
 
 			// RC coordinates of the testPawn
 			int row = 6;
 			int col = 1;
 			
 			// Place test Pawn
-			Pawn testPawn = Pawn(RC(row, col), 1);
+			Pawn testPawn = Pawn(RC(row, col), 0);
 			testBoard.insertPiece(&testPawn);
 
 			// Place enemy Pawn
-			Piece enemyPiece = Piece(RC(row - 1, col), 0);
+			Piece enemyPiece = Piece(RC(row - 1, col), 1);
 			testBoard.insertPiece(&enemyPiece);
 
 			// EXERCISE - Pawn::getPossibleMoves()
@@ -168,18 +170,19 @@ namespace ChessUnitTests
 		{
 			// SETUP - Place an enemy Pawn to the right diagonally from the testPawn
 			Board testBoard = Board(EMPTY_BOARD);
+			testBoard.setCurrentTeam(0);
 			
 			// RC coordinates of the testPawn
 			int row = 6;
 			int col = 1;
 			
 			// Place test Pawn, assume hasMoved = true
-			Pawn testPawn = Pawn(RC(row, col), 1);
+			Pawn testPawn = Pawn(RC(row, col), 0);
 			testBoard.insertPiece(&testPawn);
 			testPawn.setHasMoved(true);
 
 			// Place enemy Pawn, (up one, right one)
-			Pawn enemyPawn = Pawn(RC(row - 1, col + 1), 0);
+			Pawn enemyPawn = Pawn(RC(row - 1, col + 1), 1);
 			testBoard.insertPiece(&enemyPawn);
 
 			// EXERCISE - Pawn::getPossibleMoves
@@ -214,18 +217,19 @@ namespace ChessUnitTests
 		{
 			// SETUP - Place an enemy Pawn diagonally to the left of the testPawn
 			Board testBoard = Board(EMPTY_BOARD);
+			testBoard.setCurrentTeam(0);
 
 			// RC coordinates of the testPawn
 			int row = 6;
 			int col = 1;
 
 			// Place test Pawn, assume hasMoved = true
-			Pawn testPawn = Pawn(RC(row, col), 1);
+			Pawn testPawn = Pawn(RC(row, col), 0);
 			testBoard.insertPiece(&testPawn);
 			testPawn.setHasMoved(true);
 
 			// Place enemy Pawn (up one, left one)
-			Pawn enemyPawn = Pawn(RC(row - 1, col - 1), 0);
+			Pawn enemyPawn = Pawn(RC(row - 1, col - 1), 1);
 			testBoard.insertPiece(&enemyPawn);
 
 			// EXERCISE - Pawn::getPossibleMoves
@@ -260,20 +264,21 @@ namespace ChessUnitTests
 		{
 			// Setup - Put three enemy Pawns in front of the testPawn
 			Board testBoard = Board(EMPTY_BOARD);
+			testBoard.setCurrentTeam(0);
 
 			// RC coordinates of testPawn
 			int row = 6;
 			int col = 1;
 			
 			// Place test Pawn
-			Pawn testPawn = Pawn(RC(row, col), 1);
+			Pawn testPawn = Pawn(RC(row, col), 0);
 			testBoard.insertPiece(&testPawn);
 
-			Pawn enemyPawnOne = Pawn(RC(row - 1, col - 1), 0);
+			Pawn enemyPawnOne = Pawn(RC(row - 1, col - 1), 1);
 			testBoard.insertPiece(&enemyPawnOne);
-			Pawn enemyPawnTwo = Pawn(RC(row - 1, col), 0);
+			Pawn enemyPawnTwo = Pawn(RC(row - 1, col), 1);
 			testBoard.insertPiece(&enemyPawnTwo);
-			Pawn enemyPawnThree = Pawn(RC(row - 1, col + 1), 0);
+			Pawn enemyPawnThree = Pawn(RC(row - 1, col + 1), 1);
 			testBoard.insertPiece(&enemyPawnThree);
 
 			// EXERCISE - Pawn::getPossibleMoves
@@ -308,22 +313,23 @@ namespace ChessUnitTests
 		{
 			// Setup - Put three enemy Pawns in front of the testPawn
 			Board testBoard = Board(EMPTY_BOARD);
+			testBoard.setCurrentTeam(0);
 			
 			// RC coordinates of the testPawn
 			int row = 6;
 			int col = 1;
 			
 			// Place test Pawn, assume hasMoved = true
-			Pawn testPawn = Pawn(RC(row, col), 1);
+			Pawn testPawn = Pawn(RC(row, col), 0);
 			testBoard.insertPiece(&testPawn);
 			testPawn.setHasMoved(true);
 
 			// Place enemy Pawn, (up one, left one)
-			Pawn enemyPawnOne = Pawn(RC(row -1 , col - 1), 0);
+			Pawn enemyPawnOne = Pawn(RC(row -1 , col - 1), 1);
 			testBoard.insertPiece(&enemyPawnOne);
 
 			// Place enemy Pawn (up one, right one)
-			Pawn enemyPawnThree = Pawn(RC(row -1, col + 1), 0);
+			Pawn enemyPawnThree = Pawn(RC(row -1, col + 1), 1);
 			testBoard.insertPiece(&enemyPawnThree);
 
 			// EXERCISE - Pawn::getPossibleMoves			
@@ -361,22 +367,23 @@ namespace ChessUnitTests
 		{
 			// SETUP - Place an enemy Pawn to the right of the testPawn, having just moved two spaces
 			Board testBoard = Board(EMPTY_BOARD);
+			testBoard.setCurrentTeam(0); // Pawn is on Black's side
 
 			// RC coordinates of the testPawn
 			int row = 3;
 			int col = 1;
 
 			// Place test Pawn, assumes hasMoved = true
-			Pawn testPawn = Pawn(RC(row, col), 1);
+			Pawn testPawn = Pawn(RC(row, col), 0);
 			testBoard.insertPiece(&testPawn);
 			testPawn.setHasMoved(true);
 
 			// Enemy Pawn to the right
-			Pawn enemyPawn = Pawn(RC(row, col + 1), 0);
+			Pawn enemyPawn = Pawn(RC(row, col + 1), 1);
 			testBoard.insertPiece(&enemyPawn);
 
 			// The last move was an enemy Pawn moving 2 spaces
-			Move lastMove = Move(enemyPawn.getType(), RC(row - 2, col + 1), enemyPawn.getCurrentPosition());
+			Move lastMove = Move(RC(row - 2, col + 1), enemyPawn.getCurrentPosition());
 
 			// EXERCISE - Pawn::getPossibleMoves			
 			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard, lastMove);
@@ -425,22 +432,23 @@ namespace ChessUnitTests
 		{
 			// SETUP - Place an enemy Pawn to the left of the testPawn, having just moved two spaces
 			Board testBoard = Board(EMPTY_BOARD);
+			testBoard.setCurrentTeam(0);
 
 			// RC coordinates of the testPawn
 			int row = 3;
 			int col = 1;
 
 			// Place test Pawn, assume hasMoved = true
-			Pawn testPawn = Pawn(RC(row, col), 1);
+			Pawn testPawn = Pawn(RC(row, col), 0);
 			testBoard.insertPiece(&testPawn);
 			testPawn.setHasMoved(true);
 
 			// Place enemy Pawn to the left
-			Pawn enemyPawn = Pawn(RC(row, col - 1), 0);
+			Pawn enemyPawn = Pawn(RC(row, col - 1), 1);
 			testBoard.insertPiece(&enemyPawn);
 
 			// The last move was an enemy Pawn moving 2 spaces
-			Move lastMove = Move(enemyPawn.getType(), RC(row - 2, col - 1), enemyPawn.getCurrentPosition());
+			Move lastMove = Move(RC(row - 2, col - 1), enemyPawn.getCurrentPosition());
 
 			// EXERCISE - Pawn::getPossibleMoves			
 			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard, lastMove);
@@ -489,13 +497,14 @@ namespace ChessUnitTests
 		{
 			// SETUP
 			Board testBoard = Board(EMPTY_BOARD);
+			testBoard.setCurrentTeam(0);
 
 			// RC coordinates of the testPawn
 			int row = 1;
 			int col = 1;
 
 			// Place test Pawn
-			Pawn testPawn = Pawn(RC(row, col), 1);
+			Pawn testPawn = Pawn(RC(row, col), 0);
 			testBoard.insertPiece(&testPawn);
 
 			// Check that the Pawn was placed properly

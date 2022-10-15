@@ -15,11 +15,13 @@
 
 using namespace std;
 
-// The size of the board
 #ifndef BOARD_CONST
 #define BOARD_CONST
+// The size of the board
 const int NUM_ROW = 8;
 const int NUM_COL = 8;
+
+
 #endif
 class Board;
 

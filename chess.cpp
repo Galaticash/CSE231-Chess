@@ -29,9 +29,10 @@ using namespace std;
 #include "Knight.h"
 #endif
 
-// TODO: Move to Piece class, public
-bool TEAM_ONE = 1;
-bool TEAM_TWO = 0;
+// The Teams that Pieces can be assigned to
+// Used to determine if a Piece can be moved
+const bool TEAM_ONE = 1;
+const bool TEAM_TWO = 0;
 
 // The default Chess Board
 Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
@@ -44,13 +45,26 @@ Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
             {new Pawn(RC(6, 0), TEAM_TWO), new Pawn(RC(6, 1), TEAM_TWO), new Pawn(RC(6, 2), TEAM_TWO), new Pawn(RC(6, 3), TEAM_TWO), new Pawn(RC(6, 4), TEAM_TWO), new Pawn(RC(6, 5), TEAM_TWO), new Pawn(RC(6, 6), TEAM_TWO), new Pawn(RC(6, 7), TEAM_TWO)},
             {new Rook(RC(7, 0), TEAM_TWO), new Bishop(RC(7, 1), TEAM_TWO), new Knight(RC(7, 2), TEAM_TWO), new Queen(RC(7, 3), TEAM_TWO), new King(RC(7, 4), TEAM_TWO), new Knight(RC(7, 5), TEAM_TWO), new Bishop(RC(7, 6), TEAM_TWO), new Rook(RC(7, 7), TEAM_TWO)} };
 
+// For testing castling,
+// new Bishop(RC(7, 1), TEAM_TWO), new Knight(RC(7, 2), TEAM_TWO), new Queen(RC(7, 3), TEAM_TWO) 
+// new Space(RC(7, 1)), new Space(RC(7, 2)), new Space(RC(7, 3))
 
+/// <summary>
+/// Translates an RC into a int position on the board
+/// </summary>
+/// <param name="rcPos">A Row Column position</param>
+/// <returns>A position on the board</returns>
 int getPosition(RC rcPos)
 {
     int location = rcPos.getRow() * 8 + rcPos.getCol();
     return location;
 }
 
+/// <summary>
+/// Translates an integer position into an RC position
+/// </summary>
+/// <param name="location">A position on the board</param>
+/// <returns>RC position</returns>
 RC getRC(int location)
 {
     int row = location / 8;  // current location row
@@ -123,39 +137,6 @@ void draw(const Board* board, const Interface & ui, const set <Move> & possible)
    }
 }
 
-/*********************************************
- * MOVE 
- * Execute one movement. Return TRUE if successful
- *********************************************/
-// NOTE: Functionality move to Board class
-/*bool move(char* board, int positionFrom, int positionTo)
-{
-   // do not move if a move was not indicated
-   if (positionFrom == -1 || positionTo == -1)
-      return false;
-   assert(positionFrom >= 0 && positionFrom < 64);
-   assert(positionTo >= 0 && positionTo < 64);
-
-   // find the set of possible moves from our current location
-   // Find the Piece on the board
-   // Piece movePiece =  board[previous.row][previous.col]
-   // set <RC> possiblePrevious = movePiece.getPossibleMoves(board)
-   set <int> possiblePrevious = getPossibleMoves(board, positionFrom);
-
-   // only move there is the suggested move is on the set of possible moves
-   if (possiblePrevious.find(positionTo) != possiblePrevious.end())
-   {
-      // board[positionTo.row][positionFrom.row] = board[positionFrom.row][positionRow.row]
-      board[positionTo] = board[positionFrom];
-      board[positionFrom] = ' ';
-
-      // hasMoved = True OR nMoves ++
-      return true;
-   }
-
-   return false;
-}*/
-
 /*************************************
  *  CALLBACK
  * All the interesting work happens here, when
@@ -173,63 +154,66 @@ void callBack(Interface *pUI, void * p)
     Board* board = (Board*)p;
 
     // ** MOVE **
-    // Do the move that the user selected on the visual board
-    // Find a move that has positionTo == positionClicked
-    // Get the Move that has PosTo = position clicked
     Move currentMove = Move();
 
     RC prevPos = getRC(pUI->getPreviousPosition());
     RC selectPos = getRC(pUI->getSelectPosition());
 
     // If the Previous Position is a valid space on the Board,
-    if (board->isValidPosition(prevPos))
+    if (board->isValidPosition(selectPos))
     {
-        Piece* selectedPiece = board->getPieceAtPosition(prevPos);
-
-        set <Move> prevPossible = selectedPiece->getPossibleMoves(board, board->getLastMove());
-        //(*board)[prevPos.getRow()][prevPos.getCol()].getPossibleMoves(board, board->getLastMove()); // Board[] const broken
-
-        // If Move.positionTo == Move in possibleMoves
-        // If the possible Moves set is not empty,
-        if (prevPossible.begin() != prevPossible.end())
+        if (board->isValidPosition(prevPos) && prevPos != selectPos)
         {
-            // For every Move in the set,
-            for (set <Move> ::iterator it = prevPossible.begin(); it != prevPossible.end(); it++)
+            Piece* selectedPiece = board->getPieceAtPosition(prevPos);
+
+            set <Move> prevPossible = selectedPiece->getPossibleMoves(board, board->getLastMove());
+            //(*board)[prevPos.getRow()][prevPos.getCol()].getPossibleMoves(board, board->getLastMove()); // Board[] const broken
+
+            // If the possible Moves set is not empty,
+            if (prevPossible.begin() != prevPossible.end())
             {
-                // Look for the current Move (only comparing positionTo)
-                Move checkMove = *it;
-                if (checkMove.getPositionTo() == selectPos)
+                // For every Move in the set,
+                for (set <Move> ::iterator it = prevPossible.begin(); it != prevPossible.end(); it++)
                 {
-                    // That is the current Move to be performed
-                    currentMove = checkMove;
-                    break;
+                    // Look for the current Move (only comparing positionTo)
+                    Move checkMove = *it;
+                    if (checkMove.getPositionTo() == selectPos)
+                    {
+                        // That is the current Move to be performed
+                        currentMove = checkMove;
+                        break;
+                    }
                 }
             }
-        }
 
-        // Get the last Move performed
-        Move lastMove = board->getLastMove();
+            // Get the previous Move performed
+            Move lastMove = board->getLastMove();
 
-        // If the current Move can be done, do it
-        if (lastMove != board->move(currentMove))
-        {
-            // Then clear the selected position
-            pUI->clearSelectPosition();
+            // If the current Move can be done, do it
+            if (lastMove != board->move(currentMove))
+            {
+                // Then clear the selected position
+                pUI->clearSelectPosition();
+            }
+
+            // Otherwise, update possible Moves to display
+            else
+            {
+                Piece* selectedPiece = board->getPieceAtPosition(getRC(pUI->getSelectPosition()));
+                possible = selectedPiece->getPossibleMoves(board, lastMove);
+            }
         }
-        // Otherwise, update possible Moves to display
         else
         {
-            possible = board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->getPossibleMoves(board, lastMove);
+            // TODO: adjust logic so possible Moves only changed in one place
+            Piece* selectedPiece = board->getPieceAtPosition(getRC(pUI->getSelectPosition()));
+            possible = selectedPiece->getPossibleMoves(board, board->getLastMove());
         }
-    }
-    // Rearrange, this is so the first click works
-    else if(board->isValidPosition(selectPos))
-    {
-        possible = board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->getPossibleMoves(board, board->getLastMove());
+
     }
 
-
-    if (pUI->getSelectPosition() != -1 && board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->isSpace())
+    // If the user clicks on a space or a Piece belonging to the opposite of current Team
+    if (pUI->getSelectPosition() != -1 && (board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->isSpace() || board->currentIsWhite() != board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->getIsWhite()))
         pUI->clearSelectPosition();
 
     // draw the board

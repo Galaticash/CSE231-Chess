@@ -105,7 +105,7 @@ public:
 	char getCapture() { return this->capture; };
 
 	void setCastlingQ() { this->castlingQSide = true; };
-	void setCastlingK() { this->castlingQSide = true; };
+	void setCastlingK() { this->castlingKSide = true; };
 	bool getCastlingQ() { return this->castlingQSide; };
 	bool getCastlingK() { return this->castlingKSide; };
 

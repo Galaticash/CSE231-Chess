@@ -22,11 +22,10 @@ set <Move> Pawn::getPossibleMoves(Board* board, Move lastMove) {
     int row = this->currentPosition.getRow(); // current location row
     int col = this->currentPosition.getCol(); // current location column
 
-
-    // TODO: board[r][c] instead of board.getPiece(RC(r, c))
-
-    // If the position is not valid or the selected Position is an empty Space
-    if (!(board->isValidPosition(this->currentPosition)) || board->getPieceAtPosition(RC(row, col))->isSpace())
+    // TODO: board[r][c] instead of board.getPiece(RC(r, c)) // [] version is iffy
+   
+    // If the position is not valid, or the selected Position is an empty Space, or it is not this Piece's turn,
+    if (!(board->isValidPosition(this->currentPosition)) || board->getPieceAtPosition(RC(row, col))->isSpace() || board->currentIsWhite() != this->isWhite)
         return possible;
 
     int r;                   // the row we are checking

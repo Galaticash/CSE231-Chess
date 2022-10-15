@@ -21,8 +21,8 @@ set <Move> Bishop::getPossibleMoves(Board* board, Move lastMove)
    int row = this->currentPosition.getRow(); // current location row
    int col = this->currentPosition.getCol(); // current location column
 
-   // If the position is not valid or the selected Position is an empty Space
-   if (!(board->isValidPosition(this->currentPosition)) || (*board)[row][col]->isSpace())
+   // If the position is not valid, or the selected Position is an empty Space, or it is not this Piece's turn,
+   if (!(board->isValidPosition(this->currentPosition)) || board->getPieceAtPosition(RC(row, col))->isSpace() || board->currentIsWhite() != this->isWhite)
        return possible;
 
    int r;                   // the row we are checking

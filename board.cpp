@@ -43,12 +43,13 @@ Move Board::move(Move currentMove)
 	// TODO: Assert RC positions are on the board (return lastMove if this Move cannot be completed)
 	// Assert RC positions are not the same (no actual movement done)
 
-	// If the Move if From and To different positions on the Board,
-	if (!(pieceCurrentPos == pieceDestination))
+	// If the Move if From and To different positions on the Board, and the current Piece is the current Team
+	if (!(pieceCurrentPos == pieceDestination) && (this->currentIsWhite() == piecesBoard[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()]->getIsWhite()))
 	{
 		Piece* movePiece = piecesBoard[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()];
 		Piece* destinationPiece = piecesBoard[pieceDestination.getRow()][pieceDestination.getCol()];
 
+		// Get the current position of the Moving Piece, to be replaced with a Space
 		RC prevPosition = movePiece->getCurrentPosition();
 
 		// Update the Piece's currentPosition, and hasMoved
@@ -59,8 +60,6 @@ Move Board::move(Move currentMove)
 
 		// Replace the previous position with an empty space
 		this->insertPiece(new Space(prevPosition));
-
-		// TODO: Change to rely on Smith's notation for Castling, EnPassant, etc
 
 		if (currentMove.getPromotion())
 		{
@@ -82,14 +81,22 @@ Move Board::move(Move currentMove)
 		{
 			// Move Rook (K side)
 			move(Move(RC(pieceDestination.getRow(), 7), RC(pieceDestination.getRow(), 5)));
+			// Change current Team to the opposite (two Moves were performed, single turn)
+			this->currentTeam = (this->currentTeam) ? 0 : 1;
 		}
 		else if (currentMove.getCastlingQ())
 		{
 			// Move Rook (Q side)
 			move(Move(RC(pieceDestination.getRow(), 0), RC(pieceDestination.getRow(), 3)));
+			// Change current Team to the opposite (two Moves were performed, single turn)
+			this->currentTeam = (this->currentTeam) ? 0 : 1;
 		}
 
+		// Update the last performed Move
 		this->lastMove = currentMove;
+		// Change current Team to the opposite
+		this->currentTeam = (this->currentTeam) ? 0 : 1;
+
 	}
 
 	// Return the last Move
