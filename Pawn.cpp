@@ -31,7 +31,8 @@ set <Move> Pawn::getPossibleMoves(Board* board, Move lastMove) {
 
     int r;                   // the row we are checking
     int c;                   // the column we are checking
-    int direction = (isWhite) ? -1 : 1; // The direction the Pawn is travelling
+    // TODO: change to use TEAM_ONE/TEAM_TWO (board orientation)
+    int direction = (isWhite) ? 1 : -1; // The direction the Pawn is travelling
 
     // Check the space 1 row ahead of the Piece in the direction it is travelling
     c = col;
