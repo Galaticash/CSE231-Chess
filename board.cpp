@@ -1,10 +1,12 @@
 /***********************************************************************
  * Source File:
- *    Board:
+ *      Board
  * Author:
- *
+ *      Ashley DeMott
  * Summary:
- *
+ *      Stores a collection of Piece pointers and moves Pieces to
+ *      new positions on the Board. Also keeps track of the state of
+ *      the Chess game (lastMove and currentTeam)
  ************************************************************************/
 
 #include "board.h"
@@ -31,20 +33,18 @@ void Board::insertPiece(Piece* insertPiece)
 }
 
 /// <summary>
-/// Performs the given move
+/// Performs the given Move
 /// </summary>
 /// <param name="currentMove">Move to be performed</param>
-/// <returns></returns>
+/// <returns>The last Move successfully performed</returns>
 Move Board::move(Move currentMove)
 {
 	// Get the To and From positions of the Move
 	RC pieceCurrentPos = currentMove.getPositionFrom();
 	RC pieceDestination = currentMove.getPositionTo();
-	// TODO: Assert RC positions are on the board (return lastMove if this Move cannot be completed)
-	// Assert RC positions are not the same (no actual movement done)
 
-	// If the Move if From and To different positions on the Board, and the current Piece is the current Team
-	if (!(pieceCurrentPos == pieceDestination) && (this->currentIsWhite() == piecesBoard[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()]->getIsWhite()))
+	// If the two locations are on the board, and they are not the same, and the current Piece is on the current Team
+	if (isValidPosition(pieceCurrentPos) && isValidPosition(pieceDestination) && !(pieceCurrentPos == pieceDestination) && (this->currentIsWhite() == piecesBoard[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()]->getIsWhite()))
 	{
 		Piece* movePiece = piecesBoard[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()];
 		Piece* destinationPiece = piecesBoard[pieceDestination.getRow()][pieceDestination.getCol()];
@@ -58,15 +58,18 @@ Move Board::move(Move currentMove)
 		// Delete the old Piece/Space, and put in the new one
 		this->insertPiece(movePiece);
 
-		// Replace the previous position with an empty space
+		// Replace the previous position on the Board with an empty space
 		this->insertPiece(new Space(prevPosition));
 
+		// Check for special cases
+		// If a Pawn is being promoted,
 		if (currentMove.getPromotion())
 		{
 			// Replace the Pawn with a Queen
 			Piece* promotedPawn = new Queen(RC(movePiece->getCurrentPosition().getRow(), movePiece->getCurrentPosition().getCol()), movePiece->getIsWhite());
 			this->insertPiece(promotedPawn);
 		}
+		// If a Pawn captured another Pawn enPassant,
 		else if (currentMove.getEnPassant())
 		{
 			// Remove the Pawn that was captured
@@ -77,18 +80,20 @@ Move Board::move(Move currentMove)
 			Space* newEmpty = new Space(RC(movePiece->getCurrentPosition().getRow() + direction, movePiece->getCurrentPosition().getCol()));
 			this->insertPiece(newEmpty);
 		}
+		// If the King is castling (King side)
 		else if (currentMove.getCastlingK())
 		{
 			// Move Rook (K side)
 			move(Move(RC(pieceDestination.getRow(), 7), RC(pieceDestination.getRow(), 5)));
-			// Change current Team to the opposite (two Moves were performed, single turn)
+			// Change current Team back to the current (two Moves were performed, single turn)
 			this->currentTeam = (this->currentTeam) ? 0 : 1;
 		}
+		// If the King is castling (Queen side)
 		else if (currentMove.getCastlingQ())
 		{
 			// Move Rook (Q side)
 			move(Move(RC(pieceDestination.getRow(), 0), RC(pieceDestination.getRow(), 3)));
-			// Change current Team to the opposite (two Moves were performed, single turn)
+			// Change current Team back to the current (two Moves were performed, single turn)
 			this->currentTeam = (this->currentTeam) ? 0 : 1;
 		}
 

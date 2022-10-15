@@ -1,10 +1,12 @@
 /***********************************************************************
  * Header File:
- *    Board:
+ *      Board
  * Author:
- *
+ *      Ashley DeMott
  * Summary:
- *
+ *      Stores a collection of Piece pointers and moves Pieces to
+ *      new positions on the Board. Also keeps track of the state of
+ *      the Chess game (lastMove and currentTeam)
  ************************************************************************/
 #pragma once
 
@@ -28,7 +30,6 @@ public:
 	Board(Piece* copiedBoard[NUM_ROW][NUM_COL]) : Board()
 	{ copyBoard(copiedBoard); };
 	//~Board() { delete[] & this->piecesBoard; delete& this->lastMove;  delete this; };
-
 
 	void copyBoard(Piece* copiedBoard[NUM_ROW][NUM_COL])
 	{

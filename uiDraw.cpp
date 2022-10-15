@@ -123,9 +123,11 @@ void glColor(const int * rgb)
 *************************************************************************/
 void ogstream::drawPiece(Piece* p) const
 {   
+    // Get the color and rectangles from the Piece
     bool black = !(p->getIsWhite());
     vector<Rect> rectangles = *(p->getRectangles());
 
+    // Get the x, y position of the Piece (x = col, y = row)
     int x = (p->getCurrentPosition().getCol()) * 32;
     int y = (p->getCurrentPosition().getRow()) * 32;
 
@@ -136,10 +138,13 @@ void ogstream::drawPiece(Piece* p) const
    glBegin(GL_QUADS);
    glColor(black ? RGB_BLACK : RGB_WHITE);
    
+   // For every rectangle in the vector,
    for (int i = 0; i < rectangles.size(); i++)
    {
        // The current Rectangle being drawn
        Rect currentRect = rectangles[i];
+
+       // Draw every point
        glVertex2i(xGL + currentRect.x0, yGL + currentRect.y0);
        glVertex2i(xGL + currentRect.x1, yGL + currentRect.y1);
        glVertex2i(xGL + currentRect.x2, yGL + currentRect.y2);
@@ -198,7 +203,6 @@ void ogstream::drawSelected(int pos)
    int row = pos / 8;
    int col = pos % 8;
 
-
    // set the color and drawing style
    glBegin(GL_QUADS);
    glColor(RGB_SELECTED);
@@ -215,7 +219,6 @@ void ogstream::drawSelected(int pos)
 
    // indicate we are finished
    glEnd();
-
 }
 
 /************************************************************************
@@ -262,7 +265,6 @@ void ogstream::drawHover(int pos)
               (GLint)((row + 1) * 32 - 2));
    glVertex2i((GLint)((col + 0) * 32 + 2),
               (GLint)((row + 1) * 32 - 2));
-
 
    // finish the drawing
    glEnd();

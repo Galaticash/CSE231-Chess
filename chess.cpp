@@ -1,3 +1,13 @@
+/***********************************************************************
+ * Source File:
+ *      CHESS
+ * Authors:
+ *      Ashley DeMott and Logan Huston 
+ * Description: 
+ *      Plays the game of chess, showing the user the possible 
+ *      Moves of the Pieces they click on. Will not show possible
+ *      Moves for a Piece if it is not their turn.
+ ************************************************************************/
 /**********************************************************************
  * GL Demo
  * Just a simple program to demonstrate how to create an Open GL window, 
@@ -13,12 +23,12 @@
 #include <string>         // for STRING
 using namespace std;
 
-#ifndef BOARD_CLASS
+#ifndef BOARD_CLASS // The Board Class
 #define BOARD_CLASS
 #include "board.h"
 #endif
 
-#ifndef PIECE_CLASSES
+#ifndef PIECE_CLASSES   // All the children classes of Piece, included in Board
 #define PIECE_CLASSES
 #include "Pawn.h"
 #include "Queen.h"
@@ -45,57 +55,29 @@ Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
             {new Pawn(RC(6, 0), TEAM_TWO), new Pawn(RC(6, 1), TEAM_TWO), new Pawn(RC(6, 2), TEAM_TWO), new Pawn(RC(6, 3), TEAM_TWO), new Pawn(RC(6, 4), TEAM_TWO), new Pawn(RC(6, 5), TEAM_TWO), new Pawn(RC(6, 6), TEAM_TWO), new Pawn(RC(6, 7), TEAM_TWO)},
             {new Rook(RC(7, 0), TEAM_TWO), new Bishop(RC(7, 1), TEAM_TWO), new Knight(RC(7, 2), TEAM_TWO), new Queen(RC(7, 3), TEAM_TWO), new King(RC(7, 4), TEAM_TWO), new Knight(RC(7, 5), TEAM_TWO), new Bishop(RC(7, 6), TEAM_TWO), new Rook(RC(7, 7), TEAM_TWO)} };
 
-// For testing castling,
+// For testing castling, replace Bishop -> Queen with spaces (Team Black)
 // new Bishop(RC(7, 1), TEAM_TWO), new Knight(RC(7, 2), TEAM_TWO), new Queen(RC(7, 3), TEAM_TWO) 
 // new Space(RC(7, 1)), new Space(RC(7, 2)), new Space(RC(7, 3))
 
-/// <summary>
-/// Translates an RC into a int position on the board
-/// </summary>
-/// <param name="rcPos">A Row Column position</param>
-/// <returns>A position on the board</returns>
+/*********************************************************
+ * GET POSITION
+ * Calculates the int position from an RC position
+ *********************************************************/
 int getPosition(RC rcPos)
 {
-    int location = rcPos.getRow() * 8 + rcPos.getCol();
-    return location;
+    int position = rcPos.getRow() * 8 + rcPos.getCol();
+    return position;
 }
-
-/// <summary>
-/// Translates an integer position into an RC position
-/// </summary>
-/// <param name="location">A position on the board</param>
-/// <returns>RC position</returns>
-RC getRC(int location)
-{
-    int row = location / 8;  // current location row
-    int col = location % 8;  // current location column
-    return RC(row, col);
-}
-
 
 /*********************************************************
- * GET POSSIBLE MOVES
- * Determine all the possible moves for a given chess piece
+ * GET RC
+ * Calculates the RC position from an int position
  *********************************************************/
-set <int> getPossibleMoves(const char* board, int location)
+RC getRC(int position)
 {
-   set <int> possible;
-
-   // return the empty set if there simply are no possible moves
-   if (location < 0 || location >= 64 || board[location] == ' ')
-      return possible;
-   int row = location / 8;  // current location row
-   int col = location % 8;  // current location column
-   int r;                   // the row we are checking
-   int c;                   // the column we are checking
-   bool amBlack;
-
-   // board[index] --> Piece/None
-   // IF piece:
-   //   possible = piece.getMoves() --> RC/integer (index)
-   // return possible
-   
-   return possible;
+    int row = position / 8;  // current location row
+    int col = position % 8;  // current location column
+    return RC(row, col);
 }
 
 /***************************************************
@@ -337,9 +319,9 @@ int main(int argc, char** argv)
    // note this is upside down: 0 row is at the bottom
    Board board = Board(DEFAULT_BOARD);
    
-   // TEST: Move a Piece,
+   // TEST: Move a Piece (also this will be done for readFile,
+   //   but need to convert Smith's notation to Move first)
    //board.move(Move(RC(6, 0), RC(5, 0)));
-
 
 #ifdef _WIN32
  //  int    argc;
@@ -353,7 +335,7 @@ int main(int argc, char** argv)
 #endif // !_WIN32
 
    // set everything into action
-   ui.run(callBack, &board);             
+   ui.run(callBack, &board);
 
    return 0;
 }
