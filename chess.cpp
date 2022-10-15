@@ -180,6 +180,7 @@ void callBack(Interface *pUI, void * p)
     if (board->isValidPosition(prevPos))
     {
         Piece* selectedPiece = board->getPieceAtPosition(prevPos);
+
         set <Move> prevPossible = selectedPiece->getPossibleMoves(board, board->getLastMove());
         //(*board)[prevPos.getRow()][prevPos.getCol()].getPossibleMoves(board, board->getLastMove()); // Board[] const broken
 
@@ -201,8 +202,11 @@ void callBack(Interface *pUI, void * p)
             }
         }
 
+        // Get the last Move performed
+        Move lastMove = board->getLastMove();
+
         // If the current Move can be done, do it
-        if (board->getLastMove() != board->move(currentMove))
+        if (lastMove != board->move(currentMove))
         {
             // Then clear the selected position
             pUI->clearSelectPosition();
@@ -210,7 +214,7 @@ void callBack(Interface *pUI, void * p)
         // Otherwise, update possible Moves to display
         else
         {
-            possible = board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->getPossibleMoves(board, board->getLastMove());
+            possible = board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->getPossibleMoves(board, lastMove);
         }
     }
     // Rearrange, this is so the first click works
@@ -345,7 +349,7 @@ int main(int argc, char** argv)
    Board board = Board(DEFAULT_BOARD);
    
    // TEST: Move a Piece,
-   board.move(Move(RC(6, 0), RC(5, 0)));
+   //board.move(Move(RC(6, 0), RC(5, 0)));
 
 
 #ifdef _WIN32

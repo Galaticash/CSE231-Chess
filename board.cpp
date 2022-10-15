@@ -71,14 +71,11 @@ Move Board::move(Move currentMove)
 		else if (currentMove.getEnPassant())
 		{
 			// Remove the Pawn that was captured
-			
-			// Assert the captured Piece was a Pawn
-
-			// Get the direction the current Pawn traveled
+			// Get the direction the current Pawn traveled,
 			int direction = currentMove.getDelta().getRow();
 
 			// Insert an empty Space at the captured Pawns' position (1 row behind the moved Pawn)
-			Space* newEmpty = new Space(RC(movePiece->getCurrentPosition().getRow() - direction, movePiece->getCurrentPosition().getCol()));
+			Space* newEmpty = new Space(RC(movePiece->getCurrentPosition().getRow() + direction, movePiece->getCurrentPosition().getCol()));
 			this->insertPiece(newEmpty);
 		}
 		else if (currentMove.getCastlingK())
@@ -92,9 +89,9 @@ Move Board::move(Move currentMove)
 			move(Move(RC(pieceDestination.getRow(), 0), RC(pieceDestination.getRow(), 3)));
 		}
 
-		return currentMove;
+		this->lastMove = currentMove;
 	}
 
-	// The given Move could not be completed
+	// Return the last Move
 	return this->lastMove;
 }

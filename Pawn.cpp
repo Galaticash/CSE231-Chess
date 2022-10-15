@@ -102,7 +102,7 @@ set <Move> Pawn::getPossibleMoves(Board* board, Move lastMove) {
 
     // En-Passant
     // If the lastMove was a Pawn travelling two vertical spaces,
-    if (lastMove.getPieceType() == this->getType() && abs(lastMove.getDelta().getRow()) == 2)
+    if ((*board).getPieceAtPosition(lastMove.getPositionTo())->getType() == this->getType() && abs(lastMove.getDelta().getRow()) == 2)
     {
         // Not really needed, or could be a part of Move (Piece color) && board[row][col -1].getIsWhite() != this->isWhite
         // Probably throw in an assert (opposite colors)
@@ -113,14 +113,14 @@ set <Move> Pawn::getPossibleMoves(Board* board, Move lastMove) {
         {
             Move enPassantLeft = Move(RC(row, col), RC(row + direction, col - 1));
             enPassantLeft.setEnPassant();
-            possible.insert(enPassantLeft); // Capture the Pawn En-Passant***
+            possible.insert(enPassantLeft); // Capture the Pawn En-Passant
         }
         // If the enemy Pawn moved to the space one right of this Pawn,
         else if (lastMove.getPositionTo() == RC(row, col + 1))
         {
             Move enPassantRight = Move(RC(row, col), RC(row + direction, col + 1));
             enPassantRight.setEnPassant();
-            possible.insert(enPassantRight); // Capture the Pawn En-Passant***
+            possible.insert(enPassantRight); // Capture the Pawn En-Passant
         }
     }
 

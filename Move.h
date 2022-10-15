@@ -27,29 +27,18 @@ public:
 		translateToSmith();
 	};
 
-	// TESTING: Pass captured piece to constructor - add to rest of code?
+	// Pass captured piece to constructor - add to rest of code?
 	Move(RC from, RC to, char capture) : Move(from, to)
 	{
 		this->setCapture(capture);
 	};
 
-	// TODO: Use this OR remove this and rely on board to get pieceType
-	//  (board[RC from].getType() or .isSpace())
-	Move(char movedPiece, RC from, RC to)
-	{
-		this->pieceType = movedPiece;
-		this->positionFrom = from;
-		this->positionTo = to;
-		translateToSmith();
-	};
-	// Create a Move from a given smithNotation
+	// Create a Move from a given smithNotation - for reading list of Moves
 	/*Move(string smithNotation)
 {
 	this->smithNotation = smithNotation;
 	translateFromSmith(smithNotation);
 };*/
-
-	// TODO: Create Move.cpp?
 
 	// Translate the Move into Smith's notation
 	string translateToSmith()
@@ -99,12 +88,8 @@ public:
 
 	//};
 
-
 	// - - - GETTERS AND SETTERS - - - //
 	
-	// Piece involved in the move, currenlty used for En-Passant
-	char getPieceType() { return this->pieceType; };
-
 	// Positions To and From
 	RC getPositionFrom() { return this->positionFrom; };
 	RC getPositionTo() { return this->positionTo; };
@@ -124,7 +109,7 @@ public:
 	bool getCastlingQ() { return this->castlingQSide; };
 	bool getCastlingK() { return this->castlingKSide; };
 
-	void setEnPassant() { this->enpassant = true; };
+	void setEnPassant() { this->enpassant = true; this->capture = 'p'; };
 	bool getEnPassant() { return this->enpassant; };
 
 	void setPromotion() { this->promotion = true; };
@@ -136,7 +121,6 @@ public:
 	/*Move& operator= (const Move& m) { return *this; };*/
 	void operator= (const Move& m) {
 		// Information about Piece and how it moved
-		this->pieceType = m.pieceType;
 		this->positionTo = m.positionTo;
 		this->positionFrom = m.positionFrom;
 
@@ -162,7 +146,6 @@ public:
 	inline friend ostream& operator<<(ostream& out, Move& m) {	return out << m.smithNotation; };
 
 private:
-	char pieceType = 's';
 	string smithNotation = "";
 	RC positionTo;
 	RC positionFrom;
