@@ -1,10 +1,10 @@
 /***********************************************************************
  * Source File:
- *    Pawn:
- * Author:
- *
- * Summary:
- *
+ *    Pawn: A pawn in chess
+ * Author: 
+ *		Ashley DeMott, Logan Huston
+ * Summary: 
+ *		Contains the code for how a pawn moves.
  ************************************************************************/
 
 #pragma once
@@ -43,13 +43,14 @@ set <Move> Pawn::getPossibleMoves(Board* board, Move lastMove) {
         // If the Pawn is going into the last row,
         if (r == (NUM_ROW - 1) || r == 0)
         {
-            moveForward.setPromotion(); // Will promote to Queen***
+            moveForward.setPromotion(); // Will promote to Queen
         }
         possible.insert(moveForward);  // forward one blank space
 
         // If the Pawn has not yet moved AND the space 2 rows ahead is also empty,
         if ((!this->hasMoved) && (*board)[r + direction][c]->isSpace())
         {
+            // Assert it is in the correct row
             possible.insert(Move(RC(row, col), RC(r + direction, c))); // forward two blank spaces
         }
     }

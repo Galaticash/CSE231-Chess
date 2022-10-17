@@ -97,7 +97,6 @@ Move Board::move(Move currentMove)
 			// Change current Team back to the current (two Moves were performed, single turn)
 			this->currentTeam = (this->currentTeam) ? 0 : 1;
 		}
-
 		// Update the last performed Move
 		this->lastMove = currentMove;
 		// Change current Team to the opposite

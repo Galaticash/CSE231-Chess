@@ -1,10 +1,10 @@
 /***********************************************************************
  * Header File:
- *    Queen:
+ *    Queen: A queen in chess
  * Author:
- *
+ *    Ashley DeMott, Logan Huston
  * Summary:
- *
+ *    Contains the code for how a queen is drawn.
  ************************************************************************/
 
 #pragma once
@@ -32,7 +32,6 @@ public:
       { 6,-3, -6,-3, -6,-5,  6,-5},     // middel base
       { 8,-6, -8,-6, -8,-8,  8,-8}      // base
         };
-
     };
 
    set <Move> getPossibleMoves(Board* board, Move lastMove);

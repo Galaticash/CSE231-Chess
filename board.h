@@ -1,8 +1,8 @@
 /***********************************************************************
  * Header File:
- *      Board
+ *    Board: Represents the board in chess
  * Author:
- *      Ashley DeMott
+ *		Ashley DeMott, Logan Huston
  * Summary:
  *      Stores a collection of Piece pointers and moves Pieces to
  *      new positions on the Board. Also keeps track of the state of
@@ -12,12 +12,12 @@
 
 #ifndef PIECE_CLASSES
 #define PIECE_CLASSES
-#include "Pawn.h"
-#include "Queen.h"
 #include "Space.h"
+#include "Pawn.h"
 #include "King.h"
-#include "Rook.h"
+#include "Queen.h"
 #include "Bishop.h"
+#include "Rook.h"
 #include "Knight.h"
 #endif
 
@@ -27,9 +27,19 @@ public:
 	// When a board is created, will use the Default 2D array of Piece*
 	Board() { this->lastMove = Move(); this->currentTeam = 1; };
 	// Use a custom board, for testing
-	Board(Piece* copiedBoard[NUM_ROW][NUM_COL]) : Board()
-	{ copyBoard(copiedBoard); };
+	Board(Piece* copiedBoard[NUM_ROW][NUM_COL])	{ 
+		copyBoard(copiedBoard);
+		this->lastMove = Move();
+	};
 	//~Board() { delete[] & this->piecesBoard; delete& this->lastMove;  delete this; };
+
+	// Get a pointer to the Piece at the given position on the Board
+	// Also override []
+	Piece* getPieceAtPosition(RC position)
+	{
+		return piecesBoard[position.getRow()][position.getCol()];
+	}
+	Move getLastMove() { return this->lastMove; };
 
 	void copyBoard(Piece* copiedBoard[NUM_ROW][NUM_COL])
 	{
@@ -76,13 +86,15 @@ public:
 		// If the RC is on the board (row: 0 - 7, col: 0 - 7)
 		return (row >= 0 && row < NUM_ROW&& col >= 0 && col < NUM_COL);
 	};
+	// const Piece operator =
 
 	// Return a pointer to the given row of Piece*
-	Piece** operator[](const int row) { return piecesBoard[row]; }; // Correct, being used by Tests
-	//Piece * *operator[](const int row) const { return piecesBoard[row]; }; // Currenlty incorrect, being used by program
+	Piece** operator[](const int row) { return piecesBoard[row]; }; // Correct
+	//Piece * *operator[](const int row) const { return piecesBoard[row]; }; // Currenlty incorrect
 
 private:
 	Piece* piecesBoard[NUM_ROW][NUM_COL] = {};	// The 2D array of Piece pointers
 	Move lastMove;		// The last performed Move
 	bool currentTeam;	// The current Team
+
 };

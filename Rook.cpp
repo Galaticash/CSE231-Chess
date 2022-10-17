@@ -1,10 +1,10 @@
 /***********************************************************************
  * Source File:
- *    Rook:
+ *    Rook: A rook in chess
  * Author:
- *
+ *    Ashley DeMott, Logan Huston
  * Summary:
- *
+ *    Contains the code for how a rook moves.
  ************************************************************************/
 
 #pragma once

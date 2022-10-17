@@ -275,15 +275,19 @@ void ogstream::drawHover(int pos)
 * Highlight a chess square:
 *   INPUT  location  The location of the selected square
 ************************************************************************/
-void ogstream::drawPossible(int pos)
+void ogstream::drawPossible(RC rc)
 {
    // do nothing if there is nothing to do
-   if (pos < 0 || pos >= 64)
-      return;
+    if (rc.getRow() < 0 || rc.getRow() > 7 || rc.getCol() < 0 || rc.getCol() > 7)
+    {
+        return;
+    }
 
    // find the row and column
-   int row = pos / 8;
-   int col = pos % 8;
+    int row = rc.getRow();
+       //pos / 8;
+    int col = rc.getCol();
+       //pos % 8;
 
    // set the color and drawing style
    glBegin(GL_QUADS);

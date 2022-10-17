@@ -1,10 +1,10 @@
 /***********************************************************************
  * Header File:
- *    Pawn:
+ *    Pawn: A pawn in chess
  * Author: 
- *
+ *		Ashley DeMott, Logan Huston
  * Summary: 
- *
+ *		Contains the code for how a pawn is drawn.
  ************************************************************************/
 
 #pragma once

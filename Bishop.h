@@ -1,10 +1,10 @@
 /***********************************************************************
  * Header File:
- *    Bishop:
+ *    Bishop: A bishop in chess
  * Author:
- *
+ *    Ashley DeMott, Logan Huston
  * Summary:
- *
+ *    Contains the code for how a bishop is drawn.
  ************************************************************************/
 
 #pragma once
@@ -27,7 +27,6 @@ public:
       {-5,3,  -5,2,   5,2,   5,3 },   // base of head
       {-2,2,  -4,-5,  4,-5,  2,2 },   // neck
       { 6,-6, -6,-6, -6,-8,  6,-8}    // base
-        };
     };
 
 	set <Move> getPossibleMoves(Board* board, Move lastMove);

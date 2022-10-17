@@ -15,6 +15,7 @@
 #include "Rect.h"	// For the Rectangles used to draw the Piece
 #include <vector>	// To hold the Rectangles
 
+
 using namespace std;
 
 #ifndef BOARD_CONST
@@ -34,6 +35,7 @@ public:
 		this->currentPosition = RC();
 		this->isWhite = false;
 		this->hasMoved = false;
+		this->rectangles = {};
 	};
 	Piece(RC position, bool isWhite)
 	{
@@ -41,13 +43,26 @@ public:
 		this->currentPosition = position;
 		this->isWhite = isWhite;
 		this->hasMoved = false;
+		this->rectangles = {};
 	};
+
+	// Public, used by ogstream
+	struct Rect
+	{
+		int x0;
+		int y0;
+		int x1;
+		int y1;
+		int x2;
+		int y2;
+		int x3;
+		int y3;
+	};
+	// GETTERS AND SETTERS FOR ATTRIBUTES //
 
 	// Returns the possible moves this Piece can do, given the current Board and the previous Move
 	set <Move> virtual getPossibleMoves(Board* board, Move lastMove) { return set <Move> {}; };
 	//set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) = 0; <- pure virutal, cannot make Piece* 2D array
-
-	// GETTERS AND SETTERS FOR ATTRIBUTES //
 
 	void setPosition(RC positionTo)
 	{

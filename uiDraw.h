@@ -23,21 +23,30 @@ using std::string;
   *************************************************************************/
 class ogstream : public std::ostringstream
 {
+private:
+    // Put text at location X, Y
+    void drawText(int x, int y, const char* text) const;
+
 public:
-    ogstream() : x(0), y(0)                  {          }
-    ogstream(int position): x(0), y(0)       {          }
-    ~ogstream()                              { flush(); }
+    ogstream() : x(0), y(0) {          }
+    ogstream(int position) : x(0), y(0) {          }
+    ~ogstream() { flush(); }
 
     // Methods specific to drawing text on the screen
     virtual void flush();
-    void setPosition(int x, int y) { flush(); this->x = x; this->y = y;}
+    void setPosition(int x, int y) { flush(); this->x = x; this->y = y; }
 
+    // Methods to draw the chess pieces on the screen
+     
+    // Draw a piece with a collection of rectangles
+    //void drawPiece(int x, int y, bool black, Rect rectangle[], int num) const;
+    void drawPiece(Piece* p) const; // then get all things from Piece
 
     // Methods to draw the board 
     virtual void drawBoard();
     virtual void drawSelected(int position);
-    virtual void drawHover(   int position);
-    virtual void drawPossible(int position);
+    virtual void drawHover(int position);
+    virtual void drawPossible(RC position);
 
 
     // Draw a piece with a collection of rectangles
