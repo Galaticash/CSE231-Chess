@@ -78,8 +78,8 @@ public:
 	};
 
 	// Return a pointer to the given row of Piece*
-	Piece** operator[](const int row) { return piecesBoard[row]; }; // Correct, being used by Tests
-	//Piece * *operator[](const int row) const { return piecesBoard[row]; }; // Currenlty incorrect, being used by program
+	Piece** operator[](const int row) { return piecesBoard[row]; }; // Correct
+	//Piece** operator[](const int row) const { return piecesBoard[row]; }; // Currenlty doesn't work
 
 private:
 	Piece* piecesBoard[NUM_ROW][NUM_COL] = {};	// The 2D array of Piece pointers
