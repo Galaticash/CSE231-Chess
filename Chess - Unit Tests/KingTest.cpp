@@ -78,7 +78,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&kingTest);
 
 			// EXERCISE
-			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard);
 
 			// VERIFY   possible.insert(Move(RC(row, col), RC(r, c)));
 			set <Move> expectedMoves = set<Move> { 
@@ -128,7 +128,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&pawnTest4);
 
 			// exercise
-			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard);
 
 			// verify
 			Move castling = Move(RC(0, 4), RC(0, 3));
@@ -178,7 +178,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&pawnTest4);
 
 			// exercise
-			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard);
 
 			// verify
 			Move castlingKing = Move(RC(0, 4), RC(0, 6));
@@ -233,7 +233,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&pawnTest8);
 
 			// exercise
-			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard);
 
 			// verify
 			Assert::IsTrue(possibleMoves.empty());
@@ -281,7 +281,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&pawnTest8);
 
 			// exercise
-			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard, Move());
+			set <Move> possibleMoves = kingTest.getPossibleMoves(&testBoard);
 
 			// verify
 			set <Move> expectedMoves = set<Move> { {Move(RC(5, 4), RC(4, 3))}, {Move(RC(5, 4), RC(4, 4))}, {Move(RC(5, 4), RC(4, 5))}, {Move(RC(5, 4), RC(5, 3))},

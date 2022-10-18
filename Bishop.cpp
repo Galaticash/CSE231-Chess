@@ -16,17 +16,11 @@
  ********************************************/
 set <Move> Bishop::getPossibleMoves(Board* board)
 {
-   set <Move> possible;
+    set <Move> possible;
 
-   int row = this->currentPosition.getRow(); // current location row
-   int col = this->currentPosition.getCol(); // current location column
-
-   // If the position is not valid, or the selected Position is an empty Space, or it is not this Piece's turn,
-   if (!(board->isValidPosition(this->currentPosition)) || board->getPieceAtPosition(RC(row, col))->isSpace() || board->currentIsWhite() != this->isWhite)
-       return possible;
-
-   int r;                   // the row we are checking
-   int c;                   // the column we are checking
+    // If the Piece isn't at a valid position, or it is not this Piece's turn,
+    if (!(board->isValidPosition(this->currentPosition)) || board->currentIsWhite() != this->isWhite)
+        return possible;
 
    // The possible RC movement for a Bishop
    RC moves[4] =
@@ -35,16 +29,27 @@ set <Move> Bishop::getPossibleMoves(Board* board)
        {-1, -1}, {1, -1}
    };
 
-   // For each possible direction,
-   for (int i = 0; i < 4; i++)
+   // The Bishop only does sliding Moves in the given directions
+   //possible = getSlidingMoves(board, this->currentPosition, moves);
+
+   // The current position of the Piece
+   int row = this->getCurrentPosition().getRow();
+   int col = this->getCurrentPosition().getCol();
+
+   // The row and column being checked
+   int r = 0;
+   int c = 0;
+
+   // For each direction in moves,
+   for (int i = 0; i < sizeof(moves); i++)
    {
        r = row + moves[i].getRow();
        c = col + moves[i].getCol();
+
+       // If the space is a valid position on the board,
        if (board->isValidPosition(RC(r, c)))
        {
-           // Check how many clear spaces are in each direction,
-           //  goes until it is blocked or reaches the end of the board
-           while (board->isValidPosition(RC(r, c)) &&
+           while (r >= 0 && r < 8 && c >= 0 && c < 8 &&
                (*board)[r][c]->isSpace())
            {
                possible.insert(Move(RC(row, col), RC(r, c)));
@@ -52,11 +57,9 @@ set <Move> Bishop::getPossibleMoves(Board* board)
                c += moves[i].getCol();
            }
 
-           // TODO: Rewrite, keeps checking isValid
-           // TODO: Move slide to Piece class, then have Bishop, Queen, etc call getSlide for each direction
+           // If the capture position is a valid position on the board,
            if (board->isValidPosition(RC(r, c)))
            {
-               // Check if it can capture the piece that is blocking
                if ((*board)[r][c]->isSpace() || (!this->isWhite && (*board)[r][c]->getIsWhite()))
                    possible.insert(Move(RC(row, col), RC(r, c)));
                if ((*board)[r][c]->isSpace() || (this->isWhite && !(*board)[r][c]->getIsWhite()))
@@ -64,7 +67,6 @@ set <Move> Bishop::getPossibleMoves(Board* board)
            }
        }
    }
-
    return possible;
 };
 

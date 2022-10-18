@@ -83,5 +83,5 @@ protected:
 	bool isWhite;	// If this Piece is on Team White
 
 	
-	//set <Move> getSlidingMoves(Board* board);
+	set <Move> getSlidingMoves(const Board* board, const RC start, const RC deltas[]);
 };

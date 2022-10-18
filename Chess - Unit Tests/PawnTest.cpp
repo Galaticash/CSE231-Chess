@@ -18,11 +18,6 @@
 // Includes the Board object
 #include "../board.cpp"
 
-//#include "../piece.cpp"
-#include "../Pawn.h"
-//#include "../Space.h"
-#include "../Queen.cpp"
-
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
 
@@ -95,7 +90,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&testPawn);
 
 			// EXERCISE - Pawn::getPossibleMoves()
-			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard, Move());
+			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard);
 			
 			// VERIFY
 			set<Move> expectedMoves = { 
@@ -142,7 +137,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&enemyPiece);
 
 			// EXERCISE - Pawn::getPossibleMoves()
-			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard, Move());
+			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard);
 
 			// VERIFY
 			// Assert that the Pawn has no possibleMoves
@@ -186,7 +181,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&enemyPawn);
 
 			// EXERCISE - Pawn::getPossibleMoves
-			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard, Move());
+			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard);
 
 			// VERIFY
 			set<Move> expectedMoves = { 
@@ -233,7 +228,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&enemyPawn);
 
 			// EXERCISE - Pawn::getPossibleMoves
-			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard, Move());
+			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard);
 
 			// VERIFY
 			set<Move> expectedMoves = { 
@@ -282,7 +277,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&enemyPawnThree);
 
 			// EXERCISE - Pawn::getPossibleMoves
-			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard, Move());
+			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard);
 
 			// VERIFY
 			set<Move> expectedMoves = { 
@@ -333,7 +328,7 @@ namespace ChessUnitTests
 			testBoard.insertPiece(&enemyPawnThree);
 
 			// EXERCISE - Pawn::getPossibleMoves			
-			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard, Move());
+			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard);
 
 			// VERIFY
 			// Assert that the Pawn can attack move diagonally and attack Pawns of the opposite color, or can move forward (1 or 2)
@@ -384,9 +379,10 @@ namespace ChessUnitTests
 
 			// The last move was an enemy Pawn moving 2 spaces
 			Move lastMove = Move(RC(row - 2, col + 1), enemyPawn.getCurrentPosition());
+			//testBoard.
 
 			// EXERCISE - Pawn::getPossibleMoves			
-			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard, lastMove);
+			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard);
 
 			// VERIFY
 			// Assert that the Pawn can attack a Pawn in the same row BUT will move to the space behind it
@@ -449,9 +445,10 @@ namespace ChessUnitTests
 
 			// The last move was an enemy Pawn moving 2 spaces
 			Move lastMove = Move(RC(row - 2, col - 1), enemyPawn.getCurrentPosition());
+			//testBoard.setlastMove
 
 			// EXERCISE - Pawn::getPossibleMoves			
-			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard, lastMove);
+			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard);
 
 			// VERIFY
 			// Assert that the Pawn can attack a Pawn in the same row BUT will move to the space behind it
@@ -512,7 +509,7 @@ namespace ChessUnitTests
 			//Assert::AreEqual(pawnType, testBoard[row][col]->getType());
 
 			// EXERCISE - Pawn::getPossibleMoves()
-			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard, Move());
+			set<Move> possibleMoves = testPawn.getPossibleMoves(&testBoard);
 
 			// VERIFY
 			// Pawn can Move forward one and will be promoted to a Queen

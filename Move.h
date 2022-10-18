@@ -207,6 +207,7 @@ public:
 	bool operator!= (Move const& other) const { return !(*this == other); };
 
 	// Updated to use Smith notation to compare moves
+	bool operator< (Move const& other) { return this->smithNotation < other.smithNotation; };
 	bool operator< (Move const& other) const { return this->smithNotation < other.smithNotation; };
 	inline friend ostream& operator<<(ostream& out, Move& m) {	return out << m.smithNotation; };
 
