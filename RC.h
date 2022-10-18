@@ -39,33 +39,29 @@ public:
 		return this->col;
 	};
 
-	// Gets RC where the row is represented as a letter, ex: A1, B3
+	// Gets RC where the row is represented as a letter, ex: a1, b3
 	string getString()
 	{
-		string row = to_string(this->getRow());
-		//static_cast<char>('a' - 1 + this->getRow());
-		string col = to_string(this->getCol());
-		//col = atoi(col.substr(0));
-		//col = static_cast<char>(this->getCol());
-		string rcString = "" + row + col;
+		string rcString = "";
+
+		// Convert the row to an alpha character
+		char row = (char)('a' - 1 + this->getRow());
+		
+		// Combine together and return
+		rcString += row + to_string(this->getCol() + 1);
 		return rcString;
 	};
 
-	/*RC& operator= (const RC& rc)
-	{
-		//this->row = rc.row;
-		//this->col = rc.col;
-		return *this;
-	};*/
+	// Setting
 	void operator= (const RC& rc)
 	{
 		this->row = rc.row;
 		this->col = rc.col;
 	};
+
+	// Comparison operators
 	bool operator== (RC const& other) const { return (this->row == other.row && this->col == other.col); };
 	bool operator!= (RC const& other) const { return !(*this == other); };
-	
-	//bool _equals(RC const& other) const { return (this->row == other.row && this->col == other.col); };
 	bool operator< (RC const& other) const { return (this->row < other.row || this->col < other.col); };
 
 private:

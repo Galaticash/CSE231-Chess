@@ -40,10 +40,9 @@ using namespace std;
 #endif
 
 // The Teams that Pieces can be assigned to
-// Used to determine if a Piece can be moved
+// Used to determine if a Piece can be moved (incomplete)
 const bool TEAM_ONE = 1;
 const bool TEAM_TWO = 0;
-
 
 // For testing castling, replace Bishop -> Queen with spaces (Team Black)
 // new Bishop(RC(7, 1), TEAM_TWO), new Knight(RC(7, 2), TEAM_TWO), new Queen(RC(7, 3), TEAM_TWO) 
@@ -198,67 +197,7 @@ void callBack(Interface *pUI, void * p)
  * This is the only function understanding Smith notation
  *******************************************************/
 void parse(const string& textMove, int& positionFrom, int& positionTo)
-{
-   string::const_iterator it = textMove.cbegin();
-
-   // get the source
-   int col = *it - 'a';
-   it++;
-   int row = *it - '1';
-   it++;
-   positionFrom = row * 8 + col;
-
-   // get the destination
-   col = *it - 'a';
-   it++;
-   row = *it - '1';
-   it++;
-   positionTo = row * 8 + col;
-
-   // capture and promotion information
-   char capture = ' ';
-   char piecePromotion = ' ';
-   bool castleK = false;
-   bool castleQ = false;
-   bool enpassant = false;
-   for (; it != textMove.end(); ++it)
-   {
-      switch (*it)
-      {
-      case 'p':   // capture a pawn
-      case 'n':   // capture a knight
-      case 'b':   // capture a bishop
-      case 'r':   // capture a rook
-      case 'q':   // capture a queen
-      case 'k':   // !! you can't capture a king you silly!
-         capture = tolower(*it);
-         break;
-
-      case 'c':  // short castling or king's castle
-         castleK = true;
-         break;
-      case 'C':  // long castling or queen's castle
-         castleQ = true;
-         break;
-      case 'E':  // En-passant
-         enpassant = true;
-         break;
-
-      case 'N':  // Promote to knight
-      case 'B':  // Promote to Bishop
-      case 'R':  // Promote to Rook
-      case 'Q':  // Promote to Queen
-         piecePromotion = *it;
-         break;
-
-      }
-   }
-
-   // error checking
-   if (positionFrom < 0 || positionFrom >= 64 ||
-       positionTo   < 0 || positionTo   >= 64)
-      positionFrom = positionTo = -1;
-}
+{}
 
 /********************************************************
  * READ FILE
@@ -276,10 +215,18 @@ void readFile(const char* fileName, Board* board)
    bool valid = true;
    while (valid && fin >> textMove)
    {
-      int positionFrom;
-      int positionTo;
-      parse(textMove, positionFrom, positionTo);
-      //valid = move(board, positionFrom, positionTo);
+       try
+       {
+           // Create a move from the Smith's notation
+           Move nextMove = Move(textMove);
+           // If no errors thrown, perform the move
+           board->move(nextMove);
+       }
+       catch (string errorMessage)
+       {
+           cerr << errorMessage;
+           valid = false; // Stop reading moves
+       }
    }
 
    // close and done
@@ -323,7 +270,9 @@ int main(int argc, char** argv)
    
    // TEST: Move a Piece (also this will be done for readFile,
    //   but need to convert Smith's notation to Move first)
-   //board.move(Move(RC(6, 0), RC(5, 0)));
+   Move test = Move(RC(6, 0), RC(5, 0));
+   test.getSmithNotation();
+   board.move(test);
 
 #ifdef _WIN32
  //  int    argc;

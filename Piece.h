@@ -44,7 +44,6 @@ public:
 
 	// Returns the possible moves this Piece can do, given the current Board and the previous Move
 	set <Move> virtual getPossibleMoves(Board* board, Move lastMove) { return set <Move> {}; };
-	//set <Move> virtual getPossibleMoves(Piece* board[], Move lastMove) = 0; <- pure virutal, cannot make Piece* 2D array
 
 	// GETTERS AND SETTERS FOR ATTRIBUTES //
 
@@ -54,7 +53,6 @@ public:
 		currentPosition = positionTo;
 
 		// Update hasMoved
-		// Or change to use nMoves, nMoves++ (not implemented)
 		if (!this->hasMoved)
 		{
 			this->hasMoved = true;
@@ -70,7 +68,7 @@ public:
 	char getType() { return this->type; };	// Return the char type of this Piece
 	bool isSpace() { return this->type == 's'; };	// Return if this Piece's char type is a Space
 	bool getIsWhite() { return this->isWhite; };	// Return if this Piece is white (TODO: TEAM_ONE/TEAM_WHITE?)
-private:
+
 protected:
 	// Currently unused, Piece char types as an enum
 	enum pieceTypes { k = 'k', q = 'q', r = 'r', n = 'n', p = 'p', b = 'b', s = 's' };

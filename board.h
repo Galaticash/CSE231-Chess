@@ -42,7 +42,6 @@ public:
 		}
 	};
 
-
 	// Put a Piece onto the Board, replacing any Piece currently there
 	void insertPiece(Piece* insertPiece);
 	
@@ -74,7 +73,7 @@ public:
 		int col = position.getCol();
 
 		// If the RC is on the board (row: 0 - 7, col: 0 - 7)
-		return (row >= 0 && row < NUM_ROW&& col >= 0 && col < NUM_COL);
+		return (row >= 0 && row < NUM_ROW && col >= 0 && col < NUM_COL);
 	};
 
 	// Return a pointer to the given row of Piece*
