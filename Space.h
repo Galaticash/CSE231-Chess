@@ -26,5 +26,5 @@ public:
 	{
 		this->type = 's';
 	};
-	set <Move> getPossibleMoves(Board* board, Move lastMove) { set <Move> possible; return possible; };
+	set <Move> getPossibleMoves(Board* board) { return set <Move> {}; };
 };

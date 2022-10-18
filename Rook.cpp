@@ -14,7 +14,7 @@
  * GET POSSIBLE MOVES
  * Get's the possible moves from a piece.
  ********************************************/
-set <Move> Rook::getPossibleMoves(Board* board, Move lastMove)
+set <Move> Rook::getPossibleMoves(Board* board)
 {
    set <Move> possible;
 

@@ -14,7 +14,7 @@
  * GET POSSIBLE MOVES
  * Get's the possible moves from a piece.
  ********************************************/
-set <Move> Bishop::getPossibleMoves(Board* board, Move lastMove)
+set <Move> Bishop::getPossibleMoves(Board* board)
 {
    set <Move> possible;
 

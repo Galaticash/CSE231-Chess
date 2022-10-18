@@ -14,7 +14,7 @@
  * GET POSSIBLE MOVES
  * Gets the possible moves from a Piece.
  ********************************************/
-set <Move> Pawn::getPossibleMoves(Board* board, Move lastMove) {
+set <Move> Pawn::getPossibleMoves(Board* board) {
 
     set <Move> possible = {}; // Store possible Moves in a set
 
@@ -96,6 +96,9 @@ set <Move> Pawn::getPossibleMoves(Board* board, Move lastMove) {
         // Add to set of possible moves
         possible.insert(captureRight); // right diagonal capture
     }
+
+    // Get the last Move performed
+    Move lastMove = board->getLastMove();
 
     // En-Passant
     // If the lastMove was a Pawn travelling two vertical spaces,

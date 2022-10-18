@@ -43,7 +43,7 @@ public:
 	};
 
 	// Returns the possible moves this Piece can do, given the current Board and the previous Move
-	set <Move> virtual getPossibleMoves(Board* board, Move lastMove) { return set <Move> {}; };
+	set <Move> virtual getPossibleMoves(Board* board) { return set <Move> {}; };
 
 	// GETTERS AND SETTERS FOR ATTRIBUTES //
 
@@ -57,9 +57,9 @@ public:
 		{
 			this->hasMoved = true;
 		}
-	}	
-
+	}
 	RC getCurrentPosition() { return this->currentPosition; };	// Return the RC for this Piece
+	
 	vector<Rect>* getRectangles() { return &(this->rectangles); };	// Return a pointer to this Piece's rectangles
 
 	void setHasMoved(bool moved) { this->hasMoved = moved; }; // For Testing, set hasMoved
@@ -67,6 +67,7 @@ public:
 
 	char getType() { return this->type; };	// Return the char type of this Piece
 	bool isSpace() { return this->type == 's'; };	// Return if this Piece's char type is a Space
+	
 	bool getIsWhite() { return this->isWhite; };	// Return if this Piece is white (TODO: TEAM_ONE/TEAM_WHITE?)
 
 protected:
@@ -80,4 +81,7 @@ protected:
 
 	bool hasMoved;	// If this Piece has moved yet
 	bool isWhite;	// If this Piece is on Team White
+
+	
+	//set <Move> getSlidingMoves(Board* board);
 };

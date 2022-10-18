@@ -14,7 +14,7 @@
  * GET POSSIBLE MOVES
  * Get's the possible moves from a piece.
  ********************************************/
-set <Move> Queen::getPossibleMoves(Board* board, Move lastMove)
+set <Move> Queen::getPossibleMoves(Board* board)
 {
    set <Move> possible;
 

@@ -28,5 +28,5 @@ public:
 		};
 	};
 
-	set <Move> getPossibleMoves(Board* board, Move lastMove);
+	set <Move> getPossibleMoves(Board* board);
 };
