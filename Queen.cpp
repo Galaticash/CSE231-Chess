@@ -1,10 +1,10 @@
 /***********************************************************************
  * Source File:
- *    Queen:
+ *    Queen
  * Author:
- *
+ *		Ashley DeMott, Logan Huston
  * Summary:
- *
+ *		A queen in chess. This file contains info on moving a queen.
  ************************************************************************/
 
 #pragma once

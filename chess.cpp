@@ -44,16 +44,6 @@ using namespace std;
 const bool TEAM_ONE = 1;
 const bool TEAM_TWO = 0;
 
-// The default Chess Board
-Piece* DEFAULT_BOARD[NUM_ROW][NUM_COL] = {
-            {new Rook(RC(0, 0), TEAM_ONE), new Bishop(RC(0, 1), TEAM_ONE), new Knight(RC(0, 2), TEAM_ONE), new Queen(RC(0, 3), TEAM_ONE), new King(RC(0, 4), TEAM_ONE), new Knight(RC(0, 5), TEAM_ONE), new Bishop(RC(0, 6), TEAM_ONE), new Rook(RC(0, 7), TEAM_ONE)},
-            {new Pawn(RC(1, 0), TEAM_ONE), new Pawn(RC(1, 1), TEAM_ONE), new Pawn(RC(1, 2), TEAM_ONE), new Pawn(RC(1, 3), TEAM_ONE), new Pawn(RC(1, 4), TEAM_ONE), new Pawn(RC(1, 5), TEAM_ONE), new Pawn(RC(1, 6), TEAM_ONE),new Pawn(RC(1, 7), TEAM_ONE)},
-            {new Space(RC(2, 0)), new Space(RC(2, 1)), new Space(RC(2, 2)), new Space(RC(2, 3)), new Space(RC(2, 4)), new Space(RC(2, 5)), new Space(RC(2, 6)), new Space(RC(2, 7))},
-            {new Space(RC(3, 0)), new Space(RC(3, 1)), new Space(RC(3, 2)), new Space(RC(3, 3)), new Space(RC(3, 4)), new Space(RC(3, 5)), new Space(RC(3, 6)), new Space(RC(3, 7))},
-            {new Space(RC(4, 0)), new Space(RC(4, 1)), new Space(RC(4, 2)), new Space(RC(4, 3)), new Space(RC(4, 4)), new Space(RC(4, 5)), new Space(RC(4, 6)), new Space(RC(4, 7))},
-            {new Space(RC(5, 0)), new Space(RC(5, 1)), new Space(RC(5, 2)), new Space(RC(5, 3)), new Space(RC(5, 4)), new Space(RC(5, 5)), new Space(RC(5, 6)), new Space(RC(5, 7))},
-            {new Pawn(RC(6, 0), TEAM_TWO), new Pawn(RC(6, 1), TEAM_TWO), new Pawn(RC(6, 2), TEAM_TWO), new Pawn(RC(6, 3), TEAM_TWO), new Pawn(RC(6, 4), TEAM_TWO), new Pawn(RC(6, 5), TEAM_TWO), new Pawn(RC(6, 6), TEAM_TWO), new Pawn(RC(6, 7), TEAM_TWO)},
-            {new Rook(RC(7, 0), TEAM_TWO), new Bishop(RC(7, 1), TEAM_TWO), new Knight(RC(7, 2), TEAM_TWO), new Queen(RC(7, 3), TEAM_TWO), new King(RC(7, 4), TEAM_TWO), new Knight(RC(7, 5), TEAM_TWO), new Bishop(RC(7, 6), TEAM_TWO), new Rook(RC(7, 7), TEAM_TWO)} };
 
 // For testing castling, replace Bishop -> Queen with spaces (Team Black)
 // new Bishop(RC(7, 1), TEAM_TWO), new Knight(RC(7, 2), TEAM_TWO), new Queen(RC(7, 3), TEAM_TWO) 
@@ -313,11 +303,23 @@ int main(int argc, char** argv)
 // or char *argv[] <-- find the name of the executable created, argc is the number of parameters
 #endif // !_WIN32
 {
-   Interface ui("Chess");    
+   Interface ui("Chess");   
+
+   // The default Chess Board
+   Piece* defaultBoard[NUM_ROW][NUM_COL] = {
+               {new Rook(RC(0, 0), TEAM_ONE), new Bishop(RC(0, 1), TEAM_ONE), new Knight(RC(0, 2), TEAM_ONE), new Queen(RC(0, 3), TEAM_ONE), new King(RC(0, 4), TEAM_ONE), new Knight(RC(0, 5), TEAM_ONE), new Bishop(RC(0, 6), TEAM_ONE), new Rook(RC(0, 7), TEAM_ONE)},
+               {new Pawn(RC(1, 0), TEAM_ONE), new Pawn(RC(1, 1), TEAM_ONE), new Pawn(RC(1, 2), TEAM_ONE), new Pawn(RC(1, 3), TEAM_ONE), new Pawn(RC(1, 4), TEAM_ONE), new Pawn(RC(1, 5), TEAM_ONE), new Pawn(RC(1, 6), TEAM_ONE),new Pawn(RC(1, 7), TEAM_ONE)},
+               {new Space(RC(2, 0)), new Space(RC(2, 1)), new Space(RC(2, 2)), new Space(RC(2, 3)), new Space(RC(2, 4)), new Space(RC(2, 5)), new Space(RC(2, 6)), new Space(RC(2, 7))},
+               {new Space(RC(3, 0)), new Space(RC(3, 1)), new Space(RC(3, 2)), new Space(RC(3, 3)), new Space(RC(3, 4)), new Space(RC(3, 5)), new Space(RC(3, 6)), new Space(RC(3, 7))},
+               {new Space(RC(4, 0)), new Space(RC(4, 1)), new Space(RC(4, 2)), new Space(RC(4, 3)), new Space(RC(4, 4)), new Space(RC(4, 5)), new Space(RC(4, 6)), new Space(RC(4, 7))},
+               {new Space(RC(5, 0)), new Space(RC(5, 1)), new Space(RC(5, 2)), new Space(RC(5, 3)), new Space(RC(5, 4)), new Space(RC(5, 5)), new Space(RC(5, 6)), new Space(RC(5, 7))},
+               {new Pawn(RC(6, 0), TEAM_TWO), new Pawn(RC(6, 1), TEAM_TWO), new Pawn(RC(6, 2), TEAM_TWO), new Pawn(RC(6, 3), TEAM_TWO), new Pawn(RC(6, 4), TEAM_TWO), new Pawn(RC(6, 5), TEAM_TWO), new Pawn(RC(6, 6), TEAM_TWO), new Pawn(RC(6, 7), TEAM_TWO)},
+               {new Rook(RC(7, 0), TEAM_TWO), new Bishop(RC(7, 1), TEAM_TWO), new Knight(RC(7, 2), TEAM_TWO), new Queen(RC(7, 3), TEAM_TWO), new King(RC(7, 4), TEAM_TWO), new Knight(RC(7, 5), TEAM_TWO), new Bishop(RC(7, 6), TEAM_TWO), new Rook(RC(7, 7), TEAM_TWO)} };
+
 
    // Initialize the game class
    // note this is upside down: 0 row is at the bottom
-   Board board = Board(DEFAULT_BOARD);
+   Board board = Board(defaultBoard);
    
    // TEST: Move a Piece (also this will be done for readFile,
    //   but need to convert Smith's notation to Move first)

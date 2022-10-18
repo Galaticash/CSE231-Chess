@@ -5,8 +5,7 @@
  *		Ashley DeMott, Logan Huston
  *    
  * Summary:
- *		The base class for all types of Pieces in a chess game.
- *    
+ *		The base class for all types of Pieces in a chess game.  
  ************************************************************************/
 
 #pragma once

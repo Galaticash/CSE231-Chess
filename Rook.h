@@ -1,10 +1,10 @@
 /***********************************************************************
  * Header File:
- *    Rook:
+ *    Rook
  * Author:
- *
+ *		Ashley DeMott, Logan Huston
  * Summary:
- *
+ *		A rook in chess. This file contains info on drawing a rook.
  ************************************************************************/
 
 #pragma once

@@ -1,10 +1,10 @@
 /***********************************************************************
  * Header File:
- *    King:
+ *    King
  * Author:
- *
+ *		Ashley DeMott, Logan Huston
  * Summary:
- *
+ *		A king in chess. This file contains info on drawing a king.
  ************************************************************************/
 
 #pragma once

@@ -1,10 +1,10 @@
 /***********************************************************************
  * Header File:
- *    Bishop:
+ *    Bishop
  * Author:
- *
+ *		Ashley DeMott, Logan Huston
  * Summary:
- *
+ *		A bishop in chess. This file contains info on drawing a bishop.
  ************************************************************************/
 
 #pragma once

@@ -1,10 +1,11 @@
 /***********************************************************************
  * Header File:
- *    Space:
+ *    Space
  * Author:
- *
+ *		Ashley DeMott, Logan Huston
  * Summary:
- *
+ *		A space on the chess board. This file sets what type of piece 
+ *		it is and that it has no moves.
  ************************************************************************/
 
 #pragma once

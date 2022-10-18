@@ -1,10 +1,10 @@
 /***********************************************************************
  * Source File:
- *    King:
+ *    King
  * Author:
- *
+ *		Ashley DeMott, Logan Huston
  * Summary:
- *
+ *		A king in chess. This file contains info on moving a king.
  ************************************************************************/
 
 #pragma once

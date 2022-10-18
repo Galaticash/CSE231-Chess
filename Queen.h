@@ -1,10 +1,10 @@
 /***********************************************************************
  * Header File:
- *    Queen:
+ *    Queen
  * Author:
- *
+ *		Ashley DeMott, Logan Huston
  * Summary:
- *
+ *		A queen in chess. This file contains info on drawing a queen.
  ************************************************************************/
 
 #pragma once

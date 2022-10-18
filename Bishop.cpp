@@ -1,10 +1,10 @@
 /***********************************************************************
  * Source File:
- *    Bishop:
+ *    Bishop
  * Author:
- *
+ *		Ashley DeMott, Logan Huston
  * Summary:
- *
+ *		A bishop in chess. This file contains info on moving a bishop.
  ************************************************************************/
 
 #pragma once

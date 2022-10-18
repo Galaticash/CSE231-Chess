@@ -1,10 +1,10 @@
 /***********************************************************************
  * Source File:
- *    Knight:
+ *    Knight
  * Author:
- *
+ *		Ashley DeMott, Logan Huston
  * Summary:
- *
+ *		A knight in chess. This file contains info on moving a knight.
  ************************************************************************/
 
 #pragma once

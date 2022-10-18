@@ -1,10 +1,10 @@
 /***********************************************************************
  * Header File:
- *    Knight:
+ *    Knight
  * Author:
- *
+ *		Ashley DeMott, Logan Huston
  * Summary:
- *
+ *		A knight in chess. This file contains info on drawing a knight.
  ************************************************************************/
 
 #pragma once

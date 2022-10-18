@@ -1,10 +1,10 @@
 /***********************************************************************
  * Source File:
- *    Pawn:
+ *    Pawn
  * Author:
- *
+ *		Ashley DeMott, Logan Huston
  * Summary:
- *
+ *		A pawn in chess. This file contains info on moving a pawn.
  ************************************************************************/
 
 #pragma once
