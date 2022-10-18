@@ -64,10 +64,32 @@ Move Board::move(Move currentMove)
 
 		// Check for special cases
 		// If a Pawn is being promoted,
-		if (currentMove.getPromotion())
+		if (currentMove.getPromotion() != ' ')
 		{
-			// Replace the Pawn with a Queen
-			Piece* promotedPawn = new Queen(RC(movePiece->getCurrentPosition().getRow(), movePiece->getCurrentPosition().getCol()), movePiece->getIsWhite());
+			Piece* promotedPawn;
+
+			// Based on which Piece the Pawn is promoting to,
+			switch (currentMove.getPromotion())
+			{
+			case 'Q':
+				// Replace the Pawn with a Queen
+				promotedPawn = new Queen(RC(movePiece->getCurrentPosition().getRow(), movePiece->getCurrentPosition().getCol()), movePiece->getIsWhite());
+			case 'B':
+				// Replace the Pawn with a Bishop
+				promotedPawn = new Bishop(RC(movePiece->getCurrentPosition().getRow(), movePiece->getCurrentPosition().getCol()), movePiece->getIsWhite());
+			case 'N':
+				// Replace the Pawn with a Knight
+				promotedPawn = new Knight(RC(movePiece->getCurrentPosition().getRow(), movePiece->getCurrentPosition().getCol()), movePiece->getIsWhite());
+			case 'R':
+				// Replace the Pawn with a Rook
+				promotedPawn = new Rook(RC(movePiece->getCurrentPosition().getRow(), movePiece->getCurrentPosition().getCol()), movePiece->getIsWhite());
+
+			default:
+				// Default to Queen
+				promotedPawn = new Queen(RC(movePiece->getCurrentPosition().getRow(), movePiece->getCurrentPosition().getCol()), movePiece->getIsWhite());
+			}
+			
+			// Insert the promoted Piece into the Board
 			this->insertPiece(promotedPawn);
 		}
 		// If a Pawn captured another Pawn enPassant,

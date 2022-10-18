@@ -24,20 +24,16 @@ public:
 		this->row = -1;
 		this->col = -1;
 	}
+	// Create a RC with a given row, col
 	RC(int newRow, int newCol)
 	{
 		this->row = newRow;
 		this->col = newCol;
 	};
 
-	int getRow()
-	{
-		return this->row;
-	};
-	int getCol()
-	{
-		return this->col;
-	};
+	// Get the row or column of the RC
+	int getRow() { return this->row; };
+	int getCol() { return this->col; };
 
 	// Gets RC where the row is represented as a letter, ex: a1, b3
 	string getString()
@@ -52,7 +48,7 @@ public:
 		return rcString;
 	};
 
-	// Setting
+	// Assignment operator
 	void operator= (const RC& rc)
 	{
 		this->row = rc.row;

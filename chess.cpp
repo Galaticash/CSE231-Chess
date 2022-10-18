@@ -192,14 +192,6 @@ void callBack(Interface *pUI, void * p)
 }
 
 /********************************************************
- * PARSE
- * Determine the nature of the move based on the input.
- * This is the only function understanding Smith notation
- *******************************************************/
-void parse(const string& textMove, int& positionFrom, int& positionTo)
-{}
-
-/********************************************************
  * READ FILE
  * Read a file where moves are encoded in Smith notation
  *******************************************************/
@@ -224,11 +216,10 @@ void readFile(const char* fileName, Board* board)
        }
        catch (string errorMessage)
        {
-           cerr << errorMessage;
+           cerr << errorMessage; // Print the error message
            valid = false; // Stop reading moves
        }
    }
-
    // close and done
    fin.close();
 }
@@ -263,16 +254,9 @@ int main(int argc, char** argv)
                {new Pawn(RC(6, 0), TEAM_TWO), new Pawn(RC(6, 1), TEAM_TWO), new Pawn(RC(6, 2), TEAM_TWO), new Pawn(RC(6, 3), TEAM_TWO), new Pawn(RC(6, 4), TEAM_TWO), new Pawn(RC(6, 5), TEAM_TWO), new Pawn(RC(6, 6), TEAM_TWO), new Pawn(RC(6, 7), TEAM_TWO)},
                {new Rook(RC(7, 0), TEAM_TWO), new Bishop(RC(7, 1), TEAM_TWO), new Knight(RC(7, 2), TEAM_TWO), new Queen(RC(7, 3), TEAM_TWO), new King(RC(7, 4), TEAM_TWO), new Knight(RC(7, 5), TEAM_TWO), new Bishop(RC(7, 6), TEAM_TWO), new Rook(RC(7, 7), TEAM_TWO)} };
 
-
    // Initialize the game class
    // note this is upside down: 0 row is at the bottom
    Board board = Board(defaultBoard);
-   
-   // TEST: Move a Piece (also this will be done for readFile,
-   //   but need to convert Smith's notation to Move first)
-   Move test = Move(RC(6, 0), RC(5, 0));
-   test.getSmithNotation();
-   board.move(test);
 
 #ifdef _WIN32
  //  int    argc;
