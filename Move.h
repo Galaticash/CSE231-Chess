@@ -178,8 +178,7 @@ public:
 	void setEnPassant() { this->enpassant = true; this->capture = 'p'; };
 	bool getEnPassant() { return this->enpassant; };
 
-	// Assumes Queen every time
-	void setPromotion() { this->promotion = 'Q'; };
+	void setPromotion(char promote) { this->promotion = promote; };
 	char getPromotion() { return this->promotion; };
 
 	// - - -  OPERATORS - - - //

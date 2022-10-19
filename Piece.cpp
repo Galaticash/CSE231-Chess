@@ -19,8 +19,10 @@ set <Move> Piece::getSlidingMoves(const Board* board, const RC current, const RC
     int r = 0;
     int c = 0;
 
+    int moveSize = sizeof(moves) / sizeof(moves[0]);
+
     // For each direction in moves,
-    for (int i = 0; i < sizeof(moves); i++)
+    for (int i = 0; i < moveSize; i++)
     {
         r = row + moves[i].getRow();
         c = col + moves[i].getCol();
@@ -47,5 +49,5 @@ set <Move> Piece::getSlidingMoves(const Board* board, const RC current, const RC
         }
     }
     return possible;
-}
+};
 #endif

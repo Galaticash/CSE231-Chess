@@ -19,7 +19,7 @@ set <Move> Bishop::getPossibleMoves(Board* board)
     set <Move> possible;
 
     // If the Piece isn't at a valid position, or it is not this Piece's turn,
-    if (!(board->isValidPosition(this->currentPosition)) || board->currentIsWhite() != this->isWhite)
+    if (!(board->isValidPosition(this->currentPosition)) || board->getCurrentTeam() != this->isWhite)
         return possible;
 
    // The possible RC movement for a Bishop
@@ -40,8 +40,10 @@ set <Move> Bishop::getPossibleMoves(Board* board)
    int r = 0;
    int c = 0;
 
+   int moveSize = sizeof(moves);
+
    // For each direction in moves,
-   for (int i = 0; i < sizeof(moves); i++)
+   for (int i = 0; i < moveSize; i++)
    {
        r = row + moves[i].getRow();
        c = col + moves[i].getCol();

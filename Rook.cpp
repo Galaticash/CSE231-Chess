@@ -19,7 +19,7 @@ set <Move> Rook::getPossibleMoves(Board* board)
     set <Move> possible;
 
     // If the Piece isn't at a valid position, or it is not this Piece's turn,
-    if (!(board->isValidPosition(this->currentPosition)) || board->currentIsWhite() != this->isWhite)
+    if (!(board->isValidPosition(this->currentPosition)) || board->getCurrentTeam() != this->isWhite)
         return possible;
 
    RC moves[4] =
@@ -40,7 +40,7 @@ set <Move> Rook::getPossibleMoves(Board* board)
    int r = 0;
    int c = 0;
 
-   int moveSize = 4;
+   int moveSize = sizeof(moves);
        //sizeof(moves);
 
    // For each direction in moves,

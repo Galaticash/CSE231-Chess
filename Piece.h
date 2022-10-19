@@ -13,11 +13,12 @@
 #include <set>		// Moves are stored in a set
 #include "Rect.h"	// For the Rectangles used to draw the Piece
 #include <vector>	// To hold the Rectangles
+#include <cassert>	// To use asserts
 
 using namespace std;
 
-#ifndef BOARD_CONST
-#define BOARD_CONST
+#ifndef GAME_CONST
+#define GAME_CONST
 // The size of the board
 const int NUM_ROW = 8;
 const int NUM_COL = 8;

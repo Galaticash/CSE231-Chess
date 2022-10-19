@@ -180,7 +180,7 @@ void callBack(Interface *pUI, void * p)
     }
 
     // If the user clicks on a space or a Piece belonging to the opposite of current Team
-    if (pUI->getSelectPosition() != -1 && (board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->isSpace() || board->currentIsWhite() != board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->getIsWhite()))
+    if (pUI->getSelectPosition() != -1 && (board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->isSpace() || board->getCurrentTeam() != board->getPieceAtPosition(getRC(pUI->getSelectPosition()))->getIsWhite()))
         pUI->clearSelectPosition();
 
     // draw the board

@@ -20,30 +20,28 @@ set <Move> Pawn::getPossibleMoves(Board* board) {
 
     int row = this->currentPosition.getRow(); // current location row
     int col = this->currentPosition.getCol(); // current location column
-
-    // TODO: board[r][c] instead of board.getPiece(RC(r, c)) // [] version is iffy
-   
-    // If the position is not valid, or the selected Position is an empty Space, or it is not this Piece's turn,
-    if (!(board->isValidPosition(this->currentPosition)) || board->getPieceAtPosition(RC(row, col))->isSpace() || board->currentIsWhite() != this->isWhite)
+ 
+    // If the Piece isn't at a valid position, or it is not this Piece's turn,
+    if (!(board->isValidPosition(this->currentPosition)) || board->getCurrentTeam() != this->isWhite)
         return possible;
 
     int r;                   // the row we are checking
     int c;                   // the column we are checking
-    // TODO: change to use TEAM_ONE/TEAM_TWO (board orientation) // public const bool iffy
-    int direction = (isWhite) ? 1 : -1; // The direction the Pawn is travelling
+
+    int direction = (isWhite) ? 1 : -1; // The direction the Pawn is travelling, assumes White at bottom
 
     // Check the space 1 row ahead of the Piece in the direction it is travelling
     c = col;
     r = row + direction;
 
     // If the space in front of the Pawn is empty,
-    if ((*board)[r][c]->isSpace())
+    if (board->isValidPosition(RC(r, c)) && (*board)[r][c]->isSpace())
     {
         Move moveForward = Move(RC(row, col), RC(r, c));
         // If the Pawn is going into the last row,
         if (r == (NUM_ROW - 1) || r == 0)
         {
-            moveForward.setPromotion(); // Will promote to Queen***
+            moveForward.setPromotion('Q'); // Will promote to Queen
         }
         possible.insert(moveForward);  // forward one blank space
 
@@ -55,46 +53,28 @@ set <Move> Pawn::getPossibleMoves(Board* board) {
     }
 
     // Capture cases
-    // TODO: Duplicate code, condense
-
-    c = col - 1;
-    // If the piece on the left diagonal is a Piece of the opposite color
-    if (!((*board)[r][c]->isSpace()) && (*board)[r][c]->getIsWhite() != this->isWhite)
+    // Left and right capture (-1 and +1)
+    for (c = col - 1; c <= col + 1; c += 2)
     {
-        // The Pawn will move from its current position to the new position
-        Move captureLeft = Move(RC(row, col), RC(r, c));
-
-        // Capture the Piece at that position
-        captureLeft.setCapture((*board)[r][c]->getType());
-
-        // If the Pawn is moving into the last row,
-        if (r == (NUM_ROW - 1) || r == 0)
+        // If the diagonal Piece is valid and an enemy of the opposite color
+        if (board->isValidPosition(RC(r, c)) && !((*board)[r][c]->isSpace()) && (*board)[r][c]->getIsWhite() != this->isWhite)
         {
-            captureLeft.setPromotion();
+            // The Pawn will move from its current position to the new position
+            Move capture = Move(RC(row, col), RC(r, c));
+
+            // Capture the Piece at that position
+            capture.setCapture((*board)[r][c]->getType());
+
+            // If the Pawn is moving into the last row,
+            if (r == (NUM_ROW - 1) || r == 0)
+            {
+                capture.setPromotion('Q');
+            }
+
+            // Add to set of possible moves
+            possible.insert(capture); // diagonal capture
         }
 
-        // Add to set of possible moves
-        possible.insert(captureLeft); // left diagonal capture
-    }
-
-    c = col + 1;
-    // If the piece on the right diagonal is a Piece of the opposite color
-    if (!((*board)[r][c]->isSpace()) && (*board)[r][c]->getIsWhite() != this->isWhite)
-    {
-        // The Pawn will move from its current position to the new position
-        Move captureRight = Move(RC(row, col), RC(r, c));
-
-        // Capture the Piece at that position
-        captureRight.setCapture((*board)[r][c]->getType());
-
-        // If the Pawn is moving into the last row,
-        if (r == (NUM_ROW - 1) || r == 0)
-        {
-            captureRight.setPromotion();
-        }
-
-        // Add to set of possible moves
-        possible.insert(captureRight); // right diagonal capture
     }
 
     // Get the last Move performed
@@ -106,21 +86,22 @@ set <Move> Pawn::getPossibleMoves(Board* board) {
     {
         // Not really needed, or could be a part of Move (Piece color) && board[row][col -1].getIsWhite() != this->isWhite
         // Probably throw in an assert (opposite colors)
-        //  && (*board)[row + direction][col - 1]->isSpace() <- always true, since Pawn can't jump over other Pieces. Could place an assert
+        //assert(this->getIsWhite != (*board).getPieceAtPosition(lastMove.getPositionTo())->getIsWhite());
+        //  && (*board)[row + direction][c]->isSpace() <- always true, since Pawn can't jump over other Pieces. Could place an assert
+        //assert((*board)[row + direction][c]->isSpace())
 
-        // If the enemy Pawn moved to the space one left of this Pawn,
-        if (lastMove.getPositionTo() == RC(row, col - 1))
+        // Left and right cases (-1 and +1)
+        for (c = col - 1; c <= col + 1; c += 2)
         {
-            Move enPassantLeft = Move(RC(row, col), RC(row + direction, col - 1));
-            enPassantLeft.setEnPassant();
-            possible.insert(enPassantLeft); // Capture the Pawn En-Passant
-        }
-        // If the enemy Pawn moved to the space one right of this Pawn,
-        else if (lastMove.getPositionTo() == RC(row, col + 1))
-        {
-            Move enPassantRight = Move(RC(row, col), RC(row + direction, col + 1));
-            enPassantRight.setEnPassant();
-            possible.insert(enPassantRight); // Capture the Pawn En-Passant
+            // If the enemy Pawn moved to the space one left or right of this Pawn,
+            if (lastMove.getPositionTo() == RC(row, c))
+            {
+                // Capture the Pawn En-Passant
+                // Move the current Pawn to the space behind the captured Pawn
+                Move enPassant = Move(RC(row, col), RC(row + direction, c));
+                enPassant.setEnPassant();
+                possible.insert(enPassant);
+            }
         }
     }
 

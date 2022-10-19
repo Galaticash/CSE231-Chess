@@ -19,7 +19,7 @@ set <Move> Queen::getPossibleMoves(Board* board)
     set <Move> possible;
 
     // If the Piece isn't at a valid position, or it is not this Piece's turn,
-    if (!(board->isValidPosition(this->currentPosition)) || board->currentIsWhite() != this->isWhite)
+    if (!(board->isValidPosition(this->currentPosition)) || board->getCurrentTeam() != this->isWhite)
         return possible;
 
     RC moves[8] =
@@ -31,7 +31,6 @@ set <Move> Queen::getPossibleMoves(Board* board)
 
     // The Queen only does sliding Moves in the given directions
     //possible = getSlidingMoves(board, this->currentPosition, moves);
-    
 
     // The current position of the Piece
     int row = this->getCurrentPosition().getRow();
@@ -41,8 +40,10 @@ set <Move> Queen::getPossibleMoves(Board* board)
     int r = 0;
     int c = 0;
 
+    int moveSize = sizeof(moves) / sizeof(moves[0]);
+
     // For each direction in moves,
-    for (int i = 0; i < sizeof(moves); i++)
+    for (int i = 0; i < moveSize; i++)
     {
         r = row + moves[i].getRow();
         c = col + moves[i].getCol();
@@ -50,6 +51,7 @@ set <Move> Queen::getPossibleMoves(Board* board)
         // If the space is a valid position on the board,
         if (board->isValidPosition(RC(r, c)))
         {
+            // While is valid position && space
             while (r >= 0 && r < 8 && c >= 0 && c < 8 &&
                 (*board)[r][c]->isSpace())
             {

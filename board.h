@@ -59,8 +59,7 @@ public:
 	Move move(Move currentMove);
 
 	void setCurrentTeam(bool white) { this->currentTeam = white; };	// TESTING: set current team
-	bool currentIsWhite() { return this->currentTeam; };			// Return if it is White's turn
-	// TODO: Rename get current
+	bool getCurrentTeam() { return this->currentTeam; };			// Return if it is White's turn
 
 	/// <summary>
 	/// Determines if the given RC is a valid position on the Board

@@ -22,7 +22,7 @@ set <Move> Knight::getPossibleMoves(Board* board)
    int col = this->currentPosition.getCol(); // current location column
    
    // If the position is not valid, or the selected Position is an empty Space, or it is not this Piece's turn,
-   if (!(board->isValidPosition(this->currentPosition)) || board->getPieceAtPosition(RC(row, col))->isSpace() || board->currentIsWhite() != this->isWhite)
+   if (!(board->isValidPosition(this->currentPosition)) || board->getCurrentTeam() != this->isWhite)
        return possible;
 
    int r;                   // the row we are checking

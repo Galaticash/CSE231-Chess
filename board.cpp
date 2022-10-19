@@ -45,7 +45,7 @@ Move Board::move(Move currentMove)
 	RC pieceDestination = currentMove.getPositionTo();
 
 	// If the two locations are on the board, and they are not the same, and the current Piece is on the current Team
-	if (isValidPosition(pieceCurrentPos) && isValidPosition(pieceDestination) && !(pieceCurrentPos == pieceDestination) && (this->currentIsWhite() == piecesBoard[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()]->getIsWhite()))
+	if (isValidPosition(pieceCurrentPos) && isValidPosition(pieceDestination) && !(pieceCurrentPos == pieceDestination) && (this->getCurrentTeam() == piecesBoard[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()]->getIsWhite()))
 	{
 		Piece* movePiece = piecesBoard[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()];
 		Piece* destinationPiece = piecesBoard[pieceDestination.getRow()][pieceDestination.getCol()];
