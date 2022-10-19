@@ -32,11 +32,11 @@ public:
 	};
 
 	// Get the row or column of the RC
-	int getRow() { return this->row; };
-	int getCol() { return this->col; };
+	int getRow() const { return this->row; };
+	int getCol() const { return this->col; };
 
 	// Gets RC where the row is represented as a letter, ex: a1, b3
-	string getString()
+	string const getString()
 	{
 		string rcString = "";
 

@@ -11,7 +11,7 @@
 #pragma once
 #ifndef PIECE_CLASS
 #define PIECE_CLASS
-#include "Piece.cpp"
+#include "Piece.h"
 #endif
 
 class Space : public Piece

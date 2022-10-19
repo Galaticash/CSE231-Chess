@@ -11,10 +11,10 @@
 
 #include "board.h"
 
-/// <summary>
-/// Inserts a Piece into the Board's 2D Piece pointers array, deleting the previous piece
-/// </summary>
-/// <param name="insertPiece">The pointer of the new Piece to insert</param>
+ /***************************************
+ * INSERT PIECE
+ * Replaces the current Piece with a the insertPiece
+ ********************************************/
 void Board::insertPiece(Piece* insertPiece)
 {
 	// Get the row/column position of the Piece
@@ -29,7 +29,7 @@ void Board::insertPiece(Piece* insertPiece)
 		delete& (piecesBoard[row][col]);
 	}
 
-	// Assign the position on the board the Piece*
+	// Assign the position on the board the Piece pointer
 	this->piecesBoard[row][col] = insertPiece;
 }
 
@@ -38,6 +38,11 @@ void Board::insertPiece(Piece* insertPiece)
 /// </summary>
 /// <param name="currentMove">Move to be performed</param>
 /// <returns>The last Move successfully performed</returns>
+/// 
+ /***************************************
+ * MOVE
+ * Moves
+ ********************************************/
 Move Board::move(Move currentMove)
 {
 	// Get the To and From positions of the Move

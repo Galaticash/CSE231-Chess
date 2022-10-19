@@ -66,7 +66,7 @@ public:
 	/// </summary>
 	/// <param name="position">The Row and Column position</param>
 	/// <returns>If the given RC is a valid position on the Board</returns>
-	bool isValidPosition(RC position)
+	bool isValidPosition(RC position) const
 	{
 		int row = position.getRow();
 		int col = position.getCol();

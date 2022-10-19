@@ -30,47 +30,6 @@ set <Move> Queen::getPossibleMoves(Board* board)
     };
 
     // The Queen only does sliding Moves in the given directions
-    //possible = getSlidingMoves(board, this->currentPosition, moves);
-
-    // The current position of the Piece
-    int row = this->getCurrentPosition().getRow();
-    int col = this->getCurrentPosition().getCol();
-
-    // The row and column being checked
-    int r = 0;
-    int c = 0;
-
-    int moveSize = sizeof(moves) / sizeof(moves[0]);
-
-    // For each direction in moves,
-    for (int i = 0; i < moveSize; i++)
-    {
-        r = row + moves[i].getRow();
-        c = col + moves[i].getCol();
-
-        // If the space is a valid position on the board,
-        if (board->isValidPosition(RC(r, c)))
-        {
-            // While is valid position && space
-            while (r >= 0 && r < 8 && c >= 0 && c < 8 &&
-                (*board)[r][c]->isSpace())
-            {
-                possible.insert(Move(RC(row, col), RC(r, c)));
-                r += moves[i].getRow();
-                c += moves[i].getCol();
-            }
-
-            // If the capture position is a valid position on the board,
-            if (board->isValidPosition(RC(r, c)))
-            {
-                if ((*board)[r][c]->isSpace() || (!this->isWhite && (*board)[r][c]->getIsWhite()))
-                    possible.insert(Move(RC(row, col), RC(r, c)));
-                if ((*board)[r][c]->isSpace() || (this->isWhite && !(*board)[r][c]->getIsWhite()))
-                    possible.insert(Move(RC(row, col), RC(r, c)));
-            }
-        }
-    }
-    
-    
+    possible = getSlidingMoves(board, this->currentPosition, moves);
     return possible;
 };
