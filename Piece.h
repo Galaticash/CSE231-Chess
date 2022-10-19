@@ -61,31 +61,31 @@ public:
 	}
 	RC getCurrentPosition() const { return this->currentPosition; };	// Return the RC for this Piece
 	
-	vector<Rect>* getRectangles() { return &(this->rectangles); };	// Return a pointer to this Piece's rectangles
+	vector<Rect>* getRectangles() { return &(this->rectangles); };		// Return a pointer to this Piece's rectangles
 
-	void setHasMoved(bool moved) { this->hasMoved = moved; }; // For Testing, set hasMoved
-	bool getHasMoved() const { return this->hasMoved; };	// Return if this Piece has moved
+	void setHasMoved(bool moved) { this->hasMoved = moved; };	// For Testing, set hasMoved
+	bool getHasMoved() const { return this->hasMoved; };		// Return if this Piece has moved
 
-	char getType() const { return this->type; };	// Return the char type of this Piece
+	char getType() const { return this->type; };		// Return the char type of this Piece
 	bool isSpace() const { return this->type == 's'; };	// Return if this Piece's char type is a Space
 	
 	bool getIsWhite() const { return this->isWhite; };	// Return if this Piece is white (TODO: TEAM_ONE/TEAM_WHITE?)
 
 protected:
 	// Currently unused, Piece char types as an enum
-	enum pieceTypes { k = 'k', q = 'q', r = 'r', n = 'n', p = 'p', b = 'b', s = 's' };
+	//enum pieceTypes { k = 'k', q = 'q', r = 'r', n = 'n', p = 'p', b = 'b', s = 's' };
 	//pieceTypes type = k;
 
-	char type = ' ';	// The type of this Piece
-	vector <Rect> rectangles; // The rectangles used to draw this Piece
+	char type = ' ';			// The type of this Piece
+	vector <Rect> rectangles;	// The rectangles used to draw this Piece
 	
-	RC currentPosition; 	// Current Row Column position on the Board
+	RC currentPosition; 		// Current Row Column position on the Board
 
 	bool hasMoved;	// If this Piece has moved yet
 	bool isWhite;	// If this Piece is on Team White
-
 	
+	// Allows children Pieces to get their sliding Moves
 	set <Move> getSlidingMoves(const Board* board, RC start, RC deltas[]);
 };
 
-#include "board.h" // Inlcude Board class
+#include "board.h" // Inlcude the Board class

@@ -16,10 +16,10 @@
 class Bishop : public Piece
 {
 public:
-	// Call the base Constructor
+	// Call Piece's constructor
 	Bishop(RC position, bool isWhite) : Piece(position, isWhite)
 	{
-        this->type = 'b';
+        this->type = 'b';   // Bishop type
 		this->rectangles = {
       {-1,8,  -1,2,   1,2,   1,8 },   // center of head
       { 1,8,   1,2,   5,2,   5,5 },   // right part of head
@@ -29,6 +29,5 @@ public:
       { 6,-6, -6,-6, -6,-8,  6,-8}    // base
         };
     };
-
 	set <Move> getPossibleMoves(Board* board);
 };

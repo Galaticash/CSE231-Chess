@@ -13,14 +13,13 @@
 #include "Piece.h"
 #endif
 
-
 class King : public Piece
 {
 public:
-	// Call the base Constructor
+	// Call Piece's constructor
 	King(RC position, bool isWhite) : Piece(position, isWhite)
 	{
-        this->type = 'k';
+        this->type = 'k';   // King type
 		this->rectangles = {
       { 1,8,  -1,8,  -1,1,   1,1},     // cross vertical
       {-3,6,   3,6,   3,4,  -3,4},     // cross horizontal
@@ -31,6 +30,5 @@ public:
       { 8,-6, -8,-6, -8,-8,  8,-8}     // base
         };
     };
-
 	set <Move> getPossibleMoves(Board* board);
 };

@@ -24,13 +24,13 @@
 class Board
 {
 public:
-	// When a board is created, will use the Default 2D array of Piece*
+	// Sets the last Move to an empty Move, and the first team as white
 	Board() { this->lastMove = Move(); this->currentTeam = 1; };
-	// Use a custom board, for testing
-	Board(Piece* copiedBoard[NUM_ROW][NUM_COL]) : Board()
-	{ copyBoard(copiedBoard); };
-	//~Board() { delete[] & this->piecesBoard; delete& this->lastMove;  delete this; };
-
+	
+	// Copy from a custom board
+	Board(Piece* copiedBoard[NUM_ROW][NUM_COL]) : Board() { copyBoard(copiedBoard); };
+	
+	// Copies a given 2D array of Piece pointers
 	void copyBoard(Piece* copiedBoard[NUM_ROW][NUM_COL])
 	{
 		for (int r = 0; r < NUM_ROW; r++)
@@ -47,25 +47,18 @@ public:
 	
 	// Get a pointer to the Piece at the given position on the Board
 	// In place of [] override
-	Piece* getPieceAtPosition(RC position) const
-	{
-		return piecesBoard[position.getRow()][position.getCol()];
-	}
+	Piece* getPieceAtPosition(RC position) const { return piecesBoard[position.getRow()][position.getCol()]; }
 
 	// Get the last Move of the game
-	Move getLastMove() { return this->lastMove; };
+	Move getLastMove() const { return this->lastMove; };
 
 	// Perform a given Move
 	Move move(Move currentMove);
 
-	void setCurrentTeam(bool white) { this->currentTeam = white; };	// TESTING: set current team
-	bool getCurrentTeam() { return this->currentTeam; };			// Return if it is White's turn
+	//void setCurrentTeam(bool white) { this->currentTeam = white; };		// For testing: set the current team
+	bool getCurrentTeam() const { return this->currentTeam; };			// Return if it is White's turn
 
-	/// <summary>
-	/// Determines if the given RC is a valid position on the Board
-	/// </summary>
-	/// <param name="position">The Row and Column position</param>
-	/// <returns>If the given RC is a valid position on the Board</returns>
+	// Checks if a given RC position is on the Board
 	bool isValidPosition(RC position) const
 	{
 		int row = position.getRow();
@@ -76,8 +69,8 @@ public:
 	};
 
 	// Return a pointer to the given row of Piece*
-	Piece** operator[](const int row) { return piecesBoard[row]; }; // Correct, being used by Tests
-	//Piece * *operator[](const int row) const { return piecesBoard[row]; }; // Currenlty incorrect, being used by program
+	Piece** operator[](const int row) { return piecesBoard[row]; };
+	//Piece * *operator[](const int row) const { return piecesBoard[row]; }; // Currenlty iffy
 
 private:
 	Piece* piecesBoard[NUM_ROW][NUM_COL] = {};	// The 2D array of Piece pointers

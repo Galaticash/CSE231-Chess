@@ -1,7 +1,11 @@
 #pragma once
 #include "Piece.h"
 
-// TODO: Use this for Queen, Bishop, and Rook
+/***************************************
+* GET SLIDING MOVES
+* Gets the possible sliding moves for a Piece,
+* given the starting position and the move deltas
+********************************************/
 set <Move> Piece::getSlidingMoves(const Board* board, RC current, RC moves[])
 {
     set<Move> possible;
@@ -15,7 +19,6 @@ set <Move> Piece::getSlidingMoves(const Board* board, RC current, RC moves[])
     int c = 0;
 
     int moveSize = sizeof(moves);
-        /// sizeof(moves[0]);
 
     // For each direction in moves,
     for (int i = 0; i < moveSize; i++)

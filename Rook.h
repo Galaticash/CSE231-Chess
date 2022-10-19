@@ -16,10 +16,10 @@
 class Rook : public Piece
 {
 public:
-	// Call the base Constructor
+	// Call Piece's constructor
    Rook(RC position, bool isWhite) : Piece(position, isWhite) 
    {
-      this->type = 'r';
+      this->type = 'r'; // Rook type
       this->rectangles =
       {
          {-8,7,  -8,4,  -4,4,  -4,7},   // left battlement
@@ -29,6 +29,5 @@ public:
          { 6,-6, -6,-6, -6,-8,  6,-8}   // base
       };
    }
-
    set <Move> getPossibleMoves(Board* board);
 };

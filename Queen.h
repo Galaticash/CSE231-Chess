@@ -16,10 +16,10 @@
 class Queen : public Piece
 {
 public:
-	// Call the base Constructor
+	// Call Piece's constructor
 	Queen(RC position, bool isWhite) : Piece(position, isWhite)
     {
-        this->type = 'q';
+        this->type = 'q';   // Queen type
         this->rectangles = {
       { 8,8,   5,8,   5,5,   8,5 },     // right crown jewel
       {-8,8,  -5,8,  -5,5,  -8,5 },     // left crown jewel
@@ -31,8 +31,6 @@ public:
       { 6,-3, -6,-3, -6,-5,  6,-5},     // middel base
       { 8,-6, -8,-6, -8,-8,  8,-8}      // base
         };
-
     };
-
    set <Move> getPossibleMoves(Board* board);
 };

@@ -16,10 +16,10 @@
 class Pawn : public Piece
 {
 public:
-	// Call the base Constructor
+	// Call Piece's constructor
 	Pawn(RC position, bool isWhite) : Piece(position, isWhite)
 	{
-		this->type = 'p';
+		this->type = 'p';	// Pawn type
 		this->rectangles = {
 			{ 1,7,  -1,7,  -2,5,  2,5 }, // top of head
 			{ 3,5,  -3,5,  -3,3,  3,3 }, // bottom of head
@@ -27,6 +27,5 @@ public:
 			{ 4,-3, -4,-3, -4,-5, 4,-5}  // base
 		};
 	};
-
 	set <Move> getPossibleMoves(Board* board);
 };
