@@ -18,15 +18,9 @@ set <Move> King::getPossibleMoves(Board* board)
 {
    set <Move> possible;
 
-   int row = this->currentPosition.getRow(); // current location row
-   int col = this->currentPosition.getCol(); // current location column
-
    // If the position is not valid, or the selected Position is an empty Space, or it is not this Piece's turn,
    if (!(board->isValidPosition(this->currentPosition)) || board->getCurrentTeam() != this->isWhite)
        return possible;
-
-   int r;                   // the row we are checking
-   int c;                   // the column we are checking
 
    // posible deltas, changes in position
    RC moves[8] =
@@ -36,30 +30,13 @@ set <Move> King::getPossibleMoves(Board* board)
        {1, -1}, {1, 0}, {1, 1}
    };
 
-   // For each possible move,
-   for (int i = 0; i < 8; i++)
-   {
-      r = row + moves[i].getRow();
-      c = col + moves[i].getCol();
+   possible = getNonSlidingMoves(board, this->currentPosition, moves);
 
-      // Piece cannot move off the Board
-      if (board->isValidPosition(RC(r, c)))
-      {
-          // If Move desitnation is a Space,
-          if ((*board)[r][c]->isSpace())
-          {
-              possible.insert(Move(RC(row, col), RC(r, c)));
-          }
-          // Else if Move destination is a Piece of the opposite color,
-          else if (this->isWhite != (*board)[r][c]->getIsWhite())
-          {
-              // Set what Piece is captured by this Move
-              Move capture = Move(RC(row, col), RC(r, c));
-              capture.setCapture((*board)[r][c]->getType());
-              possible.insert(capture);
-          }
-      }
-   }
+   int row = this->currentPosition.getRow(); // current location row
+   int col = this->currentPosition.getCol(); // current location column
+
+   int r;                   // the row we are checking
+   int c;                   // the column we are checking
 
    // Castling
    // If the King has not moved,

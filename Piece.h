@@ -3,7 +3,6 @@
  *		Piece 
  * Authors: 
  *		Ashley DeMott, Logan Huston
- *    
  * Summary:
  *		The base class for all types of Pieces in a chess game.  
  ************************************************************************/
@@ -86,6 +85,8 @@ protected:
 	
 	// Allows children Pieces to get their sliding Moves
 	set <Move> getSlidingMoves(const Board* board, RC start, RC deltas[]);
+	// Allows children Pieces to get their sliding Moves
+	set <Move> getNonSlidingMoves(const Board* board, RC start, RC deltas[]);
 };
 
 #include "board.h" // Inlcude the Board class
