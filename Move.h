@@ -143,7 +143,6 @@ public:
 				case 'Q':  // Promote to Queen
 					this->promotion = *it;
 					break;
-
 				}
 			}				
 		}
@@ -212,8 +211,8 @@ public:
 
 private:
 	string smithNotation = "";	// The Smith's Notation of this Move
-	RC positionFrom;	// Where the Move starts
-	RC positionTo;		// Where the Move ends
+	RC positionFrom;				// Where the Move starts
+	RC positionTo;					// Where the Move ends
 
 	// Special Cases, default to false
 	bool enpassant = false;

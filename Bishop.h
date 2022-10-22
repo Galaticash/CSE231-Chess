@@ -1,11 +1,11 @@
 /***********************************************************************
- * Header File:
- *    Bishop
- * Author:
- *		Ashley DeMott, Logan Huston
- * Summary:
- *		A bishop in chess. This file contains info on drawing a bishop.
- ************************************************************************/
+* Header File:
+*    Bishop
+* Author:
+*		Ashley DeMott, Logan Huston
+* Summary:
+*		A bishop in chess. This file contains info on drawing a bishop.
+************************************************************************/
 
 #pragma once
 #ifndef PIECE_CLASS
@@ -19,7 +19,7 @@ public:
 	// Call Piece's constructor
 	Bishop(RC position, bool isWhite) : Piece(position, isWhite)
 	{
-        this->type = 'b';   // Bishop type
+      this->type = 'b';   // Bishop type
 		this->rectangles = {
       {-1,8,  -1,2,   1,2,   1,8 },   // center of head
       { 1,8,   1,2,   5,2,   5,5 },   // right part of head
@@ -27,7 +27,7 @@ public:
       {-5,3,  -5,2,   5,2,   5,3 },   // base of head
       {-2,2,  -4,-5,  4,-5,  2,2 },   // neck
       { 6,-6, -6,-6, -6,-8,  6,-8}    // base
-        };
-    };
+      };
+   };
 	set <Move> getPossibleMoves(Board* board);
 };

@@ -1,11 +1,11 @@
 /***********************************************************************
- * Header File:
- *    King
- * Author:
- *		Ashley DeMott, Logan Huston
- * Summary:
- *		A king in chess. This file contains info on drawing a king.
- ************************************************************************/
+* Header File:
+*    King
+* Author:
+*		Ashley DeMott, Logan Huston
+* Summary:
+*		A king in chess. This file contains info on drawing a king.
+************************************************************************/
 
 #pragma once
 #ifndef PIECE_CLASS
@@ -19,7 +19,7 @@ public:
 	// Call Piece's constructor
 	King(RC position, bool isWhite) : Piece(position, isWhite)
 	{
-        this->type = 'k';   // King type
+      this->type = 'k';   // King type
 		this->rectangles = {
       { 1,8,  -1,8,  -1,1,   1,1},     // cross vertical
       {-3,6,   3,6,   3,4,  -3,4},     // cross horizontal
@@ -28,7 +28,7 @@ public:
       { 5,1,   5,-5, -5,-5, -5,1},     // center column
       { 8,-4, -8,-4, -8,-5,  8,-5},    // base center
       { 8,-6, -8,-6, -8,-8,  8,-8}     // base
-        };
-    };
+      };
+   };
 	set <Move> getPossibleMoves(Board* board);
 };

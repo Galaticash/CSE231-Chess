@@ -1,12 +1,12 @@
 /***********************************************************************
- * Header File:
- *		RC
- * Author
- *		Ashley DeMott
- * Description:
- *		RC or RowColumn, holds two integer values representing 
- *		a Row/Column combination on the Chess Board.
- ************************************************************************/
+* Header File:
+*		RC
+* Author
+*		Ashley DeMott
+* Description:
+*		RC or RowColumn, holds two integer values representing 
+*		a Row/Column combination on the Chess Board.
+************************************************************************/
 
 #pragma once
 #include <string>

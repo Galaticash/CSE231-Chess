@@ -1,11 +1,11 @@
 /***********************************************************************
- * Header File:
- *    Pawn
- * Author: 
- *		Ashley DeMott, Logan Huston
- * Summary: 
- *		A pawn in chess. This file contains info on drawing a pawn.
- ************************************************************************/
+* Header File:
+*    Pawn
+* Author: 
+*		Ashley DeMott, Logan Huston
+* Summary: 
+*		A pawn in chess. This file contains info on drawing a pawn.
+************************************************************************/
 
 #pragma once
 #ifndef PIECE_CLASS

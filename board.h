@@ -56,7 +56,7 @@ public:
 	Move move(Move currentMove);
 
 	//void setCurrentTeam(bool white) { this->currentTeam = white; };		// For testing: set the current team
-	bool getCurrentTeam() const { return this->currentTeam; };			// Return if it is White's turn
+	bool getCurrentTeam() const { return this->currentTeam; };				// Return if it is White's turn
 
 	// Checks if a given RC position is on the Board
 	bool isValidPosition(RC position) const
@@ -70,10 +70,11 @@ public:
 
 	// Return a pointer to the given row of Piece*
 	Piece** operator[](const int row) { return piecesBoard[row]; };
-	//Piece * *operator[](const int row) const { return piecesBoard[row]; }; // Currenlty iffy
+	//Piece** operator[](const int row) const { return piecesBoard[row]; };	// Currenlty iffy
 
 private:
 	Piece* piecesBoard[NUM_ROW][NUM_COL] = {};	// The 2D array of Piece pointers
-	Move lastMove;		// The last performed Move
-	bool currentTeam;	// The current Team
+	Move lastMove;			// The last performed Move
+	bool currentTeam;		// The current Team
 };
+

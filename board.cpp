@@ -1,20 +1,20 @@
 /***********************************************************************
- * Source File:
- *      Board
- * Author:
- *      Ashley DeMott
- * Summary:
- *      Stores a collection of Piece pointers and moves Pieces to
- *      new positions on the Board. Also keeps track of the state of
- *      the Chess game (lastMove and currentTeam)
- ************************************************************************/
+* Source File:
+*      Board
+* Author:
+*      Ashley DeMott
+* Summary:
+*      Stores a collection of Piece pointers and moves Pieces to
+*      new positions on the Board. Also keeps track of the state of
+*      the Chess game (lastMove and currentTeam)
+************************************************************************/
 
 #include "board.h"
 
- /***************************************
- * INSERT PIECE
- * Replaces the current Piece with a the insertPiece
- ********************************************/
+/***************************************
+* INSERT PIECE
+* Replaces the current Piece with a the insertPiece
+********************************************/
 void Board::insertPiece(Piece* insertPiece)
 {
 	// Get the row/column position of the Piece
@@ -33,16 +33,12 @@ void Board::insertPiece(Piece* insertPiece)
 	this->piecesBoard[row][col] = insertPiece;
 }
 
-/// <summary>
-/// Performs the given Move
-/// </summary>
-/// <param name="currentMove">Move to be performed</param>
-/// <returns>The last Move successfully performed</returns>
-/// 
- /***************************************
+ /***************************************************
  * MOVE
- * Moves
- ********************************************/
+ * Performs the given Move. 
+ * currentMove: Move to be performed
+ *		 Returns: The last Move succesfully performed
+ ****************************************************/
 Move Board::move(Move currentMove)
 {
 	// Get the To and From positions of the Move
@@ -50,7 +46,8 @@ Move Board::move(Move currentMove)
 	RC pieceDestination = currentMove.getPositionTo();
 
 	// If the two locations are on the board, and they are not the same, and the current Piece is on the current Team
-	if (isValidPosition(pieceCurrentPos) && isValidPosition(pieceDestination) && !(pieceCurrentPos == pieceDestination) && (this->getCurrentTeam() == piecesBoard[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()]->getIsWhite()))
+	if (isValidPosition(pieceCurrentPos) && isValidPosition(pieceDestination) && !(pieceCurrentPos == pieceDestination) 
+		&& (this->getCurrentTeam() == piecesBoard[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()]->getIsWhite()))
 	{
 		Piece* movePiece = piecesBoard[pieceCurrentPos.getRow()][pieceCurrentPos.getCol()];
 		Piece* destinationPiece = piecesBoard[pieceDestination.getRow()][pieceDestination.getCol()];
@@ -134,3 +131,4 @@ Move Board::move(Move currentMove)
 	// Return the last Move
 	return this->lastMove;
 }
+
